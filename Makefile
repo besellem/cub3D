@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2020/12/09 23:09:23 by besellem         ###   ########.fr        #
+#    Updated: 2020/12/14 10:42:56 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ all:		$(NAME)
 bonus:		all
 
 test:		$(NAME)
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) main.c $(SRCS) -I incs libft/libft.a
+			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) main.c $(SRCS) -I incs libft/libft.a -L mlx/
 
 clean:
 			$(MUTE) $(MAKE) -C libft clean
@@ -45,4 +45,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all bonus test clean fclean re
+.PHONY:		$(NAME) all bonus test clean fclean re

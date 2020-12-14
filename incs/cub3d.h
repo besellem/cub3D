@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/10 00:53:03 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/14 10:41:45 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** -- INCLUDES --
 */
 # include "../libft/libft.h"
+# include <mlx.h>
 # include <math.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -29,32 +30,35 @@
 ** H_FOV:	horizontal
 ** V_FOV:	vertical		=>	Not sure if we need this one yet
 */
+# define CUB_ERR B_RED"Error"CLR_COLOR
+
 # define H_FOV 60
 # define V_FOV 100
 
-# define MAP_CHARSET "01NSEW"
+# define MAP_CHARSET "01NEWS"
 
 /*
 ** -- STRUCTURES --
 */
 typedef	struct	s_specs
 {
-	long res_width;
-	long res_heigh;
-	long color_sky;
-	long color_ground;
-	char *texture_north;
-	char *texture_south;
-	char *texture_east;
-	char *texture_west;
-	char *texture_sprite;
+	long	res_width;
+	long	res_heigh;
+	long	color_sky;
+	long	color_ground;
+	int		texture_north;
+	int		texture_south;
+	int		texture_east;
+	int		texture_west;
+	int		texture_sprite;
+	char	**map;
 }				t_specs;
 
 /*
 ** -- PROTOTYPES --
 ** Common
 */
-void			ft_error(char *err);
+void			ft_error(char *err, char *file, int line);
 void			ft_free_strs(char **strs);
 int				ft_strs_size(char **strs);
 int				is_rgb(int color);

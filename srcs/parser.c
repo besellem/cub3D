@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/10 00:57:35 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/14 10:29:52 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	cub_parser(char *file, t_specs *specs)
 {
 	int fd;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	if ((fd = open(file, O_RDONLY)) == -1 ||
+		ft_strcmp(file + (ft_strlen(file) - 4), ".cub") != 0)
 	{
-		perror("Unable to open the file\n");
+		ft_putendl_fd(CUB_ERR, 2);
+		perror(file);
 		exit(EXIT_FAILURE);
 	}
 	cub_fill_specs(fd, specs);

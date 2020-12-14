@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/10 00:58:30 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/14 10:28:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ int			main(int ac, char **av)
 		/*
 		if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
 			if (cub_img_save(&specs))
-				ft_error("Enable to save the image\n");
+				ft_error("Enable to save the image", NULL, 0);
 		else if (ac == 3)
-			ft_error("Argument error\n");
+			ft_error("Argument error", NULL, 0);
 		*/
+		free(specs.map);
 	}
+	else
+		ft_error("Arguments error", __FILE__, __LINE__);
 	return (0);
 }
