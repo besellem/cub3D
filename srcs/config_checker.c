@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/14 10:26:03 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/14 17:50:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	window_size_spec(char **split, t_specs *specs)
 {
 	if (ft_strs_size(split) != 3)
 		ft_error("Bad resolution configuration", __FILE__, __LINE__);
-	specs->res_width = ft_atol(split[1]);
-	specs->res_heigh = ft_atol(split[2]);
+	specs->res_width = ft_atoi(split[1]);
+	specs->res_heigh = ft_atoi(split[2]);
 	ft_free_strs(split);
 	if (specs->res_width < 0 || specs->res_heigh < 0)
 		ft_error("Bad resolution configuration", __FILE__, __LINE__);
@@ -69,7 +69,7 @@ static void	texture_specs(char *line, t_specs *specs)
 	nfos = ft_split(line, ' ');
 	if (ft_strs_size(nfos) != 2)
 		ft_error("Bad texture configuration", __FILE__, __LINE__);
-	if ((fd = open(nfos[1], O_RDONLY)) == -1 && !is_fd_open(fd, specs))
+	if ((fd = open(nfos[1], O_RDONLY)) == -1 && read(fd, NULL, 0))
 		ft_error("Cannot open a texture file", __FILE__, __LINE__);
 	if (!ft_strncmp(line, "NO ", 3) && specs->texture_north == -1)
 		specs->texture_north = fd;

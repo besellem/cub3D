@@ -1,3 +1,4 @@
-mlx/
+mlx*/
 *.txt
 *.cub
+*.sh
