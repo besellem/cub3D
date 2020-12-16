@@ -6,23 +6,23 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/14 12:03:07 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/15 23:46:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		are_specs_complete(t_specs *specs)
+int		are_specs_complete(t_cub *cub)
 {
-	if (specs->color_ground != -1 && specs->color_sky != -1 &&
-		specs->res_heigh != -1 && specs->res_width != -1 &&
-		specs->texture_north && specs->texture_south && specs->texture_east &&
-		specs->texture_west && specs->texture_sprite)
+	if (cub->grnd_color != -1 && cub->sky_color != -1 &&
+		cub->win_h != -1 && cub->win_w != -1 &&
+		cub->txtr_no && cub->txtr_so && cub->txtr_ea &&
+		cub->txtr_we && cub->txtr_s)
 		return (1);
 	return (0);
 }
 
-void	cub_parser(char *file, t_specs *specs)
+void	cub_parser(char *file, t_cub *cub)
 {
 	int fd;
 
@@ -33,5 +33,5 @@ void	cub_parser(char *file, t_specs *specs)
 		perror(file);
 		exit(EXIT_FAILURE);
 	}
-	cub_fill_specs(fd, specs);
+	cub_fill_specs(fd, cub);
 }

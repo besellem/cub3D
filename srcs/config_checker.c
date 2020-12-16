@@ -6,21 +6,29 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/14 17:50:25 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/16 00:48:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	window_size_spec(char **split, t_specs *specs)
+static void	window_size_spec(char **split, t_cub *cub)
 {
+	int x_tmp;
+	int y_tmp;
+
 	if (ft_strs_size(split) != 3)
 		ft_error("Bad resolution configuration", __FILE__, __LINE__);
-	specs->res_width = ft_atoi(split[1]);
-	specs->res_heigh = ft_atoi(split[2]);
+	cub->win_w = ft_atoi(split[1]);
+	cub->win_h = ft_atoi(split[2]);
 	ft_free_strs(split);
-	if (specs->res_width < 0 || specs->res_heigh < 0)
+	if (cub->win_w < 0 || cub->win_h < 0)
 		ft_error("Bad resolution configuration", __FILE__, __LINE__);
+	mlx_get_screen_size(cub->mlx, &x_tmp, &y_tmp);
+	if (cub->win_w > x_tmp)
+		cub->win_w = x_tmp;
+	if (cub->win_h > y_tmp)
+		cub->win_h = y_tmp;
 }
 
 /*
@@ -28,7 +36,7 @@ static void	window_size_spec(char **split, t_specs *specs)
 ** from the config overflowed an unsigned char or not
 */
 
-static void	color_specs(char where, char **split, t_specs *specs)
+static void	color_specs(char where, char **split, t_cub *cub)
 {
 	long	color;
 	int		r;
@@ -44,24 +52,24 @@ static void	color_specs(char where, char **split, t_specs *specs)
 	if (!(is_rgb(r) && is_rgb(g) && is_rgb(b)))
 		ft_error("Bad color configuration", __FILE__, __LINE__);
 	color = ft_rgb(r, g, b);
-	if (where == 'F' && specs->color_ground == -1)
-		specs->color_ground = color;
-	else if (where == 'C' && specs->color_sky == -1)
-		specs->color_sky = color;
+	if (where == 'F' && cub->grnd_color == -1)
+		cub->grnd_color = color;
+	else if (where == 'C' && cub->sky_color == -1)
+		cub->sky_color = color;
 	else
 		ft_error("Bad color configuration", __FILE__, __LINE__);
 }
 
-int			is_fd_open(int fd, t_specs *specs)
+int			is_fd_open(int fd, t_cub *cub)
 {
-	if (fd == specs->texture_north || fd == specs->texture_south ||
-		fd == specs->texture_east || fd == specs->texture_west ||
-		fd == specs->texture_sprite)
+	if (fd == cub->txtr_no || fd == cub->txtr_so ||
+		fd == cub->txtr_ea || fd == cub->txtr_we ||
+		fd == cub->txtr_s)
 		return (1);
 	return (0);
 }
 
-static void	texture_specs(char *line, t_specs *specs)
+static void	texture_specs(char *line, t_cub *cub)
 {
 	char	**nfos;
 	int		fd;
@@ -71,16 +79,16 @@ static void	texture_specs(char *line, t_specs *specs)
 		ft_error("Bad texture configuration", __FILE__, __LINE__);
 	if ((fd = open(nfos[1], O_RDONLY)) == -1 && read(fd, NULL, 0))
 		ft_error("Cannot open a texture file", __FILE__, __LINE__);
-	if (!ft_strncmp(line, "NO ", 3) && specs->texture_north == -1)
-		specs->texture_north = fd;
-	else if (!ft_strncmp(line, "SO ", 3) && specs->texture_south == -1)
-		specs->texture_south = fd;
-	else if (!ft_strncmp(line, "WE ", 3) && specs->texture_west == -1)
-		specs->texture_west = fd;
-	else if (!ft_strncmp(line, "EA ", 3) && specs->texture_east == -1)
-		specs->texture_east = fd;
-	else if (!ft_strncmp(line, "S ", 2) && specs->texture_sprite == -1)
-		specs->texture_sprite = fd;
+	if (!ft_strncmp(line, "NO ", 3) && cub->txtr_no == -1)
+		cub->txtr_no = fd;
+	else if (!ft_strncmp(line, "SO ", 3) && cub->txtr_so == -1)
+		cub->txtr_so = fd;
+	else if (!ft_strncmp(line, "WE ", 3) && cub->txtr_we == -1)
+		cub->txtr_we = fd;
+	else if (!ft_strncmp(line, "EA ", 3) && cub->txtr_ea == -1)
+		cub->txtr_ea = fd;
+	else if (!ft_strncmp(line, "S ", 2) && cub->txtr_s == -1)
+		cub->txtr_s = fd;
 	else
 	{
 		ft_free_strs(nfos);
@@ -89,22 +97,22 @@ static void	texture_specs(char *line, t_specs *specs)
 	ft_free_strs(nfos);
 }
 
-static void	check_line(char *line, t_specs *specs, int *specs_completed)
+static void	check_line(char *line, t_cub *cub, int *specs_completed)
 {
 	if (!ft_strncmp(line, "R ", 2))
-		window_size_spec(ft_split(line, ' '), specs);
+		window_size_spec(ft_split(line, ' '), cub);
 	else if (!ft_strncmp(line, "F ", 2))
-		color_specs('F', ft_split(line, ','), specs);
+		color_specs('F', ft_split(line, ','), cub);
 	else if (!ft_strncmp(line, "C ", 2))
-		color_specs('C', ft_split(line, ','), specs);
+		color_specs('C', ft_split(line, ','), cub);
 	else if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3) ||
 			!ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3))
-		texture_specs(line, specs);
-	else if (are_specs_complete(specs))
+		texture_specs(line, cub);
+	else if (are_specs_complete(cub))
 		*specs_completed = 1;
 }
 
-void		cub_fill_specs(int fd, t_specs *specs)
+void		cub_fill_specs(int fd, t_cub *cub)
 {
 	char	*ret;
 	int		check;
@@ -113,7 +121,7 @@ void		cub_fill_specs(int fd, t_specs *specs)
 	specs_completed = 0;
 	while ((check = get_next_line(fd, &ret)) >= 0)
 	{
-		check_line(ret, specs, &specs_completed);
+		check_line(ret, cub, &specs_completed);
 		free(ret);
 		if (specs_completed == 1)
 			break ;
