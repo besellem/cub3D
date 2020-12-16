@@ -1,0 +1,15 @@
+R 320 200
+NO ./textures/coucou.xpm
+SO ./textures/coucou.xpm
+WE ./textures/coucou.xpm
+EA ./textures/viper.xpm
+
+S ./textures/coucou.xpm
+F 200,100,23
+C 100,255,20
+
+11111
+10001
+10N01
+10001
+11111
