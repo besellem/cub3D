@@ -6,9 +6,54 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/14 11:15:11 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/17 02:16:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static void	free_textures(t_cub *cub)
+{
+	if (cub->txtr_no)
+		free(cub->txtr_no);
+	if (cub->txtr_so)
+		free(cub->txtr_so);
+	if (cub->txtr_ea)
+		free(cub->txtr_ea);
+	if (cub->txtr_we)
+		free(cub->txtr_we);
+	if (cub->txtr_s)
+		free(cub->txtr_s);
+}
+
+void		ft_free_cub(t_cub *cub)
+{
+	free_textures(cub);
+	if (cub->map)
+		ft_free_strs(cub->map);
+	if (cub->mlx)
+		free(cub->mlx);
+	if (cub->win)
+		free(cub->win);
+	free(cub->keys);
+	if (cub->img->ptr)
+	{
+		free(cub->img->ptr);
+		free(cub->img->addr);
+		free(cub->img);
+	}
+}
+
+int			file_got_ext(char *file, char *extension)
+{
+	size_t file_len;
+	size_t ext_len;
+
+	file_len = ft_strlen(file);
+	ext_len = ft_strlen(extension);
+	if (file_len < ext_len)
+		return (0);
+	if (ft_strncmp(file + file_len - ext_len, extension, ext_len) == 0)
+		return (1);
+	return (0);
+}

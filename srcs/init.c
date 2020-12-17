@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/16 00:46:11 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/17 00:07:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,45 @@ static int	init_keys(t_cub *cub)
 	return (0);
 }
 
+static int	init_img(t_cub *cub)
+{
+	if (!(cub->img = (t_img *)malloc(sizeof(t_img) * 1)))
+		return (1);
+	cub->img->ptr = NULL;
+	return (0);
+}
+
 int			init_cub(t_cub *cub)
 {
 	if (init_keys(cub))
 		return (1);
+	if (init_img(cub))
+		return (1);
 	cub->win_w = -1;
 	cub->win_h = -1;
-	cub->grnd_color = -1;
 	cub->sky_color = -1;
+	cub->grnd_color = -1;
+	cub->txtr_no = NULL;
+	cub->txtr_so = NULL;
+	cub->txtr_ea = NULL;
+	cub->txtr_we = NULL;
+	cub->txtr_s = NULL;
+	cub->map = NULL;
+	cub->mlx = NULL;
+	cub->win = NULL;
+	cub->drxion = M_PI; // TO CHANGE
 	cub->pos_x = 0.0;
 	cub->pos_y = 0.0;
-	cub->increment = 10.0;
+	cub->increment = 50.0;
 	return (0);
 }
 
 /*
 ** TO ADD:
 **
-** void	*mlx;
-** void	*win;
 ** int	txtr_no;
 ** int	txtr_so;
 ** int	txtr_ea;
 ** int	txtr_we;
 ** int	txtr_s;
-** char	**map;
 */

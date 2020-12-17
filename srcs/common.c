@@ -6,17 +6,19 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/14 12:03:11 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/17 02:12:04 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_error(char *err, char *file, int line)
+void	ft_error(char *err, t_cub *cub, char *file, int line)
 {
+	if (cub)
+		ft_free_cub(cub);
 	ft_putendl_fd(CUB_ERR, 2);
-	if (file)
-		ft_dprintf(2, B_GREEN"%s:%d: "CLR_COLOR, file, line);
+	if (file && line > 0)
+		ft_dprintf(2, B_YELLOW"%s:%d: "CLR_COLOR, file, line);
 	ft_putendl_fd(err, 2);
 	exit(EXIT_FAILURE);
 }
