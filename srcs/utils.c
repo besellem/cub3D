@@ -6,11 +6,27 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/17 02:13:03 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:46:47 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	print_map(t_cub *cub)
+{
+	size_t x;
+	size_t y;
+
+	y = 0;
+	while (y < cub->map_size_y)
+	{
+		x = 0;
+		while (x < cub->map_size_x)
+			ft_putchar(cub->map[y][x++]);
+		write(1, "\n", 1);
+		++y;
+	}
+}
 
 void	print_specs(t_cub *cub)
 {
@@ -27,27 +43,15 @@ void	print_specs(t_cub *cub)
 	ft_printf("    cub->txtr_ea:    %s\n", cub->txtr_ea);
 	ft_printf("    cub->txtr_we:    %s\n", cub->txtr_we);
 	ft_printf("    cub->txtr_s:     %s\n", cub->txtr_s);
+	ft_printf("    cub->map_size_x: %lld\n", cub->map_size_x);
+	ft_printf("    cub->map_size_y: %lld\n", cub->map_size_y);
 	ft_printf("    cub->drxion:     %f\n", cub->drxion);
 	ft_printf("    cub->pos_x:      %f\n", cub->pos_x);
 	ft_printf("    cub->pos_y:      %f\n", cub->pos_y);
 	ft_printf("    cub->increment:  %f\n", cub->increment);
 	ft_putendl("}");
+	print_map(cub);
 	ft_putendl("----\n");
-}
-
-void	print_map(t_cub *cub)
-{
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < cub->win_h)
-	{
-		x = -1;
-		while (++x < cub->win_w)
-			ft_putchar(cub->map[x][y]);
-		ft_putchar('\n');
-	}
 }
 
 void	ft_get_env(void)

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/17 00:07:22 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/18 00:14:12 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ static int	init_img(t_cub *cub)
 	return (0);
 }
 
+static void	init_ptrs(t_cub *cub)
+{
+	cub->txtr_no = NULL;
+	cub->txtr_so = NULL;
+	cub->txtr_ea = NULL;
+	cub->txtr_we = NULL;
+	cub->txtr_s = NULL;
+	cub->map = NULL;
+	cub->mlx = NULL;
+	cub->win = NULL;
+}
+
 int			init_cub(t_cub *cub)
 {
 	if (init_keys(cub))
@@ -58,27 +70,12 @@ int			init_cub(t_cub *cub)
 	cub->win_h = -1;
 	cub->sky_color = -1;
 	cub->grnd_color = -1;
-	cub->txtr_no = NULL;
-	cub->txtr_so = NULL;
-	cub->txtr_ea = NULL;
-	cub->txtr_we = NULL;
-	cub->txtr_s = NULL;
-	cub->map = NULL;
-	cub->mlx = NULL;
-	cub->win = NULL;
+	init_ptrs(cub);
+	cub->map_size_x = 0;
+	cub->map_size_y = 0;
 	cub->drxion = M_PI; // TO CHANGE
 	cub->pos_x = 0.0;
 	cub->pos_y = 0.0;
 	cub->increment = 50.0;
 	return (0);
 }
-
-/*
-** TO ADD:
-**
-** int	txtr_no;
-** int	txtr_so;
-** int	txtr_ea;
-** int	txtr_we;
-** int	txtr_s;
-*/

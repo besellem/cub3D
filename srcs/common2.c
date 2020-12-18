@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/17 02:16:10 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:33:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ static void	free_textures(t_cub *cub)
 		free(cub->txtr_s);
 }
 
+/*
+** I've not freed cub->win pointer because it's done by mlx_destroy_window()
+*/
+
 void		ft_free_cub(t_cub *cub)
 {
 	free_textures(cub);
@@ -33,8 +37,6 @@ void		ft_free_cub(t_cub *cub)
 		ft_free_strs(cub->map);
 	if (cub->mlx)
 		free(cub->mlx);
-	if (cub->win)
-		free(cub->win);
 	free(cub->keys);
 	if (cub->img->ptr)
 	{

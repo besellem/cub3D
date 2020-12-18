@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/17 02:16:51 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:51:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,11 @@
 /*
 ** -- STRUCTURES --
 */
+typedef struct	s_map_checker
+{
+	int got_player_pos;
+}				t_map_checker;
+
 typedef struct	s_keys
 {
 	int		key;
@@ -102,6 +107,8 @@ typedef	struct	s_cub
 	char	*txtr_we;
 	char	*txtr_s;
 	char	**map;
+	size_t	map_size_x;
+	size_t	map_size_y;
 	void	*mlx;
 	void	*win;
 	double	drxion;
@@ -137,6 +144,7 @@ void			ft_get_env(void);
 int				are_specs_complete(t_cub *cub);
 void			cub_fill_specs(int fd, t_cub *cub);
 void			parse_map(int fd, t_cub *cub);
+int				check_map(t_cub *cub);
 void			cub_parser(char *file, t_cub *cub);
 
 /*

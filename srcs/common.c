@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/17 02:12:04 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:07:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int		ft_strs_size(char **strs)
 {
 	int i;
 
+	if (!strs)
+		return (0);
 	i = 0;
 	while (strs[i])
 		++i;
@@ -37,6 +39,8 @@ void	ft_free_strs(char **strs)
 {
 	int i;
 
+	if (!strs)
+		return ;
 	i = -1;
 	while (strs[++i])
 		free(strs[i]);

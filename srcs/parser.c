@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/17 02:12:56 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/18 01:29:19 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	cub_parser(char *file, t_cub *cub)
 	}
 	cub_fill_specs(fd, cub);
 	parse_map(fd, cub);
-	print_map(cub);
 	close(fd);
+	check_map(cub);
 }
