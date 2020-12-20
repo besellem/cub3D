@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 00:26:39 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 02:05:59 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 11:24:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ static size_t	ft_ocurcs(const char *haystack, char c)
 	return (oc);
 }
 
-static void		update_pos(t_cub *cub, int x, int y, char pos)
-{
-	cub->pos_x = x + 0.5;
-	cub->pos_y = y + 0.5;
-	if (pos == 'E')
-		cub->drxion = DRXION_E;
-	else if (pos == 'N')
-		cub->drxion = DRXION_N;
-	else if (pos == 'W')
-		cub->drxion = DRXION_W;
-	else if (pos == 'S')
-		cub->drxion = DRXION_S;
-}
-
 static int		check_pos(char *haystack, char *needle)
 {
 	size_t i;
@@ -61,6 +47,24 @@ static int		check_pos(char *haystack, char *needle)
 		++i;
 	}
 	return (0);
+}
+
+/*
+** +0.5 to be in the center of the cube we're in
+*/
+
+static void		update_pos(t_cub *cub, int x, int y, char pos)
+{
+	cub->pos_x = x + 0.5;
+	cub->pos_y = y + 0.5;
+	if (pos == 'E')
+		cub->drxion = DRXION_E;
+	else if (pos == 'N')
+		cub->drxion = DRXION_N;
+	else if (pos == 'W')
+		cub->drxion = DRXION_W;
+	else if (pos == 'S')
+		cub->drxion = DRXION_S;
 }
 
 static int		is_valid_charset(t_cub *cub, t_map_checker *mcheck)

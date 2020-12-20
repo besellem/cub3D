@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 03:08:50 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 18:41:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 /*
 ** FOV (field of view)
 */
-# define FOV 60
+# define FOV 90
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
@@ -62,9 +62,9 @@
 #  define KEY_ESC 53
 #  define KEY_LEFT 123
 #  define KEY_RIGHT 124
-#  define KEY_W 1
+#  define KEY_W 13
 #  define KEY_A 0
-#  define KEY_S 13
+#  define KEY_S 1
 #  define KEY_D 2
 # else
 #  define KEY_ESC -1

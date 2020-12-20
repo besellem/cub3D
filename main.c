@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 00:34:23 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 20:25:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int			main(int ac, char **av)
 		if (init_cub(&cub))
 			ft_error("Malloc err while initializing", &cub, __FILE__, __LINE__);
 		cub_parser(av[1], &cub);
+		cub.pos_x *= 20;
+		cub.pos_y *= 20;
 		cub.mlx = mlx_init();
 		if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
 		{

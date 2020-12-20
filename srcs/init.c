@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 03:08:34 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 20:09:30 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int			init_cub(t_cub *cub)
 	cub->drxion = 0.0;
 	cub->pos_x = 0.0;
 	cub->pos_y = 0.0;
-	cub->increment = 1.0;
+	cub->increment = 5.0;
 	return (0);
 }
