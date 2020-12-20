@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/18 01:50:00 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 02:56:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,36 @@ void	ft_quit(t_cub *cub)
 	exit(EXIT_SUCCESS);
 }
 
+double	ft_deg2rad(int deg)
+{
+	return (deg * (M_PI / 180));
+}
+
+double	ft_rad2deg(double rad)
+{
+	return (rad * (180 / M_PI));
+}
+
 void	ft_key_left(t_cub *cub)
 {
-	ft_putendl("=> Move camera left <=");
-	(void)cub;
+	double new;
+
+	new = ft_deg2rad(6);
+	if (cub->drxion + new >= (M_PI * 2))
+		cub->drxion = DRXION_E;
+	else
+		cub->drxion += new;
 }
 
 void	ft_key_right(t_cub *cub)
 {
-	ft_putendl("=> Move camera right <=");
-	(void)cub;
+	double new;
+
+	new = ft_deg2rad(6);
+	if (cub->drxion - new < 0)
+		cub->drxion = M_PI * 2 - new;
+	else
+		cub->drxion -= new;
 }
 
 void	ft_move_front(t_cub *cub)
@@ -93,7 +113,6 @@ void	update_view(t_cub *cub)
 
 	x = (int)cub->pos_x;
 	y = (int)cub->pos_y;
-	ft_printf("[ %f ; %f ]\n", cub->pos_x, cub->pos_y);
 	// cub->img->ptr = mlx_xpm_file_to_image(cub->mlx, "./textures/wall.xpm", &x, &y);
 	cub->img->ptr = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
 	cub->img->addr = mlx_get_data_addr(cub->img->ptr,
@@ -117,6 +136,7 @@ int		handle_key_event(int key, t_cub *cub)
 		{
 			ft_printf("key: [%d] f: [%p]\n", cub->keys[i].key, cub->keys[i].f);
 			cub->keys[i].f(cub);
+			ft_printf("[ %f ; %f ] [ %f ]\n", cub->pos_x, cub->pos_y, ft_rad2deg(cub->drxion));
 			update_view(cub);
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/18 01:46:47 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 02:08:32 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_specs(t_cub *cub)
 	ft_printf("    cub->pos_x:      %f\n", cub->pos_x);
 	ft_printf("    cub->pos_y:      %f\n", cub->pos_y);
 	ft_printf("    cub->increment:  %f\n", cub->increment);
-	ft_putendl("}");
+	ft_putendl("}\n");
 	print_map(cub);
 	ft_putendl("----\n");
 }

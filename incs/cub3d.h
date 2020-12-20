@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/18 01:51:08 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 03:08:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 **            N (PI / 2)
 **            |
 **            |
-** W (PI) ---- ---- E (0)
+** W (PI) ---- ---- E (0.0)
 **            |
 **            |
 **            S (PI + (PI / 2) OR (3 * PI) / 2)
@@ -48,6 +48,10 @@
 ** FOV (field of view)
 */
 # define FOV 60
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+#define ERR_MSG(s) ft_printf("\033[1;31m" __FILE__ ":" TOSTRING(__LINE__) ":\033[0m " s)
 
 /*
 ** Key mapping for macOS & Linux envs
@@ -130,6 +134,8 @@ int				ft_strs_size(char **strs);
 int				file_got_ext(char *file, char *extension);
 int				is_rgb(int color);
 long			ft_rgb(unsigned char r, unsigned char g, unsigned char b);
+int				in_charset(char *charset, int c);
+int				charset_in_line(char *line, char *charset);
 
 /*
 ** Utils

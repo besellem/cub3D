@@ -6,19 +6,35 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/18 02:06:14 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 00:34:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int		ft_red_cross(t_cub *cub)
+{
+	ft_putendl(B_RED"[Quit]"CLR_COLOR);
+	ft_free_cub(cub);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
+
+int		ft_hook(t_cub *cub)
+{
+	mlx_hook(cub->win, 2, (1L << 0), handle_key_event, cub);
+	mlx_hook(cub->win, 17, (1L << 2), ft_red_cross, cub);
+	// update_view(cub);
+	return (0);
+}
+
 static void	ft_mlx_start(t_cub *cub)
 {
-	cub->win = mlx_new_window(cub->mlx, cub->win_w, cub->win_h, NAME);
 	mlx_do_key_autorepeaton(cub->mlx);
-	mlx_key_hook(cub->win, handle_key_event, cub);
+	cub->win = mlx_new_window(cub->mlx, cub->win_w, cub->win_h, NAME);
 	update_view(cub);
 	print_specs(cub); // TO REMOVE
+	mlx_loop_hook(cub->mlx, ft_hook, cub);
 	mlx_loop(cub->mlx);
 }
 

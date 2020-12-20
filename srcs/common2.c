@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/18 01:33:09 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 02:28:34 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	free_textures(t_cub *cub)
 }
 
 /*
-** I've not freed cub->win pointer because it's done by mlx_destroy_window()
+** cub->win pointer is not freed here because it's done by mlx_destroy_window()
 */
 
 void		ft_free_cub(t_cub *cub)
@@ -58,4 +58,33 @@ int			file_got_ext(char *file, char *extension)
 	if (ft_strncmp(file + file_len - ext_len, extension, ext_len) == 0)
 		return (1);
 	return (0);
+}
+
+int			in_charset(char *charset, int c)
+{
+	int i;
+
+	if (!charset)
+		return (0);
+	i = 0;
+	while (charset[i])
+	{
+		if (charset[i] == (char)c)
+			return (i);
+		++i;
+	}
+	return (-1);
+}
+
+int			charset_in_line(char *line, char *charset)
+{
+	int i;
+
+	if (!line || !charset)
+		return (0);
+	i = 0;
+	while (line[i])
+		if (in_charset(charset, line[i++]) == -1)
+			return (0);
+	return (1);
 }

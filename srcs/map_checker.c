@@ -6,24 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 00:26:39 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/18 01:42:40 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 02:05:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int		in_charset(char *charset, int c)
-{
-	size_t i;
-
-	if (!charset)
-		return (0);
-	i = 0;
-	while (charset[i])
-		if (charset[i++] == (char)c)
-			return (1);
-	return (0);
-}
 
 static size_t	ft_ocurcs(const char *haystack, char c)
 {
@@ -43,7 +30,40 @@ static size_t	ft_ocurcs(const char *haystack, char c)
 	return (oc);
 }
 
-int				is_valid_charset(t_cub *cub, t_map_checker *mcheck)
+static void		update_pos(t_cub *cub, int x, int y, char pos)
+{
+	cub->pos_x = x + 0.5;
+	cub->pos_y = y + 0.5;
+	if (pos == 'E')
+		cub->drxion = DRXION_E;
+	else if (pos == 'N')
+		cub->drxion = DRXION_N;
+	else if (pos == 'W')
+		cub->drxion = DRXION_W;
+	else if (pos == 'S')
+		cub->drxion = DRXION_S;
+}
+
+static int		check_pos(char *haystack, char *needle)
+{
+	size_t i;
+	size_t j;
+
+	if (!haystack || !needle)
+		return (0);
+	i = 0;
+	while (haystack[i])
+	{
+		j = 0;
+		while (needle[j])
+			if (needle[j++] == haystack[i])
+				return (i);
+		++i;
+	}
+	return (0);
+}
+
+static int		is_valid_charset(t_cub *cub, t_map_checker *mcheck)
 {
 	char	*dirxns;
 	size_t	tst;
@@ -61,10 +81,12 @@ int				is_valid_charset(t_cub *cub, t_map_checker *mcheck)
 				ft_error("Map contains multiple positions", cub, NULL, 0);
 			if (tst == 1 && ++mcheck->got_player_pos > 1)
 				return (0);
+			if (tst == 1 && mcheck->got_player_pos == 1)
+				update_pos(cub, check_pos(cub->map[i], dirxns), i, dirxns[j]);
 		}
 		j = -1;
 		while (cub->map[i][++j])
-			if (!in_charset(MAP_CHARSET, cub->map[i][j]))
+			if (in_charset(MAP_CHARSET, cub->map[i][j]) == -1)
 				return (0);
 	}
 	return (1);
@@ -72,7 +94,7 @@ int				is_valid_charset(t_cub *cub, t_map_checker *mcheck)
 
 int				check_map(t_cub *cub)
 {
-	t_map_checker mcheck;
+	t_map_checker	mcheck;
 
 	mcheck.got_player_pos = 0;
 	if (!is_valid_charset(cub, &mcheck))
