@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 00:26:39 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 11:24:53 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 22:16:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int				check_map(t_cub *cub)
 	mcheck.got_player_pos = 0;
 	if (!is_valid_charset(cub, &mcheck))
 		ft_error("Invalid map", cub, __FILE__, __LINE__);
+	cub->map[(int)(cub->pos_y)][(int)(cub->pos_x)] = '0';
 	return (1);
 }

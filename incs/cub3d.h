@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 18:41:07 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 22:21:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef	struct	s_cub
 	double	pos_x;
 	double	pos_y;
 	double	increment;
+	int		cub_size;
 	t_keys	*keys;
 	t_img	*img;
 }				t_cub;

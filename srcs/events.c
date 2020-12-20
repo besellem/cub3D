@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 20:29:25 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/20 22:33:21 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,58 @@ void	ft_key_right(t_cub *cub)
 
 void	ft_move_front(t_cub *cub)
 {
-	cub->pos_x += cos(cub->drxion) * cub->increment;
-	cub->pos_y += sin(cub->drxion) * cub->increment;
+	int x;
+	int y;
+
+	x = (int)(cub->pos_x + cos(cub->drxion) * cub->increment) / cub->cub_size;
+	y = (int)(cub->pos_y + sin(cub->drxion) * cub->increment) / cub->cub_size;
+	if (cub->map[y][x] == '0')
+	{
+		cub->pos_x += cos(cub->drxion) * cub->increment;
+		cub->pos_y += sin(cub->drxion) * cub->increment;
+	}
 }
 
 void	ft_move_back(t_cub *cub)
 {
-	cub->pos_x -= cos(cub->drxion) * cub->increment;
-	cub->pos_y -= sin(cub->drxion) * cub->increment;
+	int x;
+	int y;
+
+	x = (int)(cub->pos_x - cos(cub->drxion) * cub->increment) / cub->cub_size;
+	y = (int)(cub->pos_y - sin(cub->drxion) * cub->increment) / cub->cub_size;
+	if (cub->map[y][x] == '0')
+	{
+		cub->pos_x -= cos(cub->drxion) * cub->increment;
+		cub->pos_y -= sin(cub->drxion) * cub->increment;
+	}
 }
 
 void	ft_move_left(t_cub *cub)
 {
-	cub->pos_x -= sin(-cub->drxion) * cub->increment;
-	cub->pos_y -= cos(-cub->drxion) * cub->increment;
+	int x;
+	int y;
+
+	x = (int)(cub->pos_x - sin(-cub->drxion) * cub->increment) / cub->cub_size;
+	y = (int)(cub->pos_y - cos(-cub->drxion) * cub->increment) / cub->cub_size;
+	if (cub->map[y][x] == '0')
+	{
+		cub->pos_x -= sin(-cub->drxion) * cub->increment;
+		cub->pos_y -= cos(-cub->drxion) * cub->increment;
+	}
 }
 
 void	ft_move_right(t_cub *cub)
 {
-	cub->pos_x += sin(-cub->drxion) * cub->increment;
-	cub->pos_y += cos(-cub->drxion) * cub->increment;
+	int x;
+	int y;
+
+	x = (int)(cub->pos_x + sin(-cub->drxion) * cub->increment) / cub->cub_size;
+	y = (int)(cub->pos_y + cos(-cub->drxion) * cub->increment) / cub->cub_size;
+	if (cub->map[y][x] == '0')
+	{
+		cub->pos_x += sin(-cub->drxion) * cub->increment;
+		cub->pos_y += cos(-cub->drxion) * cub->increment;
+	}
 }
 
 void	ft_pixel_put(t_cub *cub, int x, int y, int color)
@@ -112,7 +144,7 @@ void	update_player(t_cub *cub)
 	while (++i < cub->win_w)
 	{
 		count = size / 2;
-		while (++count < size * 3)
+		while (++count < size * 2.5)
 			ft_pixel_put(cub, x + cos(ray_angle) * count, y + sin(ray_angle) * count, 0xFF0000);
 		ray_angle += ft_deg2rad(FOV) / cub->win_w;
 	}
@@ -134,9 +166,11 @@ void	put_cub(t_cub *cub, int size, int x, int y, int color)
 
 void	update_map(t_cub *cub)
 {
-	size_t i;
-	size_t j;
+	int		size;
+	size_t	i;
+	size_t	j;
 
+	size = cub->cub_size;
 	i = 0;
 	while (i < cub->map_size_y)
 	{
@@ -144,11 +178,11 @@ void	update_map(t_cub *cub)
 		while (j < cub->map_size_x)
 		{
 			if (cub->map[i][j] == '0' || in_charset("NEWS", cub->map[i][j]) >= 0)
-				put_cub(cub, 20, j * 20, i * 20, 0xD2D2D2);
+				put_cub(cub, size, j * size, i * size, 0xD2D2D2);
 			else if (cub->map[i][j] == '1')
-				put_cub(cub, 20, j * 20, i * 20, 0x0);
+				put_cub(cub, size, j * size, i * size, 0x0);
 			else if (cub->map[i][j] == '2')
-				put_cub(cub, 20, j * 20, i * 20, 0x8080ff);
+				put_cub(cub, size, j * size, i * size, 0x8080ff);
 			++j;
 		}
 		++i;
