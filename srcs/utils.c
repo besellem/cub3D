@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 02:08:32 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/22 02:20:03 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ void	print_map(t_cub *cub)
 	{
 		x = 0;
 		while (x < cub->map_size_x)
-			ft_putchar(cub->map[y][x++]);
+		{
+			if (x == (size_t)cub->pos_x && y == (size_t)cub->pos_y)
+				ft_printf(B_GREEN"%c"CLR_COLOR, cub->map[y][x++]);
+			else
+				ft_putchar(cub->map[y][x++]);
+		}
 		write(1, "\n", 1);
 		++y;
 	}

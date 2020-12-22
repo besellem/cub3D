@@ -6,25 +6,24 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 22:24:54 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/22 02:22:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_red_cross(t_cub *cub)
+static int	need_update(t_cub *cub)
 {
-	ft_putendl(B_RED"[Quit]"CLR_COLOR);
-	ft_free_cub(cub);
-	exit(EXIT_SUCCESS);
-	return (0);
+	return (cub->dh != 0 || cub->dw != 0 || cub->turn != 0);
 }
 
-int		ft_hook(t_cub *cub)
+static int	ft_hook(t_cub *cub)
 {
-	mlx_hook(cub->win, 2, (1L << 0), handle_key_event, cub);
+	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
+	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);
 	mlx_hook(cub->win, 17, (1L << 2), ft_red_cross, cub);
-	// update_view(cub);
+	if (need_update(cub))
+		update_view(cub);
 	return (0);
 }
 
@@ -40,8 +39,8 @@ static void	ft_mlx_start(t_cub *cub)
 
 static int	ft_save_img(t_cub *cub)
 {
-	ft_free_cub(cub);
-	return (0);
+	(void)cub;
+	return (1);
 }
 
 int			main(int ac, char **av)
@@ -54,8 +53,6 @@ int			main(int ac, char **av)
 		if (init_cub(&cub))
 			ft_error("Malloc err while initializing", &cub, __FILE__, __LINE__);
 		cub_parser(av[1], &cub);
-		cub.pos_x *= cub.cub_size;
-		cub.pos_y *= cub.cub_size;
 		cub.mlx = mlx_init();
 		if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
 		{

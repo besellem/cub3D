@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 22:21:31 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/22 03:59:21 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,12 @@ typedef struct	s_map_checker
 
 typedef struct	s_keys
 {
-	int		key;
-	void	(*f)();
+	int key_w;
+	int key_s;
+	int key_a;
+	int key_d;
+	int key_left;
+	int key_right;
 }				t_keys;
 
 typedef struct	s_img
@@ -116,6 +120,9 @@ typedef	struct	s_cub
 	void	*mlx;
 	void	*win;
 	double	drxion;
+	int		turn;
+	int		dw;
+	int		dh;
 	double	pos_x;
 	double	pos_y;
 	double	increment;
@@ -129,14 +136,16 @@ typedef	struct	s_cub
 ** Common
 */
 void			ft_error(char *err, t_cub *cub, char *file, int line);
+void			ft_quit(t_cub *cub);
+int				ft_red_cross(t_cub *cub);
 void			ft_free_cub(t_cub *cub);
 void			ft_free_strs(char **strs);
 int				ft_strs_size(char **strs);
 int				file_got_ext(char *file, char *extension);
-int				is_rgb(int color);
-long			ft_rgb(unsigned char r, unsigned char g, unsigned char b);
 int				in_charset(char *charset, int c);
 int				charset_in_line(char *line, char *charset);
+int				is_rgb(int color);
+long			ft_rgb(unsigned char r, unsigned char g, unsigned char b);
 
 /*
 ** Utils
@@ -157,14 +166,14 @@ void			cub_parser(char *file, t_cub *cub);
 /*
 ** Events handlers
 */
-void			ft_quit(t_cub *cub);
 void			ft_key_left(t_cub *cub);
 void			ft_key_right(t_cub *cub);
 void			ft_move_front(t_cub *cub);
 void			ft_move_back(t_cub *cub);
 void			ft_move_left(t_cub *cub);
 void			ft_move_right(t_cub *cub);
-int				handle_key_event(int key, t_cub *cub);
+int				handle_key_press(int key, t_cub *cub);
+int				handle_key_release(int key, t_cub *cub);
 
 /*
 ** Display

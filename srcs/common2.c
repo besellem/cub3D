@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 02:28:34 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/21 17:54:49 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void		ft_free_cub(t_cub *cub)
 		ft_free_strs(cub->map);
 	if (cub->mlx)
 		free(cub->mlx);
-	free(cub->keys);
 	if (cub->img->ptr)
 	{
 		free(cub->img->ptr);
 		free(cub->img->addr);
 		free(cub->img);
 	}
+	free(cub->keys);
 }
 
 int			file_got_ext(char *file, char *extension)

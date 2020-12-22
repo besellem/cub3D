@@ -6,45 +6,18 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 22:35:20 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/22 01:50:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	add_key(t_keys *keys, int key, void (*f)())
-{
-	keys->key = key;
-	keys->f = f;
-}
-
-/*
-** There are 7 keys to map
-*/
-
-static int	init_keys(t_cub *cub)
-{
-	int i;
-
-	i = 0;
-	if (!(cub->keys = (t_keys *)malloc(sizeof(t_keys) * (7 + 1))))
-		return (1);
-	add_key(&(cub->keys[i++]), KEY_LEFT, &ft_key_left);
-	add_key(&(cub->keys[i++]), KEY_RIGHT, &ft_key_right);
-	add_key(&(cub->keys[i++]), KEY_W, &ft_move_front);
-	add_key(&(cub->keys[i++]), KEY_S, &ft_move_back);
-	add_key(&(cub->keys[i++]), KEY_A, &ft_move_left);
-	add_key(&(cub->keys[i++]), KEY_D, &ft_move_right);
-	add_key(&(cub->keys[i++]), KEY_ESC, &ft_quit);
-	add_key(&(cub->keys[i]), -1, NULL);
-	return (0);
-}
-
 static int	init_img(t_cub *cub)
 {
-	if (!(cub->img = (t_img *)malloc(sizeof(t_img) * 1)))
+	if (!(cub->img = (t_img *)malloc(sizeof(t_img))))
 		return (1);
 	cub->img->ptr = NULL;
+	cub->img->addr = NULL;
 	return (0);
 }
 
@@ -60,10 +33,21 @@ static void	init_ptrs(t_cub *cub)
 	cub->win = NULL;
 }
 
+static int	init_keys(t_cub *cub)
+{
+	if (!(cub->keys = (t_keys *)malloc(sizeof(t_keys))))
+		return (1);
+	cub->keys->key_w = 0;
+	cub->keys->key_s = 0;
+	cub->keys->key_a = 0;
+	cub->keys->key_d = 0;
+	cub->keys->key_left = 0;
+	cub->keys->key_right = 0;
+	return (0);
+}
+
 int			init_cub(t_cub *cub)
 {
-	if (init_keys(cub))
-		return (1);
 	if (init_img(cub))
 		return (1);
 	cub->win_w = -1;
@@ -74,9 +58,14 @@ int			init_cub(t_cub *cub)
 	cub->map_size_x = 0;
 	cub->map_size_y = 0;
 	cub->drxion = 0.0;
+	cub->turn = 0;
+	cub->dw = 0;
+	cub->dh = 0;
 	cub->pos_x = 0.0;
 	cub->pos_y = 0.0;
-	cub->increment = 4.0;
+	cub->increment = 0.1;
 	cub->cub_size = 20;
+	if (init_keys(cub))
+		return (1);
 	return (0);
 }

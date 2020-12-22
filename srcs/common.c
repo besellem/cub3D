@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 02:22:47 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/22 01:45:55 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,28 @@ void	ft_error(char *err, t_cub *cub, char *file, int line)
 	ft_putendl_fd(CUB_ERR, 2);
 	if (file && line > 0)
 		ft_dprintf(2, B_YELLOW"%s:%d: "CLR_COLOR, file, line);
-	else if (file && line == 0)
+	else if (file && line <= 0)
 		ft_dprintf(2, B_YELLOW"%s: "CLR_COLOR, file);
 	else if (!file && line > 0)
 		ft_dprintf(2, B_YELLOW"line %d: "CLR_COLOR, line);
 	ft_putendl_fd(err, 2);
 	exit(EXIT_FAILURE);
+}
+
+void	ft_quit(t_cub *cub)
+{
+	ft_putendl(B_RED"[Quit]"CLR_COLOR);
+	mlx_destroy_window(cub->mlx, cub->win);
+	ft_free_cub(cub);
+	exit(EXIT_SUCCESS);
+}
+
+int		ft_red_cross(t_cub *cub)
+{
+	ft_putendl(B_RED"[Quit]"CLR_COLOR);
+	ft_free_cub(cub);
+	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 int		ft_strs_size(char **strs)
@@ -49,14 +65,4 @@ void	ft_free_strs(char **strs)
 	while (strs[++i])
 		free(strs[i]);
 	free(strs);
-}
-
-int		is_rgb(int color)
-{
-	return (color >= 0 && color <= 255);
-}
-
-long	ft_rgb(unsigned char r, unsigned char g, unsigned char b)
-{
-	return ((long)(((r << 8) + g) << 8) + b);
 }
