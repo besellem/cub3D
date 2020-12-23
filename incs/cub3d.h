@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/22 03:59:21 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/23 00:30:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,6 @@
 */
 # define FOV 90
 
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-#define ERR_MSG(s) ft_printf("\033[1;31m" __FILE__ ":" TOSTRING(__LINE__) ":\033[0m " s)
-
 /*
 ** Key mapping for macOS & Linux envs
 ** For macOS compilation	=> cc ... -D MACOS_WORKSTATION ...
@@ -83,6 +79,20 @@ typedef struct	s_map_checker
 {
 	int got_player_pos;
 }				t_map_checker;
+
+typedef struct	s_ray
+{
+	double	angle;
+	char	is_down;
+	char	is_right;
+	double	xintcpt;
+	double	yintcpt;
+	double	xstep;
+	double	ystep;
+	double	distance;
+	double	hit_wall_x;
+	double	hit_wall_y;
+}				t_ray;
 
 typedef struct	s_keys
 {
@@ -146,6 +156,9 @@ int				in_charset(char *charset, int c);
 int				charset_in_line(char *line, char *charset);
 int				is_rgb(int color);
 long			ft_rgb(unsigned char r, unsigned char g, unsigned char b);
+double			ft_deg2rad(int deg);
+double			ft_rad2deg(double rad);
+double			ft_norm_angle(double angle);
 
 /*
 ** Utils
@@ -166,12 +179,6 @@ void			cub_parser(char *file, t_cub *cub);
 /*
 ** Events handlers
 */
-void			ft_key_left(t_cub *cub);
-void			ft_key_right(t_cub *cub);
-void			ft_move_front(t_cub *cub);
-void			ft_move_back(t_cub *cub);
-void			ft_move_left(t_cub *cub);
-void			ft_move_right(t_cub *cub);
 int				handle_key_press(int key, t_cub *cub);
 int				handle_key_release(int key, t_cub *cub);
 

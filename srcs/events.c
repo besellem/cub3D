@@ -6,85 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/22 04:07:53 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/23 02:21:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-double	ft_deg2rad(int deg)
-{
-	return (deg * (M_PI / 180));
-}
-
-double	ft_rad2deg(double rad)
-{
-	return (rad * (180 / M_PI));
-}
-
-void	ft_key_left(t_cub *cub)
-{
-	cub->drxion += ft_deg2rad(4);
-}
-
-void	ft_key_right(t_cub *cub)
-{
-	cub->drxion -= ft_deg2rad(4);
-}
-
-void	ft_move_front(t_cub *cub)
-{
-	int x;
-	int y;
-
-	x = (int)(cub->pos_x + cos(cub->drxion) * cub->increment);
-	y = (int)(cub->pos_y + sin(cub->drxion) * cub->increment);
-	if (cub->map[y][x] == '0')
-	{
-		cub->pos_x += cos(cub->drxion) * cub->increment;
-		cub->pos_y += sin(cub->drxion) * cub->increment;
-	}
-}
-
-void	ft_move_back(t_cub *cub)
-{
-	int x;
-	int y;
-
-	x = (int)(cub->pos_x - cos(cub->drxion) * cub->increment);
-	y = (int)(cub->pos_y - sin(cub->drxion) * cub->increment);
-	if (cub->map[y][x] == '0')
-	{
-		cub->pos_x -= cos(cub->drxion) * cub->increment;
-		cub->pos_y -= sin(cub->drxion) * cub->increment;
-	}
-}
-
-void	ft_move_left(t_cub *cub)
-{
-	double x;
-	double y;
-
-	x = cub->pos_x - sin(-cub->drxion) * cub->increment;
-	y = cub->pos_y - cos(-cub->drxion) * cub->increment;
-	if (cub->map[(int)cub->pos_y][(int)x] == '0')
-		cub->pos_x = x;
-	if (cub->map[(int)y][(int)cub->pos_x] == '0')
-		cub->pos_y = y;
-}
-
-void	ft_move_right(t_cub *cub)
-{
-	double x;
-	double y;
-
-	x = cub->pos_x + sin(-cub->drxion) * cub->increment;
-	y = cub->pos_y + cos(-cub->drxion) * cub->increment;
-	if (cub->map[(int)cub->pos_y][(int)x] == '0')
-		cub->pos_x = x;
-	if (cub->map[(int)y][(int)cub->pos_x] == '0')
-		cub->pos_y = y;
-}
 
 void	ft_pixel_put(t_cub *cub, int x, int y, int color)
 {
@@ -99,10 +25,8 @@ void	move_player(t_cub *cub)
 {
 	double step;
 
-	if (cub->turn == -1)
-		ft_key_right(cub);
-	else if (cub->turn == 1)
-		ft_key_left(cub);
+	if (cub->turn != 0)
+		cub->drxion = ft_norm_angle(cub->drxion + cub->turn * ft_deg2rad(4));
 	if (cub->dh != 0)
 	{
 		step = cub->pos_x + cos(cub->drxion) * cub->dh * cub->increment;
@@ -112,26 +36,142 @@ void	move_player(t_cub *cub)
 		if (cub->map[(int)step][(int)cub->pos_x] == '0')
 			cub->pos_y = step;
 	}
-	if (cub->dw == 1)
-		ft_move_right(cub);
-	else if (cub->dw == -1)
-		ft_move_left(cub);
+	if (cub->dw != 0)
+	{
+		step = cub->pos_x + cub->dw * (sin(-cub->drxion) * cub->increment);
+		if (cub->map[(int)cub->pos_y][(int)step] == '0')
+			cub->pos_x = step;
+		step = cub->pos_y + cub->dw * (cos(-cub->drxion) * cub->increment);
+		if (cub->map[(int)step][(int)cub->pos_x] == '0')
+			cub->pos_y = step;
+	}
+}
+
+void	print_ray(t_cub *cub, t_ray *ray)
+{
+	double xstep;
+	double ystep;
+
+	xstep = ray->xintcpt;
+	ystep = ray->yintcpt;
+	while (xstep < ray->hit_wall_x && ystep < ray->hit_wall_y)
+	{
+		ft_pixel_put(cub, xstep * cub->cub_size, ystep * cub->cub_size, 0xFFFFFF);
+		xstep += ray->xstep * 0.05;
+		ystep += ray->ystep * 0.05;
+	}
+}
+
+void	init_ray(t_ray *ray, double angle)
+{
+	ray->angle = angle;
+	ray->is_down = 0;
+	ray->is_right = 0;
+	ray->xintcpt = 0.0;
+	ray->yintcpt = 0.0;
+	ray->xstep = 0.0;
+	ray->ystep = 0.0;
+	ray->distance = 0.0;
+	ray->hit_wall_x = 0;
+	ray->hit_wall_y = 0;
+}
+
+void	check_horizontal(t_cub *cub, t_ray *ray)
+{
+	double x;
+	double y;
+
+	ray->is_down = ray->angle > 0 && ray->angle < M_PI;
+	ray->is_right = ray->angle < M_PI_2 || ray->angle > (1.5 * M_PI);
+	ray->yintcpt = (int)cub->pos_y + ray->is_down;;
+	ray->xintcpt = cub->pos_x + (ray->yintcpt - cub->pos_y) / tan(ray->angle);
+	ray->ystep = ray->is_down ? 1 : -1;
+	ray->xstep = 1 / tan(ray->angle);
+	ray->xstep *= (!ray->is_right && ray->xstep > 0) ? -1 : 1;
+	ray->xstep *= (ray->is_right && ray->xstep < 0) ? -1 : 1;
+	x = ray->xintcpt;
+	y = !ray->is_down ? ray->yintcpt - 1 : ray->yintcpt;
+	while (x >= 0 && x < cub->win_w && y >= 0 && y < cub->win_h)
+	{
+		if (cub->map[(int)y][(int)x] != '0')
+		{
+			ray->hit_wall_x = x;
+			ray->hit_wall_y = y;
+			break ;
+		}
+		x += ray->xstep;
+		y += ray->ystep;
+	}
+}
+
+void	cast_ray(t_cub *cub, t_ray *ray, double angle)
+{
+	t_ray horizontal;
+	t_ray vertical;
+
+	init_ray(&horizontal, angle);
+	init_ray(&vertical, angle);
+	check_horizontal(cub, &horizontal);
+	/*
+	if (horizontal.distance > vertical.distance)
+		*ray = vertical;
+	else
+	*/
+		*ray = horizontal;
+}
+
+void	cast_all_rays(t_cub *cub)
+{
+	t_ray	rays[cub->win_w];
+	double	ray_angle;
+	int		i;
+
+	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
+	i = -1;
+	while (++i < cub->win_w)
+	{
+		cast_ray(cub, &rays[i], ray_angle);
+		print_ray(cub, &rays[i]);
+		ray_angle += (ft_deg2rad(FOV) / cub->win_w);
+	}
+}
+
+/*
+** PRINT PLAYER'S DOT
+*/
+
+void	print_player(t_cub *cub)
+{
+	int size;
+	int i;
+	int j;
+
+	size = 8;
+	i = -(size / 2);
+	while (++i < size / 2)
+	{
+		j = -(size / 2);
+		while (++j < size / 2)
+			ft_pixel_put(cub, cub->pos_x * cub->cub_size + i,
+						cub->pos_y * cub->cub_size + j, 0x808080);
+	}
 }
 
 void	update_player(t_cub *cub)
 {
-	int size = 8;
-	int count;
-	int i;
-	int j;
-	
 	// PRINT PLAYER'S VISION
-	double ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
+	/*
+	double	ray_angle;
+	double	count;
+	int		i;
+	int		j;
+
+	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
 	i = -1;
 	while (++i < cub->win_w)
 	{
-		count = 0;
-		while (++count && cub->map[(int)(cub->pos_y + sin(ray_angle) * count)][(int)(cub->pos_x + cos(ray_angle) * count)] == '0')
+		count = 0.0;
+		while ((count += .2) && cub->map[(int)(cub->pos_y + sin(ray_angle) * count)][(int)(cub->pos_x + cos(ray_angle) * count)] == '0')
 		{
 			j = -1;
 			while (++j < cub->cub_size)
@@ -139,46 +179,38 @@ void	update_player(t_cub *cub)
 				ft_pixel_put(cub,
 						cub->pos_x * cub->cub_size + cos(ray_angle) * count * j,
 						cub->pos_y * cub->cub_size + sin(ray_angle) * count * j,
-						0xFF0000);
+						0xFFFFFF);
 			}
 		}
 		ray_angle += ft_deg2rad(FOV) / cub->win_w;
 	}
-
-	// PRINT PLAYER'S DOT
-	i = -(size / 2);
-	while (++i < size / 2)
-	{
-		j = -(size / 2);
-		while (++j < size / 2)
-			ft_pixel_put(cub,
-						(cub->pos_x * cub->cub_size) + i,
-						(cub->pos_y * cub->cub_size) + j,
-						0x808080);
-	}
+*/
+	cast_all_rays(cub);
+	print_player(cub);
 }
 
-void	put_cub(t_cub *cub, int size, int x, int y, int color)
+void	put_cub(t_cub *cub, int x, int y, int color)
 {
 	int i;
 	int j;
 
 	i = -1;
-	while (++i < size)
+	while (++i < cub->cub_size)
 	{
 		j = -1;
-		while (++j < size)
-			ft_pixel_put(cub, x + i, y + j, color);
+		while (++j < cub->cub_size)
+		{
+			ft_pixel_put(cub, x * cub->cub_size + i, y * cub->cub_size + j,
+						color);
+		}
 	}
 }
 
 void	update_map(t_cub *cub)
 {
-	int		size;
-	size_t	i;
-	size_t	j;
+	size_t i;
+	size_t j;
 
-	size = cub->cub_size;
 	i = 0;
 	while (i < cub->map_size_y)
 	{
@@ -186,11 +218,11 @@ void	update_map(t_cub *cub)
 		while (j < cub->map_size_x)
 		{
 			if (cub->map[i][j] == '0' || in_charset("NEWS", cub->map[i][j]) >= 0)
-				put_cub(cub, size, j * size, i * size, 0xD2D2D2);
+				put_cub(cub, j, i, 0xE0E0E0);
 			else if (cub->map[i][j] == '1')
-				put_cub(cub, size, j * size, i * size, 0x0);
+				put_cub(cub, j, i, 0x0);
 			else if (cub->map[i][j] == '2')
-				put_cub(cub, size, j * size, i * size, 0x8080ff);
+				put_cub(cub, j, i, 0x8080ff);
 			++j;
 		}
 		++i;
@@ -228,52 +260,8 @@ void	update_view(t_cub *cub)
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);
 	mlx_destroy_image(cub->mlx, cub->img->ptr);
 	cub->img->ptr = NULL;
-	ft_printf("[ %f ; %f ] [ %d° ]\n",
+	printf("[ %f ; %f ] [ %d° ]\n",
 				cub->pos_x,
 				cub->pos_y,
-				abs((int)ft_rad2deg(cub->drxion) % 360));
-}
-
-int		handle_key_press(int key, t_cub *cub)
-{
-	if (key == KEY_ESC)
-		ft_quit(cub);
-	else if (key == KEY_W && (cub->dh = 1))
-		cub->keys->key_w = 1;
-	else if (key == KEY_S && (cub->dh = -1))
-		cub->keys->key_s = 1;
-	else if (key == KEY_D && (cub->dw = 1))
-		cub->keys->key_d = 1;
-	else if (key == KEY_A && (cub->dw = -1))
-		cub->keys->key_a = 1;
-	else if (key == KEY_LEFT && (cub->turn = -1))
-		cub->keys->key_left = 1;
-	else if (key == KEY_RIGHT && (cub->turn = 1))
-		cub->keys->key_right = 1;
-	else
-		return (1);
-	ft_printf("key pressed: [%d]\n", key);
-	return (0);
-}
-
-int		handle_key_release(int key, t_cub *cub)
-{
-	if (key == KEY_W && !(cub->keys->key_w = 0) && cub->keys->key_s == 0)
-		cub->dh = 0;
-	else if (key == KEY_S && !(cub->keys->key_s = 0) && cub->keys->key_w == 0)
-		cub->dh = 0;
-	else if (key == KEY_D && !(cub->keys->key_d = 0) && cub->keys->key_a == 0)
-		cub->dw = 0;
-	else if (key == KEY_A && !(cub->keys->key_a = 0) && cub->keys->key_d == 0)
-		cub->dw = 0;
-	else if (key == KEY_LEFT && !(cub->keys->key_left = 0) &&
-			cub->keys->key_right == 0)
-		cub->turn = 0;
-	else if (key == KEY_RIGHT && !(cub->keys->key_right = 0) &&
-			cub->keys->key_left == 0)
-		cub->turn = 0;
-	else
-		return (1);
-	ft_printf("key released: [%d]\n", key);
-	return (0);
+				(int)ft_rad2deg(cub->drxion));
 }
