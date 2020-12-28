@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/23 00:30:08 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/28 20:22:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@
 ** FOV (field of view)
 */
 # define FOV 90
+
+# define UCOLOR_GREY 0xE0E0E0
+# define UCOLOR_BLACK 0x0
+# define UCOLOR_BLUE 0x8080ff
+# define UCOLOR_RED 0xFF0000
 
 /*
 ** Key mapping for macOS & Linux envs
