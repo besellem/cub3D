@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/28 20:22:22 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 01:01:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ long			ft_rgb(unsigned char r, unsigned char g, unsigned char b);
 double			ft_deg2rad(int deg);
 double			ft_rad2deg(double rad);
 double			ft_norm_angle(double angle);
+double			get_dist(double x1, double y1, double x2, double y2);
 
 /*
 ** Utils
@@ -190,6 +191,12 @@ int				handle_key_release(int key, t_cub *cub);
 /*
 ** Display
 */
+void			ft_pixel_put(t_cub *cub, int x, int y, unsigned int color);
+void			fill_background(t_cub *cub);
+void			print_player(t_cub *cub);
+void			print_ray(t_cub *cub, t_ray *ray);
+void			cast_all_rays(t_cub *cub);
+void			update_map(t_cub *cub);
 void			update_view(t_cub *cub);
 
 /*
