@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 01:05:58 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 18:09:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	update_view(t_cub *cub)
 										&(cub->img->size_line),
 										&(cub->img->endian));
 	move_player(cub);
-	fill_background(cub);
-	update_map(cub);
 	cast_all_rays(cub);
-	print_player(cub);
+	fill_background(cub);
+	update_cubs(cub);
+	update_minimap(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);
 	mlx_destroy_image(cub->mlx, cub->img->ptr);
 	cub->img->ptr = NULL;

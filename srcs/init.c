@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 00:47:47 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 18:05:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ static int	init_keys(t_cub *cub)
 	return (0);
 }
 
+/*
+** cub->rays is malloc in the parser as we don't know win_w & win_h yet
+*/
+
 int			init_cub(t_cub *cub)
 {
 	if (init_img(cub))
@@ -64,7 +68,7 @@ int			init_cub(t_cub *cub)
 	cub->pos_x = 0.0;
 	cub->pos_y = 0.0;
 	cub->increment = 0.1;
-	cub->cub_size = 20;
+	cub->cub_size = 8;
 	if (init_keys(cub))
 		return (1);
 	return (0);

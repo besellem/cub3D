@@ -6,13 +6,13 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 01:03:33 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 20:37:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	print_ray(t_cub *cub, t_ray *ray)
+static void	print_ray(t_cub *cub, t_ray *ray)
 {
 	double distance;
 	double xstep;
@@ -34,7 +34,7 @@ void	print_ray(t_cub *cub, t_ray *ray)
 ** PRINT PLAYER'S DOT
 */
 
-void	print_player(t_cub *cub)
+static void	print_player(t_cub *cub)
 {
 	int size;
 	int i;
@@ -51,7 +51,7 @@ void	print_player(t_cub *cub)
 	}
 }
 
-void	put_cub(t_cub *cub, int x, int y, int color)
+static void	put_cub(t_cub *cub, int x, int y, unsigned int color)
 {
 	int i;
 	int j;
@@ -61,14 +61,12 @@ void	put_cub(t_cub *cub, int x, int y, int color)
 	{
 		j = -1;
 		while (++j < cub->cub_size)
-		{
 			ft_pixel_put(cub, x * cub->cub_size + i, y * cub->cub_size + j,
 						color);
-		}
 	}
 }
 
-void	update_map(t_cub *cub)
+static void	put_map(t_cub *cub)
 {
 	size_t i;
 	size_t j;
@@ -79,10 +77,12 @@ void	update_map(t_cub *cub)
 		j = 0;
 		while (j < cub->map_size_x)
 		{
+			/*
 			if (cub->map[i][j] == '0' ||
 				in_charset("NEWS", cub->map[i][j]) >= 0)
 				put_cub(cub, j, i, UCOLOR_GREY);
-			else if (cub->map[i][j] == '1')
+			else */
+			if (cub->map[i][j] == '1')
 				put_cub(cub, j, i, UCOLOR_BLACK);
 			else if (cub->map[i][j] == '2')
 				put_cub(cub, j, i, UCOLOR_BLUE);
@@ -90,4 +90,15 @@ void	update_map(t_cub *cub)
 		}
 		++i;
 	}
+}
+
+void		update_minimap(t_cub *cub)
+{
+	int i;
+
+	put_map(cub);
+	print_player(cub);
+	i = -1;
+	while (++i < cub->win_w)
+		print_ray(cub, &(cub->rays[i]));
 }

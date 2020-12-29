@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/20 02:27:02 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 16:37:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 
 	if (ft_strs_size(split) != 3)
 		ft_error("Bad resolution configuration", cub, NULL, line_c);
-	cub->win_w = ft_atoi(split[1]);
-	cub->win_h = ft_atoi(split[2]);
+	cub->parsed_width = ft_atoi(split[1]);
+	cub->parsed_heigh = ft_atoi(split[2]);
+	cub->win_w = cub->parsed_width;
+	cub->win_h = cub->parsed_heigh;
 	ft_free_strs(split);
 	if (cub->win_w <= 0 || cub->win_h <= 0)
 		ft_error("Bad resolution configuration", cub, NULL, line_c);
@@ -29,6 +31,8 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 		cub->win_w = x_tmp;
 	if (cub->win_h > y_tmp)
 		cub->win_h = y_tmp;
+	if (!(cub->rays = (t_ray *)malloc(sizeof(t_ray) * cub->win_w)))
+		ft_error("Malloc error", cub, __FILE__, line_c);
 }
 
 /*

@@ -6,17 +6,19 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 00:54:17 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 22:32:12 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_ray(t_ray *ray, double angle)
+static void	init_ray(t_ray *ray, double angle)
 {
 	ray->angle = angle;
 	ray->is_down = angle > 0 && angle < M_PI;
 	ray->is_right = !(angle > M_PI_2 && angle < (1.5 * M_PI));
+	ray->hit_vertical = 0;
+	ray->hit_horizontal = 0;
 	ray->xintcpt = 0.0;
 	ray->yintcpt = 0.0;
 	ray->xstep = 0.0;
@@ -26,7 +28,7 @@ void	init_ray(t_ray *ray, double angle)
 	ray->hit_wall_y = 0;
 }
 
-void	check_horizontal(t_cub *cub, t_ray *ray)
+static void	check_horizontal(t_cub *cub, t_ray *ray)
 {
 	double x;
 	double y;
@@ -53,7 +55,7 @@ void	check_horizontal(t_cub *cub, t_ray *ray)
 	}
 }
 
-void	check_vertical(t_cub *cub, t_ray *ray)
+static void	check_vertical(t_cub *cub, t_ray *ray)
 {
 	double x;
 	double y;
@@ -73,6 +75,7 @@ void	check_vertical(t_cub *cub, t_ray *ray)
 			ray->hit_wall_x = x;
 			ray->hit_wall_y = y;
 			ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
+			ray->hit_vertical = 1;
 			break ;
 		}
 		x += ray->xstep;
@@ -84,7 +87,7 @@ void	check_vertical(t_cub *cub, t_ray *ray)
 ** CAST RAY AND GET THE LESS DISTANT HIT (HORIZ OR VERTIC)
 */
 
-void	cast_ray(t_cub *cub, t_ray *ray, double angle)
+static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 {
 	t_ray hor;
 	t_ray ver;
@@ -103,18 +106,19 @@ void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		*ray = hor;
 }
 
-void	cast_all_rays(t_cub *cub)
+void		cast_all_rays(t_cub *cub)
 {
-	t_ray	rays[cub->win_w];
 	double	ray_angle;
+	double	tmp_angle;
 	int		i;
 
 	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
 	i = -1;
 	while (++i < cub->win_w)
 	{
-		cast_ray(cub, &rays[i], ft_norm_angle(ray_angle));
-		print_ray(cub, &rays[i]);
+		tmp_angle = ft_norm_angle(ray_angle);
+		init_ray(&(cub->rays[i]), tmp_angle);
+		cast_ray(cub, &(cub->rays[i]), tmp_angle);
 		ray_angle += ft_deg2rad(FOV) / cub->win_w;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 01:01:50 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/29 22:21:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@
 
 /*
 ** Key mapping for macOS & Linux envs
-** For macOS compilation	=> cc ... -D MACOS_WORKSTATION ...
-** For Linux:				=> compile normally
 */
-# ifdef MACOS_WORKSTATION
+# if defined(__APPLE__) && defined(__MACH__)
 #  define KEY_ESC 53
 #  define KEY_LEFT 123
 #  define KEY_RIGHT 124
@@ -68,13 +66,13 @@
 #  define KEY_S 1
 #  define KEY_D 2
 # else
-#  define KEY_ESC -1
-#  define KEY_LEFT -1
-#  define KEY_RIGHT -1
-#  define KEY_W -1
-#  define KEY_A -1
-#  define KEY_S -1
-#  define KEY_D -1
+#  define KEY_ESC 53
+#  define KEY_LEFT 123
+#  define KEY_RIGHT 124
+#  define KEY_W 13
+#  define KEY_A 0
+#  define KEY_S 1
+#  define KEY_D 2
 # endif
 
 /*
@@ -85,11 +83,25 @@ typedef struct	s_map_checker
 	int got_player_pos;
 }				t_map_checker;
 
+/*
+** angle:		angle of the ray in radians
+** is_down:		is the angle pointing up (0) or down (1)
+** is_right:	is the angle pointing left (0) or right (1)
+** xintcpt:		next cube from cub->pos_x
+** yintcpt:		next cube from cub->pos_y
+** xstep:		increment with xstep to check if we hit something
+** ystep:		increment with ystep to check if we hit something
+** distance:	distance from the player to a wall for that angle
+** hit_wall_x:	coordinate x of the wall hit
+** hit_wall_y:	coordinate y of the wall hit
+*/
 typedef struct	s_ray
 {
 	double	angle;
 	char	is_down;
 	char	is_right;
+	char	hit_vertical;
+	char	hit_horizontal;
 	double	xintcpt;
 	double	yintcpt;
 	double	xstep;
@@ -118,10 +130,38 @@ typedef struct	s_img
 	int		endian;
 }				t_img;
 
+/*
+** win_w:			resolution width (if > screen, is troncated)
+** win_h:			resolution heigh (if > screen, is troncated)
+** parsed_width:	resolution width from the .cub file
+** parsed_heigh:	resolution heigh from the .cub file
+** sky_color:		sky color
+** grnd_color:		ground color
+** txtr_no:			path to the north texture file
+** txtr_so:			path to the south texture file
+** txtr_ea:			path to the east texture file
+** txtr_we:			path to the west texture file
+** txtr_s:			path to the sprite texture file
+** map:				map
+** map_size_x:		horizontal size of the map
+** map_size_y:		vertical size of the map
+** mlx:				pointer created by mlx_init()
+** win:				pointer of the window
+** drxion:			direction of the player in radians
+** turn:			(key press): none (0), left angle (-1), right angle (1)
+** dw:				(key press): none (0), left (-1), right (1)
+** dh:				(key press): none (0), down (-1), up (1)
+** pos_x:			player position horizontally
+** pos_y:			player position vertically
+** increment:		player's speed
+** cub_size:		size of a cube in pixels (for the minimap only)
+*/
 typedef	struct	s_cub
 {
 	int		win_w;
 	int		win_h;
+	int		parsed_width;
+	int		parsed_heigh;
 	int		sky_color;
 	int		grnd_color;
 	char	*txtr_no;
@@ -144,6 +184,7 @@ typedef	struct	s_cub
 	int		cub_size;
 	t_keys	*keys;
 	t_img	*img;
+	t_ray	*rays;
 }				t_cub;
 
 /*
@@ -193,10 +234,9 @@ int				handle_key_release(int key, t_cub *cub);
 */
 void			ft_pixel_put(t_cub *cub, int x, int y, unsigned int color);
 void			fill_background(t_cub *cub);
-void			print_player(t_cub *cub);
-void			print_ray(t_cub *cub, t_ray *ray);
 void			cast_all_rays(t_cub *cub);
-void			update_map(t_cub *cub);
+void			update_cubs(t_cub *cub);
+void			update_minimap(t_cub *cub);
 void			update_view(t_cub *cub);
 
 /*
