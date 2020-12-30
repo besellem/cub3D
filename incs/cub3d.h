@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 22:21:48 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:03:57 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define NAME "Cub3D"
 # define CUB_ERR "\033[1;31mError\033[0m"
 # define MAP_CHARSET " 012NEWS"
+# define TEXTURES_COUNT 5
 
 /*
 ** Get the 4 cardinal values whithin a circle:
@@ -49,6 +50,9 @@
 */
 # define FOV 90
 
+/*
+** Colors (for testing - to remove)
+*/
 # define UCOLOR_GREY 0xE0E0E0
 # define UCOLOR_BLACK 0x0
 # define UCOLOR_BLUE 0x8080ff
@@ -58,6 +62,7 @@
 ** Key mapping for macOS & Linux envs
 */
 # if defined(__APPLE__) && defined(__MACH__)
+#  define ENV_MSG "\033[1;32m[macOS environnement]\033[0m"
 #  define KEY_ESC 53
 #  define KEY_LEFT 123
 #  define KEY_RIGHT 124
@@ -66,6 +71,7 @@
 #  define KEY_S 1
 #  define KEY_D 2
 # else
+#  define ENV_MSG "\033[1;32m[Linux (default) environnement]\033[0m"
 #  define KEY_ESC 53
 #  define KEY_LEFT 123
 #  define KEY_RIGHT 124
@@ -128,6 +134,8 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
+	int		x;
+	int		y;
 }				t_img;
 
 /*
@@ -155,6 +163,8 @@ typedef struct	s_img
 ** pos_y:			player position vertically
 ** increment:		player's speed
 ** cub_size:		size of a cube in pixels (for the minimap only)
+** img:				image to print out
+** txtrs:			all the textures and their infos
 */
 typedef	struct	s_cub
 {
@@ -184,6 +194,7 @@ typedef	struct	s_cub
 	int		cub_size;
 	t_keys	*keys;
 	t_img	*img;
+	t_img	*txtrs;
 	t_ray	*rays;
 }				t_cub;
 
@@ -212,7 +223,6 @@ double			get_dist(double x1, double y1, double x2, double y2);
 */
 void			print_specs(t_cub *cub);
 void			print_map(t_cub *cub);
-void			ft_get_env(void);
 
 /*
 ** Parser & Checkers
@@ -221,6 +231,7 @@ int				are_specs_complete(t_cub *cub);
 void			cub_fill_specs(int fd, t_cub *cub);
 void			parse_map(int fd, t_cub *cub);
 int				check_map(t_cub *cub);
+void			load_textures(t_cub *cub);
 void			cub_parser(char *file, t_cub *cub);
 
 /*

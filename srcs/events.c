@@ -6,13 +6,13 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 18:09:38 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:54:02 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	move_player(t_cub *cub)
+static void	move_player(t_cub *cub)
 {
 	double step;
 
@@ -38,12 +38,7 @@ void	move_player(t_cub *cub)
 	}
 }
 
-/*
-** For textures:
-** cub->img->ptr = mlx_xpm_file_to_image(cub->mlx, "./txtrs/wall.xpm", &x, &y);
-*/
-
-void	update_view(t_cub *cub)
+void		update_view(t_cub *cub)
 {
 	cub->img->ptr = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
 	cub->img->addr = mlx_get_data_addr(cub->img->ptr,

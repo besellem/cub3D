@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/22 02:20:03 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/30 19:20:04 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,4 @@ void	print_specs(t_cub *cub)
 	ft_putendl("}\n");
 	print_map(cub);
 	ft_putendl("----\n");
-}
-
-void	ft_get_env(void)
-{
-	if (KEY_ESC != -1)
-		ft_putendl(B_GREEN"[macOS environnement]"CLR_COLOR);
-	else
-		ft_putendl(B_GREEN"[Linux (default) environnement]"CLR_COLOR);
 }

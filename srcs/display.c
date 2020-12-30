@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 22:24:57 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:45:46 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	fill_background(t_cub *cub)
 void	update_cubs(t_cub *cub)
 {
 	double	ratio;
+	// char	*px;
 	int		x;
 	int		y;
 	int		color;
@@ -50,21 +51,34 @@ void	update_cubs(t_cub *cub)
 	{
 		ratio = cub->rays[x].distance * cos(cub->rays[x].angle - cub->drxion);
 		ratio = cub->win_h / (ratio < 1 ? 1 : ratio);
-		tmp = (int)((cub->win_h - ratio) / 2);
-		color = UCOLOR_GREY;
+		tmp = (cub->win_h - ratio) / 2;
 		/*
-		if (cub->rays[x].hit_vertical && cub->rays[x].is_right)
-			color = 0xff08e2;
-		else if (cub->rays[x].hit_vertical && !cub->rays[x].is_right)
-			color = 0x0008e2;
-		else if (!cub->rays[x].hit_vertical && cub->rays[x].is_right)
-			color = 0xe208ff;
-		else if (!cub->rays[x].hit_vertical && !cub->rays[x].is_right)
-			color = 0xffd2ff;
+		px = cub->txtrs[3].addr + (0 * cub->txtrs[3].size_line + 0 * (cub->txtrs[3].bits_per_pixel / 8));
 		*/
+		if (cub->rays[x].hit_vertical && cub->rays[x].is_right)
+		{
+			// EAST (RIGHT) TEXTURE
+			color = UCOLOR_GREY;
+		}
+		else if (cub->rays[x].hit_vertical && !cub->rays[x].is_right)
+		{
+			// WEST (LEFT) TEXTURE
+			color = UCOLOR_BLACK;
+		}
+		else if (!cub->rays[x].hit_vertical && cub->rays[x].is_down)
+		{
+			// SOUTH (DOWN) TEXTURE
+			color = UCOLOR_BLUE;
+		}
+		else if (!cub->rays[x].hit_vertical && !cub->rays[x].is_down)
+		{
+			// NORTH (UP) TEXTURE
+			color = UCOLOR_RED;
+		}
 		y = -1;
 		while (++y < ratio)
 		{
+			// ft_pixel_put(cub, x, tmp + y, *(unsigned int *)px);
 			ft_pixel_put(cub, x, tmp + y, color);
 		}
 	}

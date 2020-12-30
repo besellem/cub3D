@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/22 02:22:25 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:04:37 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	ft_hook(t_cub *cub)
 
 static void	ft_mlx_start(t_cub *cub)
 {
+	load_textures(cub);
 	mlx_do_key_autorepeaton(cub->mlx);
 	cub->win = mlx_new_window(cub->mlx, cub->win_w, cub->win_h, NAME);
 	update_view(cub);
@@ -49,7 +50,7 @@ int			main(int ac, char **av)
 
 	if (ac >= 2 && ac <= 3)
 	{
-		ft_get_env();
+		ft_putendl(ENV_MSG);
 		if (init_cub(&cub))
 			ft_error("Malloc err while initializing", &cub, __FILE__, __LINE__);
 		cub_parser(av[1], &cub);
