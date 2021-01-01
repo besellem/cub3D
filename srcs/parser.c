@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/30 23:05:46 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/31 19:31:27 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,20 @@
 
 static void	fill_texture(t_cub *cub, t_img *txtre, char *path)
 {
-	txtre->ptr = mlx_xpm_file_to_image(cub->mlx, path, &(txtre->x),
-										&(txtre->y));
+	if (file_got_ext(path, ".xpm"))
+	{
+		if (!(txtre->ptr = mlx_xpm_file_to_image(cub->mlx, path, &(txtre->x),
+											&(txtre->y))))
+			ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
+	}
+	else if (file_got_ext(path, ".png"))
+	{
+		if (!(txtre->ptr = mlx_png_file_to_image(cub->mlx, path, &(txtre->x),
+											&(txtre->y))))
+			ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
+	}
+	else
+		ft_error("Not a valid texture", cub, __FILE__, __LINE__);
 	txtre->addr = mlx_get_data_addr(txtre->ptr, &(txtre->bits_per_pixel),
 									&(txtre->size_line), &(txtre->endian));
 }

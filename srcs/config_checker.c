@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 16:37:40 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/31 11:54:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 		cub->win_h = y_tmp;
 	if (!(cub->rays = (t_ray *)malloc(sizeof(t_ray) * cub->win_w)))
 		ft_error("Malloc error", cub, __FILE__, line_c);
+	cub->dist_plane = (cub->win_w / 2) / tan(FOV / 2);
 }
 
 /*

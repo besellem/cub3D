@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/30 23:04:37 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:07:24 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	ft_mlx_start(t_cub *cub)
 static int	ft_save_img(t_cub *cub)
 {
 	(void)cub;
-	return (1);
+	return (0);
 }
 
 int			main(int ac, char **av)

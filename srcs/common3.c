@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 01:46:24 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/22 19:34:03 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:11:54 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ double	ft_rad2deg(double rad)
 
 double	ft_norm_angle(double angle)
 {
-	double normed;
+	double fract;
+	double integral;
 
-	normed = ft_deg2rad((int)ft_rad2deg(angle) % 360);
-	if (normed < 0)
-		return (normed + 2 * M_PI);
-	return (normed);
+	fract = modf(angle, &integral);
+	fract += ((int)integral % 360);
+	if (fract < 0)
+		fract += M_2PI;
+	else if (fract >= M_2PI)
+		fract -= M_2PI;
+	return (fract);
 }

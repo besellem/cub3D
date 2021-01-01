@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/30 23:03:57 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/31 18:14:21 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,14 @@
 # define DRXION_S 4.71238898038468967399694520281627774
 
 /*
+** 2 * PI
+*/
+# define M_2PI 6.28318530717958623199592693708837032
+
+/*
 ** FOV (field of view)
 */
-# define FOV 90
+# define FOV 60
 
 /*
 ** Colors (for testing - to remove)
@@ -162,6 +167,7 @@ typedef struct	s_img
 ** pos_x:			player position horizontally
 ** pos_y:			player position vertically
 ** increment:		player's speed
+** dist_plane:		distance to the projection plane
 ** cub_size:		size of a cube in pixels (for the minimap only)
 ** img:				image to print out
 ** txtrs:			all the textures and their infos
@@ -191,6 +197,7 @@ typedef	struct	s_cub
 	double	pos_x;
 	double	pos_y;
 	double	increment;
+	double	dist_plane;
 	int		cub_size;
 	t_keys	*keys;
 	t_img	*img;

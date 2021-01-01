@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/30 23:06:40 by besellem         ###   ########.fr       */
+/*   Updated: 2020/12/31 19:27:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void		ft_free_cub(t_cub *cub)
 		free(cub->rays);
 	free(cub->keys);
 }
+
+/*
+** Check the extension name of a file
+*/
 
 int			file_got_ext(char *file, char *extension)
 {
