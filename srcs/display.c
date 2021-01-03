@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/31 19:22:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/02 20:55:37 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void		fill_background(t_cub *cub)
 	}
 }
 
-static void	print_texture_ray(t_cub *cub, t_img *tx, int idx, double size)
+// static
+void	print_texture_ray(t_cub *cub, t_img *tx, int idx, double size)
 {
 	char	*px;
 	int		i;
@@ -70,6 +71,7 @@ void		update_cubs(t_cub *cub)
 	double	ratio;
 	int		x;
 	int		tmp;
+	int		color;
 
 	x = -1;
 	while (++x < cub->win_w)
@@ -82,12 +84,16 @@ void		update_cubs(t_cub *cub)
 		tmp = (cub->win_h - ratio) / 2;
 
 		if (cub->rays[x].hit_vertical && cub->rays[x].is_right)			// EAST (RIGHT) TEXTURE
-			print_texture_ray(cub, &(cub->txtrs[2]), x, ratio);
+			color = UCOLOR_BLUE;// print_texture_ray(cub, &(cub->txtrs[2]), x, ratio);
 		else if (cub->rays[x].hit_vertical && !cub->rays[x].is_right)	// WEST (LEFT) TEXTURE
-			print_texture_ray(cub, &(cub->txtrs[3]), x, ratio);
+			color = UCOLOR_BLACK;// print_texture_ray(cub, &(cub->txtrs[3]), x, ratio);
 		else if (!cub->rays[x].hit_vertical && cub->rays[x].is_down)	// SOUTH (DOWN) TEXTURE
-			print_texture_ray(cub, &(cub->txtrs[1]), x, ratio);
+			color = UCOLOR_GREY;// print_texture_ray(cub, &(cub->txtrs[1]), x, ratio);
 		else if (!cub->rays[x].hit_vertical && !cub->rays[x].is_down)	// NORTH (UP) TEXTURE
-			print_texture_ray(cub, &(cub->txtrs[0]), x, ratio);
+			color = UCOLOR_RED;// print_texture_ray(cub, &(cub->txtrs[0]), x, ratio);
+
+		int j = -1;
+		while (++j < ratio)
+			ft_pixel_put(cub, x, tmp + j, color);
 	}
 }

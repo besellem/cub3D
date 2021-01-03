@@ -1,0 +1,17 @@
+R	1000	500
+NO	./texture/eagle.xpm
+SO	./texture/wolftextures.xpm
+WE	./texture/wolftextures.xpm
+EA	./texture/wolftextures.xpm
+
+S	./texture/path_to_the_sprite_texture
+F	220,100,0
+C	225,30,0
+
+11111111
+10000001
+1000N001
+10000001
+1000N001
+10000001
+11111111

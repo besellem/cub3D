@@ -1,0 +1,13 @@
+R	1000	500
+S	./texture/path_to_the_spri
+SO	./texture/wolftextures.xpm
+WE	./texture/wolftextures.xpm
+EA	./texture/wolftextures.xpm
+
+NO	./texture/eagle.xpm
+F	220,100,0
+C	225,30,0
+
+11111110
+1000N001
+11111111
