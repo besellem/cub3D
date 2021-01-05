@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/02 20:55:37 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 10:34:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,75 @@ void	print_texture_ray(t_cub *cub, t_img *tx, int idx, double size)
 	*/
 }
 
+/*
+** tx:	image
+*/
+
+void	print_texture_ray_test(t_cub *cub, t_img *tx, t_ray *ray, int idx, int px)
+{
+	char	*ptr;
+	int		ratio;
+	int		i;
+	int		j;
+
+	(void)ray;
+	ratio = px / tx->y;
+	i = -1;
+	while (++i < tx->y)
+	{
+		j = -1;
+		while (++j < ratio)
+		{
+			ptr = tx->addr + (idx * tx->size_line + i * (tx->bits_per_pixel / 8));
+			ft_pixel_put(cub, idx, px + i + j, *(unsigned int *)ptr);
+		}
+	}
+}
+
+// void		calc_txtr(t_cub *cub, t_ray *ray)
+// {
+	
+// }
+
+// void		update_cubs(t_cub *cub)
+// {
+// 	double	ratio;
+// 	int		x;
+// 	int		tmp;
+
+// 	x = -1;
+// 	while (++x < cub->win_w)
+// 	{
+// 		ratio = cub->rays[x].distance * cos(cub->rays[x].angle - cub->drxion);
+// 		if (ratio < 1)
+// 			ratio = cub->win_h;
+// 		else
+// 			ratio = cub->win_h / ratio;
+// 		tmp = (cub->win_h - ratio) / 2;
+
+// 		if (cub->rays[x].hit_drxion == HIT_EAST)		// NORTH (UP) TEXTURE
+// 			print_texture_ray_test(cub, &(cub->txtrs[0]), &(cub->rays[x]), x, (int)ratio);
+// 		else if (cub->rays[x].hit_drxion == HIT_EAST)	// SOUTH (DOWN) TEXTURE
+// 			print_texture_ray_test(cub, &(cub->txtrs[1]), &(cub->rays[x]), x, (int)ratio);
+// 		else if (cub->rays[x].hit_drxion == HIT_EAST)	// EAST (RIGHT) TEXTURE
+// 			print_texture_ray_test(cub, &(cub->txtrs[2]), &(cub->rays[x]), x, (int)ratio);
+// 		else if (cub->rays[x].hit_drxion == HIT_EAST)	// WEST (LEFT) TEXTURE
+// 			print_texture_ray_test(cub, &(cub->txtrs[3]), &(cub->rays[x]), x, (int)ratio);
+	
+// 		print_texture_ray_test(
+// 			cub,
+// 			&(cub->txtrs[cub->rays[x].hit_drxion]),
+// 			&(cub->rays[x]),
+// 			x,
+// 			(int)ratio);
+// 		}
+// }
+
 void		update_cubs(t_cub *cub)
 {
 	double	ratio;
 	int		x;
+	int		y;
 	int		tmp;
 	int		color;
 
@@ -82,18 +147,16 @@ void		update_cubs(t_cub *cub)
 		else
 			ratio = cub->win_h / ratio;
 		tmp = (cub->win_h - ratio) / 2;
-
-		if (cub->rays[x].hit_vertical && cub->rays[x].is_right)			// EAST (RIGHT) TEXTURE
-			color = UCOLOR_BLUE;// print_texture_ray(cub, &(cub->txtrs[2]), x, ratio);
-		else if (cub->rays[x].hit_vertical && !cub->rays[x].is_right)	// WEST (LEFT) TEXTURE
-			color = UCOLOR_BLACK;// print_texture_ray(cub, &(cub->txtrs[3]), x, ratio);
-		else if (!cub->rays[x].hit_vertical && cub->rays[x].is_down)	// SOUTH (DOWN) TEXTURE
-			color = UCOLOR_GREY;// print_texture_ray(cub, &(cub->txtrs[1]), x, ratio);
-		else if (!cub->rays[x].hit_vertical && !cub->rays[x].is_down)	// NORTH (UP) TEXTURE
-			color = UCOLOR_RED;// print_texture_ray(cub, &(cub->txtrs[0]), x, ratio);
-
-		int j = -1;
-		while (++j < ratio)
-			ft_pixel_put(cub, x, tmp + j, color);
+		if (cub->rays[x].hit_drxion == HIT_EAST)
+			color = UCOLOR_BLUE;
+		else if (cub->rays[x].hit_drxion == HIT_WEST)
+			color = UCOLOR_BLACK;
+		else if (cub->rays[x].hit_drxion == HIT_SOUTH)
+			color = UCOLOR_GREY;
+		else if (cub->rays[x].hit_drxion == HIT_NORTH)
+			color = UCOLOR_RED;
+		y = -1;
+		while (++y < ratio)
+			ft_pixel_put(cub, x, tmp + y, color);
 	}
 }

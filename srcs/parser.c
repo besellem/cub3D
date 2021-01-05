@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/31 19:31:27 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 12:13:32 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,8 @@ static void	fill_texture(t_cub *cub, t_img *txtre, char *path)
 											&(txtre->y))))
 			ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
 	}
-	else if (file_got_ext(path, ".png"))
-	{
-		if (!(txtre->ptr = mlx_png_file_to_image(cub->mlx, path, &(txtre->x),
-											&(txtre->y))))
-			ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
-	}
 	else
-		ft_error("Not a valid texture", cub, __FILE__, __LINE__);
+		ft_error("Not a valid texture file", cub, __FILE__, __LINE__);
 	txtre->addr = mlx_get_data_addr(txtre->ptr, &(txtre->bits_per_pixel),
 									&(txtre->size_line), &(txtre->endian));
 }
@@ -53,12 +47,15 @@ void		load_textures(t_cub *cub)
 
 int			are_specs_complete(t_cub *cub)
 {
-	if (cub->grnd_color != -1 && cub->sky_color != -1 &&
-		cub->win_h != -1 && cub->win_w != -1 &&
-		cub->txtr_no && cub->txtr_so && cub->txtr_ea &&
-		cub->txtr_we && cub->txtr_s)
-		return (1);
-	return (0);
+	return (cub->grnd_color != -1 &&
+		cub->sky_color != -1 &&
+		cub->win_h != -1 &&
+		cub->win_w != -1 &&
+		cub->txtr_no &&
+		cub->txtr_so &&
+		cub->txtr_ea &&
+		cub->txtr_we &&
+		cub->txtr_s);
 }
 
 void		cub_parser(char *file, t_cub *cub)

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/02 20:54:58 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 10:11:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@
 # define DRXION_W M_PI
 # define DRXION_S 4.71238898038468967399694520281627774
 
+# define HIT_NORTH 0
+# define HIT_SOUTH 1
+# define HIT_EAST 2
+# define HIT_WEST 3
+
 /*
 ** 2 * PI
 */
@@ -60,7 +65,7 @@
 */
 # define UCOLOR_GREY 0xE0E0E0
 # define UCOLOR_BLACK 0x0
-# define UCOLOR_BLUE 0x8080ff
+# define UCOLOR_BLUE 0x8080FF
 # define UCOLOR_RED 0xFF0000
 
 /*
@@ -105,6 +110,7 @@ typedef struct	s_map_checker
 ** distance:	distance from the player to a wall for that angle
 ** hit_wall_x:	coordinate x of the wall hit
 ** hit_wall_y:	coordinate y of the wall hit
+** hit_drxion:	from where the ray hit a wall. Defined with macros NORTH, ...
 */
 typedef struct	s_ray
 {
@@ -120,6 +126,7 @@ typedef struct	s_ray
 	double	distance;
 	double	hit_wall_x;
 	double	hit_wall_y;
+	int		hit_drxion;
 }				t_ray;
 
 typedef struct	s_keys

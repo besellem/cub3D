@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/31 14:28:15 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 10:30:27 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 }
 
 /*
-** CAST RAY AND GET THE LESS DISTANT HIT (HORIZ OR VERTIC)
+** CAST RAY, GET THE LESS DISTANT HIT (HORIZ OR VERTIC) AND GET THE HIT DRXION
 */
 
 static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
@@ -104,6 +104,14 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		*ray = ver;
 	else if (hor.distance < ver.distance)
 		*ray = hor;
+	if (!ray->hit_vertical && !ray->is_down)
+		ray->hit_drxion = HIT_NORTH;
+	else if (!ray->hit_vertical && ray->is_down)
+		ray->hit_drxion = HIT_SOUTH;
+	else if (ray->hit_vertical && ray->is_right)
+		ray->hit_drxion = HIT_EAST;
+	else if (ray->hit_vertical && !ray->is_right)
+		ray->hit_drxion = HIT_WEST;
 }
 
 void		cast_all_rays(t_cub *cub)
