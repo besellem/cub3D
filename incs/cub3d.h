@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/05 10:11:17 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 15:17:44 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,6 @@ int				handle_key_release(int key, t_cub *cub);
 ** Display
 */
 void			ft_pixel_put(t_cub *cub, int x, int y, unsigned int color);
-void			fill_background(t_cub *cub);
 void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);
 void			update_minimap(t_cub *cub);

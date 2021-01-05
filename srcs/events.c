@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/05 12:14:42 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 15:15:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,16 @@ static void	move_player(t_cub *cub)
 
 void		update_view(t_cub *cub)
 {
-	cub->img->ptr = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
-	cub->img->addr = mlx_get_data_addr(cub->img->ptr,
-										&(cub->img->bits_per_pixel),
-										&(cub->img->size_line),
-										&(cub->img->endian));
 	move_player(cub);
 	cast_all_rays(cub);
-	fill_background(cub);
 	update_cubs(cub);
-	update_minimap(cub);
+	// update_minimap(cub);
+	// mlx_clear_window(cub->mlx, cub->win);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);
-	mlx_destroy_image(cub->mlx, cub->img->ptr);
-	cub->img->ptr = NULL;
+	/*
 	ft_printf("[ %.3f ; %.3f ] [ %d° ]\n",
 			cub->pos_x,
 			cub->pos_y,
 			(int)ft_rad2deg(cub->drxion));
+	*/
 }

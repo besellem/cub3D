@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/05 10:34:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 15:22:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,6 @@ void		ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 	px = cub->img->addr;
 	px += (y * cub->img->size_line + x * (cub->img->bits_per_pixel / 8));
 	*(unsigned int *)px = color;
-}
-
-void		fill_background(t_cub *cub)
-{
-	int x;
-	int y;
-
-	x = -1;
-	while (++x < cub->win_w)
-	{
-		y = 0;
-		while (y < cub->win_h / 2)
-			ft_pixel_put(cub, x, y++, cub->sky_color);
-		while (y < cub->win_h)
-			ft_pixel_put(cub, x, y++, cub->grnd_color);
-	}
 }
 
 // static
@@ -155,8 +139,13 @@ void		update_cubs(t_cub *cub)
 			color = UCOLOR_GREY;
 		else if (cub->rays[x].hit_drxion == HIT_NORTH)
 			color = UCOLOR_RED;
-		y = -1;
-		while (++y < ratio)
-			ft_pixel_put(cub, x, tmp + y, color);
+		y = 0;
+		while (y < tmp)
+			ft_pixel_put(cub, x, y++, cub->sky_color);
+		while (y < ratio + tmp)
+			ft_pixel_put(cub, x, y++, color);
+		while (y < cub->win_h)
+			ft_pixel_put(cub, x, y++, cub->grnd_color);
+		printf("HIT WALL => [ %.2f ; %.2f ]\n", cub->rays[x].hit_wall_x, cub->rays[x].hit_wall_y);
 	}
 }

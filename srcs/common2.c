@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/31 19:27:09 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/05 15:06:45 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ void		ft_free_cub(t_cub *cub)
 		ft_free_strs(cub->map);
 	if (cub->mlx)
 		free(cub->mlx);
-	if (cub->img->ptr)
+	if (cub->img)
 	{
-		free(cub->img->ptr);
-		free(cub->img->addr);
+		mlx_destroy_image(cub->mlx, cub->img->ptr);
 		free(cub->img);
 	}
 	if (cub->rays)

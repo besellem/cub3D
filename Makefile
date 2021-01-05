@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/05 11:55:23 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/05 15:27:46 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ RM			=	rm -f
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
-			cp ./mlx/$(MLIBX) .
+			$(MUTE) cp ./mlx/$(MLIBX) .
 			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 
 all:		$(NAME)
