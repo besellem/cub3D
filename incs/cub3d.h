@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/05 15:17:44 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/06 15:52:18 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 /*
 ** FOV (field of view)
 */
-# define FOV 60
+# define FOV 90
 
 /*
 ** Colors (for testing - to remove)
@@ -126,6 +126,9 @@ typedef struct	s_ray
 	double	distance;
 	double	hit_wall_x;
 	double	hit_wall_y;
+	double	hit_sp_x;
+	double	hit_sp_y;
+	double	sp_distance;
 	int		hit_drxion;
 }				t_ray;
 
@@ -231,6 +234,7 @@ double			ft_deg2rad(int deg);
 double			ft_rad2deg(double rad);
 double			ft_norm_angle(double angle);
 double			get_dist(double x1, double y1, double x2, double y2);
+double			get_dec(double n);
 
 /*
 ** Utils
@@ -262,6 +266,7 @@ void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);
 void			update_minimap(t_cub *cub);
 void			update_view(t_cub *cub);
+int				ft_refresh(t_cub *cub);
 
 /*
 ** Main

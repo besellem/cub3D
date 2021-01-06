@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:18:26 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/29 01:09:32 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/06 15:33:34 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ int	handle_key_press(int key, t_cub *cub)
 {
 	if (key == KEY_ESC)
 		ft_quit(cub);
-	else if (key == KEY_W && (cub->dh = 1))
+	else if (key == KEY_W && cub->keys->key_s == 0 && (cub->dh = 1))
 		cub->keys->key_w = 1;
-	else if (key == KEY_S && (cub->dh = -1))
+	else if (key == KEY_S && cub->keys->key_w == 0 && (cub->dh = -1))
 		cub->keys->key_s = 1;
-	else if (key == KEY_D && (cub->dw = 1))
+	else if (key == KEY_D && cub->keys->key_a == 0 && (cub->dw = 1))
 		cub->keys->key_d = 1;
-	else if (key == KEY_A && (cub->dw = -1))
+	else if (key == KEY_A && cub->keys->key_d == 0 && (cub->dw = -1))
 		cub->keys->key_a = 1;
-	else if (key == KEY_LEFT && (cub->turn = -1))
+	else if (key == KEY_LEFT && cub->keys->key_right == 0 && (cub->turn = -1))
 		cub->keys->key_left = 1;
-	else if (key == KEY_RIGHT && (cub->turn = 1))
+	else if (key == KEY_RIGHT && cub->keys->key_left == 0 && (cub->turn = 1))
 		cub->keys->key_right = 1;
 	else
 		return (1);

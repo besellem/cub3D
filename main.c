@@ -6,23 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/05 15:11:18 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/06 09:04:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	need_update(t_cub *cub)
-{
-	return (cub->dh != 0 || cub->dw != 0 || cub->turn != 0);
-}
-
-static int	ft_hook(t_cub *cub)
-{
-	if (need_update(cub))
-		update_view(cub);
-	return (0);
-}
 
 static void	ft_mlx_start(t_cub *cub)
 {
@@ -39,7 +27,7 @@ static void	ft_mlx_start(t_cub *cub)
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);
 	mlx_hook(cub->win, 17, (1L << 2), ft_red_cross, cub);
-	mlx_loop_hook(cub->mlx, ft_hook, cub);
+	mlx_loop_hook(cub->mlx, ft_refresh, cub);
 	mlx_loop(cub->mlx);
 }
 
