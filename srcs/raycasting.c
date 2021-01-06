@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/06 15:54:46 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/06 19:26:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,18 @@ static void	init_ray(t_ray *ray, double angle)
 	ray->sp_distance = -1.0;
 }
 
-int			check_intersect(t_cub *cub, t_ray *ray, int y, int x)
+void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
-	if (cub->map[y][x] == '1')
-	{
-		ray->hit_wall_x = x;
-		ray->hit_wall_y = y;
-		ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
-		return (1);
-	}
-	else if (cub->map[y][x] == '2')
-	{
-		ray->hit_sp_x = x;
-		ray->hit_sp_y = y;
-		ray->sp_distance = get_dist(cub->pos_x, cub->pos_y, x, y);
-	}
-	return (0);
+	ray->hit_wall_x = x;
+	ray->hit_wall_y = y;
+	ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
+}
+
+void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
+{
+	ray->hit_sp_x = x;
+	ray->hit_sp_y = y;
+	ray->sp_distance = get_dist(cub->pos_x, cub->pos_y, x, y);
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)
@@ -64,13 +60,13 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 	y = ray->yintcpt;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
 	{
-		if (check_intersect(cub, ray, (int)(y - !ray->is_down), (int)x))
+		if (cub->map[(int)(y - !ray->is_down)][(int)x] == '1')
 		{
-			// ray->hit_wall_x = x;
-			// ray->hit_wall_y = y;
-			// ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
-			break ;
+			wall_intersect(cub, ray, x, y);
+			return ;
 		}
+		else if (cub->map[(int)(y - !ray->is_down)][(int)x] == '2')
+			sprite_intersect(cub, ray , x, y);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -93,12 +89,12 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 	{
 		if (cub->map[(int)y][(int)(x - !ray->is_right)] == '1')
 		{
-			ray->hit_wall_x = x;
-			ray->hit_wall_y = y;
-			ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
+			wall_intersect(cub, ray, x, y);
 			ray->hit_vertical = 1;
-			break ;
+			return ;
 		}
+		else if (cub->map[(int)y][(int)(x - !ray->is_right)] == '2')
+			sprite_intersect(cub, ray , x, y);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
