@@ -6,11 +6,11 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/05 15:27:46 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/07 16:00:34 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MUTE		=	@
+MUTE		=	
 NAME		=	Cub3D
 
 ## Sources
@@ -22,14 +22,15 @@ SRCS		=	main.c srcs/*.c
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address,undefined #Check leak option in Linux
 RM			=	rm -f
+RMD			=	rm -rf
 
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -g -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 
 all:		$(NAME)
 
@@ -40,6 +41,7 @@ test:		$(NAME)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx clean
+			$(MUTE) $(RMD) Cub3D.dSYM
 
 fclean:		clean
 			$(MUTE) $(MAKE) -C libft fclean

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/06 18:37:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/07 14:24:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ typedef struct	s_ray
 	char	is_down;
 	char	is_right;
 	char	hit_vertical;
-	char	hit_horizontal;
 	double	xintcpt;
 	double	yintcpt;
 	double	xstep;
@@ -235,6 +234,7 @@ double			ft_rad2deg(double rad);
 double			ft_norm_angle(double angle);
 double			get_dist(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
+int				safe_min(int nb1, int nb2);
 
 /*
 ** Utils

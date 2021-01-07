@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/06 19:26:50 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/07 15:45:43 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	init_ray(t_ray *ray, double angle)
 	ray->is_down = angle > 0 && angle < M_PI;
 	ray->is_right = !(angle > M_PI_2 && angle < (1.5 * M_PI));
 	ray->hit_vertical = 0;
-	ray->hit_horizontal = 0;
 	ray->xintcpt = 0.0;
 	ray->yintcpt = 0.0;
 	ray->xstep = 0.0;
@@ -60,12 +59,12 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 	y = ray->yintcpt;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
 	{
-		if (cub->map[(int)(y - !ray->is_down)][(int)x] == '1')
+		if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '1')
 		{
 			wall_intersect(cub, ray, x, y);
 			return ;
 		}
-		else if (cub->map[(int)(y - !ray->is_down)][(int)x] == '2')
+		else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
 			sprite_intersect(cub, ray , x, y);
 		x += ray->xstep;
 		y += ray->ystep;
@@ -87,13 +86,13 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 	y = ray->yintcpt;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
 	{
-		if (cub->map[(int)y][(int)(x - !ray->is_right)] == '1')
+		if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '1')
 		{
 			wall_intersect(cub, ray, x, y);
 			ray->hit_vertical = 1;
 			return ;
 		}
-		else if (cub->map[(int)y][(int)(x - !ray->is_right)] == '2')
+		else if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
 			sprite_intersect(cub, ray , x, y);
 		x += ray->xstep;
 		y += ray->ystep;
