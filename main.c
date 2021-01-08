@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/08 12:45:13 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/08 16:11:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_mlx_start(t_cub *cub)
 	print_specs(cub); // TO REMOVE
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);
-	mlx_hook(cub->win, 17, (1L << 2), ft_red_cross, cub);
+	mlx_hook(cub->win, EVT_RED_CROSS, (1L << 2), ft_red_cross, cub);
 	mlx_loop_hook(cub->mlx, ft_refresh, cub);
 	mlx_loop(cub->mlx);
 }

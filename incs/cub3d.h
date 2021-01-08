@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/08 13:27:11 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/08 16:11:19 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@
 #  define KEY_A 0
 #  define KEY_S 1
 #  define KEY_D 2
+#  define EVT_RED_CROSS 17
 # else
 #  define ENV_MSG "\033[1;32m[Linux (default) environnement]\033[0m"
 #  define KEY_ESC 53
@@ -89,6 +90,7 @@
 #  define KEY_A 0
 #  define KEY_S 1
 #  define KEY_D 2
+#  define EVT_RED_CROSS 33
 # endif
 
 /*
