@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/30 23:53:29 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/08 13:23:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_ray(t_cub *cub, t_ray *ray)
 	double ystep;
 
 	distance = ray->distance * cub->cub_size;
-	while ((distance -= 5) > cub->cub_size / 2)
+	while ((distance -= 1) > cub->cub_size / 2)
 	{
 		xstep = cos(ray->angle) * distance;
 		ystep = sin(ray->angle) * distance;

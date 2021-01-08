@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/05 12:13:32 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/08 11:28:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	fill_texture(t_cub *cub, t_img *txtre, char *path)
 									&(txtre->size_line), &(txtre->endian));
 }
 
-void		load_textures(t_cub *cub)
+static void	load_textures(t_cub *cub)
 {
 	int i;
 
@@ -70,6 +70,7 @@ void		cub_parser(char *file, t_cub *cub)
 		exit(EXIT_FAILURE);
 	}
 	cub_fill_specs(fd, cub);
+	load_textures(cub);
 	parse_map(fd, cub);
 	close(fd);
 	check_map(cub);

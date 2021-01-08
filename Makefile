@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/07 16:00:34 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/08 13:25:56 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS		=	main.c srcs/*.c
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address,undefined #Check leak option in Linux
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address #Check leak option in Linux
 RM			=	rm -f
 RMD			=	rm -rf
 

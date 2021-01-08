@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/07 13:08:25 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/08 11:34:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void		ft_free_cub(t_cub *cub)
 		mlx_destroy_image(cub->mlx, cub->img->ptr);
 		free(cub->img);
 	}
-	if (cub->mlx)
-		free(cub->mlx);
 	if (cub->rays)
 		free(cub->rays);
 	free(cub->keys);
+	if (cub->mlx)
+		free(cub->mlx);
 }
 
 /*
