@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/08 13:20:15 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:47:39 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,19 @@ void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
 }
 
+/*
+void	draw_sprite_ray(t_ray *ray)
+{
+	
+}
+*/
+
 void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	ray->hit_sp_x = x;
 	ray->hit_sp_y = y;
 	ray->sp_distance = get_dist(cub->pos_x, cub->pos_y, x, y);
+	// draw_sprite_ray(ray);
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)
@@ -57,7 +65,7 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 			return ;
 		}
 		else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
-			sprite_intersect(cub, ray , x, y);
+			sprite_intersect(cub, ray, x, y);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -85,7 +93,7 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 			return ;
 		}
 		else if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
-			sprite_intersect(cub, ray , x, y);
+			sprite_intersect(cub, ray, x, y);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -113,13 +121,13 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 	else if (hor.distance < ver.distance)
 		*ray = hor;
 	if (!ray->hit_vertical && !ray->is_down)
-		ray->hit_drxion = HIT_NORTH;
-	else if (!ray->hit_vertical && ray->is_down)
 		ray->hit_drxion = HIT_SOUTH;
+	else if (!ray->hit_vertical && ray->is_down)
+		ray->hit_drxion = HIT_NORTH;
 	else if (ray->hit_vertical && ray->is_right)
-		ray->hit_drxion = HIT_EAST;
-	else if (ray->hit_vertical && !ray->is_right)
 		ray->hit_drxion = HIT_WEST;
+	else if (ray->hit_vertical && !ray->is_right)
+		ray->hit_drxion = HIT_EAST;
 }
 
 void		cast_all_rays(t_cub *cub)
@@ -133,8 +141,8 @@ void		cast_all_rays(t_cub *cub)
 	while (++i < cub->win_w)
 	{
 		tmp_angle = ft_norm_angle(ray_angle);
-		init_ray(&(cub->rays[i]), tmp_angle);
 		cast_ray(cub, &(cub->rays[i]), tmp_angle);
-		ray_angle += ft_deg2rad(FOV) / cub->win_w;
+		(&cub->rays[i])->distortion = cos(cub->rays[i].angle - cub->drxion);
+		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/08 13:25:34 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:48:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		update_cubs(t_cub *cub)
 	x = -1;
 	while (++x < cub->win_w)
 	{
-		ratio = cub->rays[x].distance * cos(cub->rays[x].angle - cub->drxion);
+		ratio = cub->rays[x].distance * cub->rays[x].distortion;
 		if (ratio < 1)
 			ratio = cub->win_h;	// -- TO CHANGE MAYBE (REMOVE). DOES A DISTORTION WHEN TOO CLOSE TO A WALL --
 		else

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/08 16:11:19 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 13:45:55 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct	s_map_checker
 ** xstep:		increment with xstep to check if we hit something
 ** ystep:		increment with ystep to check if we hit something
 ** distance:	distance from the player to a wall for that angle
+** distortion:	cos(ray->angle - cub->drxion) -> is used 2 times per ray
 ** hit_wall_x:	coordinate x of the wall hit
 ** hit_wall_y:	coordinate y of the wall hit
 ** hit_drxion:	from where the ray hit a wall. Defined with macros NORTH, ...
@@ -127,11 +128,19 @@ typedef struct	s_ray
 	double	hit_sp_x;
 	double	hit_sp_y;
 	double	sp_distance;
+	double	distortion;
 	int		is_down;
 	int		is_right;
 	int		hit_vertical;
 	int		hit_drxion;
 }				t_ray;
+
+typedef	struct	s_sprite
+{
+	double	x;
+	double	y;
+	int		hit;
+}				t_sprite;
 
 typedef struct	s_keys
 {
