@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 13:45:55 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 14:01:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,22 +102,25 @@ typedef struct	s_map_checker
 }				t_map_checker;
 
 /*
-** angle:		angle of the ray in radians
-** is_down:		is the angle pointing up (0) or down (1)
-** is_right:	is the angle pointing left (0) or right (1)
-** xintcpt:		next cube from cub->pos_x
-** yintcpt:		next cube from cub->pos_y
-** xstep:		increment with xstep to check if we hit something
-** ystep:		increment with ystep to check if we hit something
-** distance:	distance from the player to a wall for that angle
-** distortion:	cos(ray->angle - cub->drxion) -> is used 2 times per ray
-** hit_wall_x:	coordinate x of the wall hit
-** hit_wall_y:	coordinate y of the wall hit
-** hit_drxion:	from where the ray hit a wall. Defined with macros NORTH, ...
+** angle:			angle of the ray in radians
+** distortion:		cos(ray->angle - cub->drxion) -> is used 2 times per ray
+** xintcpt:			next cube from cub->pos_x
+** yintcpt:			next cube from cub->pos_y
+** xstep:			increment with xstep to check if we hit something
+** ystep:			increment with ystep to check if we hit something
+** distance:		distance from the player to a wall for that angle
+** hit_wall_x:		coordinate x of the wall hit
+** hit_wall_y:		coordinate y of the wall hit
+
+** is_down:			is the angle pointing up (0) or down (1)
+** is_right:		is the angle pointing left (0) or right (1)
+** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
+** hit_drxion:		from where the ray hit a wall. Macros NORTH, SOUTH, ...
 */
 typedef struct	s_ray
 {
 	double	angle;
+	double	distortion;
 	double	xintcpt;
 	double	yintcpt;
 	double	xstep;
@@ -128,7 +131,6 @@ typedef struct	s_ray
 	double	hit_sp_x;
 	double	hit_sp_y;
 	double	sp_distance;
-	double	distortion;
 	int		is_down;
 	int		is_right;
 	int		hit_vertical;

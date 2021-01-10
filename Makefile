@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/10 13:41:22 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/10 15:46:14 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS		=	main.c srcs/*.c
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror #-fsanitize=address #Check leak option in Linux
+CFLAGS		=	-Wall -Wextra -Werror# -fsanitize=address #Check leak option in Linux
 RM			=	rm -f
 RMD			=	rm -rf
 
@@ -30,7 +30,7 @@ $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -g -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -g3 -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 
 all:		$(NAME)
 

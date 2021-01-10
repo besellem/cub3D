@@ -6,12 +6,16 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 13:47:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 14:20:06 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+** Init a ray struct
+** Use of memset to (re)set all variables to 0
+*/
 static void	init_ray(t_ray *ray, double angle)
 {
 	ft_memset(ray, 0, sizeof(t_ray));
@@ -29,19 +33,11 @@ void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
 }
 
-/*
-void	draw_sprite_ray(t_ray *ray)
-{
-	
-}
-*/
-
 void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	ray->hit_sp_x = x;
 	ray->hit_sp_y = y;
 	ray->sp_distance = get_dist(cub->pos_x, cub->pos_y, x, y);
-	// draw_sprite_ray(ray);
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)
