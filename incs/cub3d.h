@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 14:01:17 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 23:16:37 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,8 @@ typedef struct	s_img
 /*
 ** win_w:			resolution width (if > screen, is troncated)
 ** win_h:			resolution heigh (if > screen, is troncated)
-** parsed_width:	resolution width from the .cub file
-** parsed_heigh:	resolution heigh from the .cub file
+** parsed_w:		resolution width from the .cub file
+** parsed_h:		resolution heigh from the .cub file
 ** sky_color:		sky color
 ** grnd_color:		ground color
 ** txtr_no:			path to the north texture file
@@ -198,8 +198,8 @@ typedef	struct	s_cub
 {
 	int		win_w;
 	int		win_h;
-	int		parsed_width;
-	int		parsed_heigh;
+	int		parsed_w;
+	int		parsed_h;
 	int		sky_color;
 	int		grnd_color;
 	char	*txtr_no;
@@ -248,6 +248,7 @@ double			ft_norm_angle(double angle);
 double			get_dist(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
 int				safe_min(int nb1, int nb2);
+void			*ft_print_memory(void *addr, unsigned int size);
 
 /*
 ** Utils

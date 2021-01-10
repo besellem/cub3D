@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/30 19:20:04 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 23:34:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	print_specs(t_cub *cub)
 	ft_printf("    cub->win_h:      %d\n", cub->win_h);
 	ft_printf("    cub->sky_color:  0b%.32b\n", cub->sky_color);
 	ft_printf("    cub->grnd_color: 0b%.32b\n", cub->grnd_color);
-	ft_printf("    cub->txtr_no:    %s\n", cub->txtr_no);
-	ft_printf("    cub->txtr_so:    %s\n", cub->txtr_so);
-	ft_printf("    cub->txtr_ea:    %s\n", cub->txtr_ea);
-	ft_printf("    cub->txtr_we:    %s\n", cub->txtr_we);
-	ft_printf("    cub->txtr_s:     %s\n", cub->txtr_s);
+	ft_printf("    cub->txtr_no:    [%p] %s\n", cub->txtr_no, cub->txtr_no);
+	ft_printf("    cub->txtr_so:    [%p] %s\n", cub->txtr_so, cub->txtr_so);
+	ft_printf("    cub->txtr_ea:    [%p] %s\n", cub->txtr_ea, cub->txtr_ea);
+	ft_printf("    cub->txtr_we:    [%p] %s\n", cub->txtr_we, cub->txtr_we);
+	ft_printf("    cub->txtr_s:     [%p] %s\n", cub->txtr_s, cub->txtr_s);
 	ft_printf("    cub->map_size_x: %lld\n", cub->map_size_x);
 	ft_printf("    cub->map_size_y: %lld\n", cub->map_size_y);
 	ft_printf("    cub->drxion:     %f\n", cub->drxion);
@@ -57,4 +57,6 @@ void	print_specs(t_cub *cub)
 	ft_putendl("}\n");
 	print_map(cub);
 	ft_putendl("----\n");
+	ft_print_memory(cub, 256);
+	ft_putendl("\n----\n");
 }

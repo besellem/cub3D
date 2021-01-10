@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 15:49:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 23:37:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_mlx_start(t_cub *cub)
 										&(cub->img->size_line),
 										&(cub->img->endian));
 	update_view(cub);
-	print_specs(cub); // TO REMOVE
+	print_specs(cub);
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);
 	mlx_hook(cub->win, EVT_RED_CROSS, (1L << 2), ft_red_cross, cub);
@@ -32,14 +32,26 @@ static void	ft_mlx_start(t_cub *cub)
 
 static int	ft_save_img(t_cub *cub)
 {
-	cub->img->ptr = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
+	uint32_t	nbr;
+	int			fd;
+
+	cub->img->ptr = mlx_new_image(cub->mlx, cub->parsed_w, cub->parsed_h);
 	cub->img->addr = mlx_get_data_addr(cub->img->ptr,
 										&(cub->img->bits_per_pixel),
 										&(cub->img->size_line),
 										&(cub->img->endian));
 	update_view(cub);
+	print_specs(cub);
+	if ((fd = open("./saved.bmp", O_WRONLY | O_CREAT, 0644)) == 1)
+		return (0);
+	write(fd, "BM", 2);
+	nbr = cub->img->bits_per_pixel * cub->parsed_h * cub->parsed_w;
+	write(fd, &nbr, 4);
+	// write(fd, "BESE", 4);
+	close(fd);
 	ft_free_cub(cub);
-	return (0);
+	ft_printf("BMP file created -> "B_GREEN"./saved.bmp\n"CLR_COLOR);
+	return (1);
 }
 
 int			main(int ac, char **av)
@@ -57,6 +69,7 @@ int			main(int ac, char **av)
 		{
 			if (!ft_save_img(&cub))
 				ft_error("Enable to create the .bmp file", &cub, NULL, 0);
+			return (0);
 		}
 		else if (ac == 3)
 			ft_error("Argument error", &cub, NULL, 0);

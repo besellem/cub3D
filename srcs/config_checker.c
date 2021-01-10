@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2020/12/31 11:54:48 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 22:54:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 
 	if (ft_strs_size(split) != 3)
 		ft_error("Bad resolution configuration", cub, NULL, line_c);
-	cub->parsed_width = ft_atoi(split[1]);
-	cub->parsed_heigh = ft_atoi(split[2]);
-	cub->win_w = cub->parsed_width;
-	cub->win_h = cub->parsed_heigh;
+	cub->parsed_w = ft_atoi(split[1]);
+	cub->parsed_h = ft_atoi(split[2]);
+	cub->win_w = cub->parsed_w;
+	cub->win_h = cub->parsed_h;
 	ft_free_strs(split);
 	if (cub->win_w <= 0 || cub->win_h <= 0)
 		ft_error("Bad resolution configuration", cub, NULL, line_c);

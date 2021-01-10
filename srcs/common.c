@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/07 14:08:34 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/10 20:11:02 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	ft_error(char *err, t_cub *cub, char *file, int line)
 void	ft_quit(t_cub *cub)
 {
 	ft_putendl(B_RED"[Quit]"CLR_COLOR);
-	mlx_destroy_window(cub->mlx, cub->win);
+	if (cub->win)
+		mlx_destroy_window(cub->mlx, cub->win);
 	ft_free_cub(cub);
 	exit(EXIT_SUCCESS);
 }

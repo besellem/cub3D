@@ -6,12 +6,13 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/10 15:46:14 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/11 00:06:17 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MUTE		=	
 NAME		=	Cub3D
+BMP_FILE	=	./saved.bmp
 
 ## Sources
 INCS		=	incs libft/libft.a
@@ -42,6 +43,7 @@ clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx clean
 			$(MUTE) $(RMD) Cub3D.dSYM
+			$(MUTE) $(RM) $(BMP_FILE)
 
 fclean:		clean
 			$(MUTE) $(MAKE) -C libft fclean
