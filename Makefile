@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/11 00:06:17 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/11 09:53:00 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,25 @@ SRCS		=	main.c srcs/*.c
 CC			=	clang
 CFLAGS		=	-Wall -Wextra -Werror# -fsanitize=address #Check leak option in Linux
 RM			=	rm -f
-RMD			=	rm -rf
+RMRF		=	rm -rf
+UNAME		:=	$(shell uname)
 
+## Targets
+# Check system -- macOS or Linux --
+ifeq ($(UNAME), Darwin)
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
 			$(MUTE) $(CC) $(CFLAGS) -g3 -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
+endif
+
+ifeq ($(UNAME), Linux)
+$(NAME):
+			$(MUTE) $(MAKE) -C libft all
+			$(MUTE) $(MAKE) -C mlx_linux all
+			$(MUTE) $(CC) $(CFLAGS) -g3 -o $(NAME) -Imlx_linux $(SRCS) -Lmlx -lmlx -lm -I $(INCS) mlx_linux/
+endif
 
 all:		$(NAME)
 
@@ -39,11 +51,21 @@ bonus:		all
 
 test:		$(NAME)
 
+ifeq ($(UNAME), Darwin)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx clean
-			$(MUTE) $(RMD) Cub3D.dSYM
+			$(MUTE) $(RMRF) Cub3D.dSYM
 			$(MUTE) $(RM) $(BMP_FILE)
+endif
+
+ifeq ($(UNAME), Linux)
+clean:
+			$(MUTE) $(MAKE) -C libft clean
+			$(MUTE) $(MAKE) -C mlx_linux clean
+			$(MUTE) $(RMRF) Cub3D.dSYM
+			$(MUTE) $(RM) $(BMP_FILE)
+endif
 
 fclean:		clean
 			$(MUTE) $(MAKE) -C libft fclean
