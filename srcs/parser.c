@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/08 11:28:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/11 15:24:54 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void		cub_parser(char *file, t_cub *cub)
 {
 	int fd;
 
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		ft_error("Unable to start mlx", cub, __FILE__, __LINE__);
 	if ((fd = open(file, O_RDONLY)) == -1 ||
 		ft_strcmp(file + (ft_strlen(file) - 4), ".cub") != 0)
 	{

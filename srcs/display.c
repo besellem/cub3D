@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 14:20:19 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/11 15:10:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 ** PRINT A RAY OF TEXTURE
 */
 
-static void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
+void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
 {
 	t_img	tx;
 	char	*ptr;
@@ -94,7 +94,7 @@ void		update_cubs(t_cub *cub)
 	{
 		ratio = cub->rays[x].distance * cub->rays[x].distortion;
 		if (ratio < 1)
-			ratio = cub->win_h;	// -- TO CHANGE MAYBE (REMOVE). DOES A DISTORTION WHEN TOO CLOSE TO A WALL --
+			ratio = cub->win_h;
 		else
 			ratio = cub->win_h / ratio;
 		h_start = (cub->win_h - ratio) / 2;
@@ -109,38 +109,62 @@ void		update_cubs(t_cub *cub)
 	}
 }
 
+// void	init_display(t_cub *cub, t_ray *ray, t_display *dsp)
+// {
+// 	dsp->ratio = cub->win_h / (ray->distance * ray->distortion);
+// 	dsp->t_win_start = (cub->win_h - dsp->ratio) / 2;
+// 	if (dsp->t_win_start < 0)
+// 	{
+// 		dsp->t_start = -dsp->t_win_start / cub->win_h;
+// 		dsp->t_end = cub->win_h - dsp->t_start;
+// 		dsp->t_win_start = 0;
+// 		dsp->t_win_end = cub->win_h;
+// 	}
+// 	else
+// 	{
+// 		dsp->t_start = 0;
+// 		dsp->t_end = cub->txtrs[ray->hit_drxion].y;
+// 		dsp->t_win_end = dsp->ratio + dsp->t_win_start;
+// 	}
+// }
+
+// void		tst_ray(t_cub *cub, t_ray *ray, t_display *dsp, int idx)
+// {
+// 	t_img	tx;
+// 	char	*ptr;
+// 	int		x;
+// 	double	y;
+
+// 	tx = cub->txtrs[ray->hit_drxion];
+// 	y = dsp->t_start;
+// 	while (y < dsp->t_end)
+// 	{
+// 		if (ray->hit_drxion == HIT_NORTH || ray->hit_drxion == HIT_SOUTH)
+// 			x = tx.x * get_dec(ray->hit_wall_x);
+// 		else if (ray->hit_drxion == HIT_EAST || ray->hit_drxion == HIT_WEST)
+// 			x = tx.x * get_dec(ray->hit_wall_y);
+// 		ptr = tx.addr + (int)y * tx.size_line + x * (tx.bits_per_pixel / 8);
+// 		ft_pixel_put(cub, idx, dsp->t_win_start + y, *(unsigned int *)ptr);
+// 		y += tx.y / (dsp->t_win_end - dsp->t_win_start);
+// 	}
+// }
+
 // void		update_cubs(t_cub *cub)
 // {
-// 	double	ratio;
-// 	int		x;
-// 	int		y;
-// 	int		tmp;
-// 	int		color;
+// 	t_display	dsp;
+// 	int			x;
+// 	int			y;
 
 // 	x = -1;
 // 	while (++x < cub->win_w)
 // 	{
-// 		ratio = cub->rays[x].distance * cos(cub->rays[x].angle - cub->drxion);
-// 		if (ratio < 1)
-// 			ratio = cub->win_h;
-// 		else
-// 			ratio = cub->win_h / ratio;
-// 		tmp = (cub->win_h - ratio) / 2;
-// 		if (cub->rays[x].hit_drxion == HIT_EAST)
-// 			color = UCOLOR_BLUE;
-// 		else if (cub->rays[x].hit_drxion == HIT_WEST)
-// 			color = UCOLOR_BLACK;
-// 		else if (cub->rays[x].hit_drxion == HIT_SOUTH)
-// 			color = UCOLOR_GREY;
-// 		else if (cub->rays[x].hit_drxion == HIT_NORTH)
-// 			color = UCOLOR_RED;
+// 		init_display(cub, &(cub->rays[x]), &dsp);
 // 		y = 0;
-// 		while (y < tmp)
+// 		while (y < dsp.t_win_start)
 // 			ft_pixel_put(cub, x, y++, cub->sky_color);
-// 		while (y < ratio + tmp)
-// 			ft_pixel_put(cub, x, y++, color);
+// 		tst_ray(cub, &(cub->rays[x]), &dsp, x);
+// 		y = dsp.t_win_end;
 // 		while (y < cub->win_h)
 // 			ft_pixel_put(cub, x, y++, cub->grnd_color);
-// 		printf("HIT WALL => [ %.2f ; %.2f ]\n", cub->rays[x].hit_wall_x, cub->rays[x].hit_wall_y);
 // 	}
 // }
