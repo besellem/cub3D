@@ -1,4 +1,4 @@
-R 720 480
+R 2560 1440
 NO ./textures/xpm/colorstone.xpm
 SO ./textures/xpm/eagle.xpm
 WE ./textures/xpm/greystone.xpm

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/11 14:44:02 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/12 14:35:00 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,24 @@
 # endif
 
 /*
-** -- STRUCTURES --
+** -- TYPEDEFS & STRUCTURES --
 */
+/*
+** INTEGER TYPES
+** Signed
+*/
+typedef	signed char	t_int8;
+typedef	short		t_int16;
+typedef	int			t_int32;
+typedef	long long	t_int64;
+/*
+** Unsigned
+*/
+typedef	unsigned char		t_uint8;
+typedef	unsigned short		t_uint16;
+typedef	unsigned int		t_uint32;
+typedef	unsigned long long	t_uint64;
+
 typedef struct	s_map_checker
 {
 	int got_player_pos;
@@ -130,7 +146,6 @@ typedef	struct	s_display
 ** distance:		distance from the player to a wall for that angle
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
-
 ** is_down:			is the angle pointing up (0) or down (1)
 ** is_right:		is the angle pointing left (0) or right (1)
 ** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
@@ -304,5 +319,6 @@ int				ft_refresh(t_cub *cub);
 ** Main
 */
 int				init_cub(t_cub *cub);
+int				ft_save(t_cub *cub);
 
 #endif

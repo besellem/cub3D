@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/11 12:15:09 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/12 14:08:04 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
-			$(MUTE) $(CC) $(CFLAGS) -g3 -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 endif
 
 # Does not work yet
@@ -43,7 +43,7 @@ ifeq ($(UNAME), Linux)
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
-			$(MUTE) $(CC) $(CFLAGS) -g3 -o $(NAME) -Imlx_linux $(SRCS) -Lmlx_linux -lmlx_Linux -lm -I $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx_linux $(SRCS) -Lmlx_linux -lmlx_Linux -lm -I $(INCS)
 endif
 
 all:		$(NAME)
