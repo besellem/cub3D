@@ -10,9 +10,8 @@ clang, GNU make
 - [x] Raycasting
 - [x] Textures
 - [ ] Sprites
+- [ ] --save option
 - [ ] Fix memory leaks
-- [ ] Speed ?
 
 ## Compilation
-On Linux, just run `make`.
-On macOS, run `make macos`.
+Just run `make` (macOS and Linux compilation).
