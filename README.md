@@ -1,5 +1,5 @@
-# cub3D
-The goal of this project is to produce a simple ray-casting game, Wolfenstein 3D - like.
+# Cub3D
+The goal of this project is to produce a simple ray-casting game, Wolfenstein 3D like.
 
 ## Requirements
 clang, GNU make
@@ -14,4 +14,9 @@ clang, GNU make
 - [ ] Fix memory leaks
 
 ## Compilation
-Just run `make` (macOS and Linux compilation).
+Just run `make` for macOS or Linux compilation (check the system automatically).
+
+## Usage
+```sh
+./Cub3D path_to_map/map.cub [--save]
+```
