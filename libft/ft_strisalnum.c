@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc_hex_maj.c                                 :+:      :+:    :+:   */
+/*   ft_strisalnum.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/26 16:23:35 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/27 14:52:38 by besellem         ###   ########.fr       */
+/*   Created: 2021/01/13 12:45:53 by besellem          #+#    #+#             */
+/*   Updated: 2021/01/13 12:55:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf_internal.h"
+#include "libft.h"
 
-void	ft_alloc_hex_maj(t_data **s, t_indicators t, va_list ap)
+/*
+** Check if each characters of the string are alphanumeric
+*/
+
+int	ft_strisalnum(char *str)
 {
-	char				*data;
-	unsigned long long	n;
+	size_t i;
 
-	n = u_spec(&t, ap);
-	data = conv_x(t, n, 0);
-	ft_strupcase(data);
-	add_lstd(s, data);
-	ft_free(1, data);
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == 0)
+			return (0);
+		++i;
+	}
+	return (1);
 }

@@ -6,11 +6,11 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/17 21:13:07 by besellem          #+#    #+#              #
-#    Updated: 2020/12/09 20:48:45 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/12 23:08:57 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MUTE		=	@
+MUTE		=	
 NAME		=	libftprintf.a
 
 ## Mandatory
@@ -32,27 +32,24 @@ SRCS		+=	srcs/ft_alloc_mod.c
 SRCS		+=	srcs/ft_alloc_c.c
 SRCS		+=	srcs/ft_alloc_s.c
 SRCS		+=	srcs/ft_alloc_p.c
-SRCS		+=	srcs/ft_alloc_d.c
-SRCS		+=	srcs/ft_alloc_i.c
-SRCS		+=	srcs/ft_alloc_u.c
-SRCS		+=	srcs/ft_alloc_hex_maj.c
-SRCS		+=	srcs/ft_alloc_hex_min.c
+SRCS		+=	srcs/ft_alloc_idu.c
+SRCS		+=	srcs/ft_alloc_hex.c
 SRCS		+=	srcs/ft_alloc_f.c
 SRCS		+=	srcs/ft_alloc_f_utils.c
 SRCS		+=	srcs/ft_alloc_n.c
 SRCS		+=	srcs/ft_alloc_o.c
 SRCS		+=	srcs/ft_alloc_b.c
 
-SRCS		+=	ft_printf_family/ft_printf.c
-SRCS		+=	ft_printf_family/ft_sprintf.c
-SRCS		+=	ft_printf_family/ft_snprintf.c
-SRCS		+=	ft_printf_family/ft_asprintf.c
-SRCS		+=	ft_printf_family/ft_dprintf.c
-SRCS		+=	ft_printf_family/ft_vprintf.c
-SRCS		+=	ft_printf_family/ft_vsprintf.c
-SRCS		+=	ft_printf_family/ft_vsnprintf.c
-SRCS		+=	ft_printf_family/ft_vasprintf.c
-SRCS		+=	ft_printf_family/ft_vdprintf.c
+SRCS		+=	family/ft_printf.c
+SRCS		+=	family/ft_sprintf.c
+SRCS		+=	family/ft_snprintf.c
+SRCS		+=	family/ft_asprintf.c
+SRCS		+=	family/ft_dprintf.c
+SRCS		+=	family/ft_vprintf.c
+SRCS		+=	family/ft_vsprintf.c
+SRCS		+=	family/ft_vsnprintf.c
+SRCS		+=	family/ft_vasprintf.c
+SRCS		+=	family/ft_vdprintf.c
 
 ## Objects
 OBJS		=	$(SRCS:.c=.o)

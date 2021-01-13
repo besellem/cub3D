@@ -6,11 +6,11 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/13 02:01:30 by besellem          #+#    #+#              #
-#    Updated: 2020/12/09 20:48:36 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/13 13:06:08 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MUTE		=	@
+MUTE		=	
 NAME		=	libft.a
 
 # Main srcs
@@ -68,6 +68,12 @@ SRCS		+=	ft_strchr.c
 SRCS		+=	ft_strcmp.c
 SRCS		+=	ft_strcpy.c
 SRCS		+=	ft_strdup.c
+SRCS		+=	ft_strisall.c
+SRCS		+=	ft_strisalnum.c
+SRCS		+=	ft_strisalpha.c
+SRCS		+=	ft_strisascii.c
+SRCS		+=	ft_strisdigit.c
+SRCS		+=	ft_strisprint.c
 SRCS		+=	ft_strjoin.c
 SRCS		+=	ft_strlcat.c
 SRCS		+=	ft_strlcpy.c
@@ -101,7 +107,7 @@ INC			=	libft.h
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -Ofast
 LIBC		=	ar rc
 RM			=	rm -f
 

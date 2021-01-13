@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 15:06:12 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/27 14:52:32 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/12 22:40:00 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ int	prec_zero_case(long double n, int sign)
 	int		x;
 	long	next;
 
-	n = sign ? -n : n;
+	if (sign)
+		n = -n;
 	next = ((long)(n * 10) - (((long)n % 10) * 10)) % 10;
 	if ((long)n % 2 == 1)
-		x = next >= 5 ? 1 : 0;
+		x = (next >= 5);
 	else
-		x = next > 5 ? 1 : 0;
-	return (!x && sign ? 0 : x);
+		x = (next > 5);
+	if (!x && sign)
+		return (0);
+	return (x);
 }

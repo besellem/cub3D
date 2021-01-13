@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc_u.c                                       :+:      :+:    :+:   */
+/*   ft_strisprint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/26 16:58:37 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/27 14:53:01 by besellem         ###   ########.fr       */
+/*   Created: 2021/01/13 12:41:19 by besellem          #+#    #+#             */
+/*   Updated: 2021/01/13 12:54:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf_internal.h"
+#include "libft.h"
 
-void	ft_alloc_u(t_data **s, t_indicators t, va_list ap)
+/*
+** Check if each characters of the string are printable
+*/
+
+int	ft_strisprint(char *str)
 {
-	char				*data;
-	unsigned long long	n;
+	size_t i;
 
-	n = u_spec(&t, ap);
-	data = conv_d(t, n, 0, "0123456789");
-	add_lstd(s, data);
-	ft_free(1, data);
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isprint(str[i]) == 0)
+			return (0);
+		++i;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 00:26:39 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/07 14:10:25 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 14:12:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void		update_pos(t_cub *cub, int x, int y, char pos)
 		cub->drxion = DRXION_W;
 	else if (pos == 'S')
 		cub->drxion = DRXION_S;
+	cub->map[y][x] = '0';
 }
 
 static int		is_valid_charset(t_cub *cub, t_map_checker *mcheck)
@@ -103,6 +104,5 @@ int				check_map(t_cub *cub)
 	mcheck.got_player_pos = 0;
 	if (!is_valid_charset(cub, &mcheck))
 		ft_error("Invalid map", cub, __FILE__, __LINE__);
-	cub->map[(int)(cub->pos_y)][(int)(cub->pos_x)] = '0';
 	return (1);
 }

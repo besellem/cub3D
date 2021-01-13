@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc_i.c                                       :+:      :+:    :+:   */
+/*   ft_strisall.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/01 00:59:14 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/27 14:52:45 by besellem         ###   ########.fr       */
+/*   Created: 2021/01/13 12:57:27 by besellem          #+#    #+#             */
+/*   Updated: 2021/01/13 12:57:41 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf_internal.h"
+#include "libft.h"
 
-void	ft_alloc_i(t_data **s, t_indicators t, va_list ap)
+/*
+** Use a function to check each characters of a string
+** usage:
+** ft_strisall("012345", ft_isdigit) == 1
+*/
+
+int	ft_strisall(char *str, int (*f)(int))
 {
-	ft_alloc_d(s, t, ap);
+	size_t i;
+
+	i = 0;
+	while (str[i])
+	{
+		if ((*f)(str[i]) == 0)
+			return (0);
+		++i;
+	}
+	return (1);
 }

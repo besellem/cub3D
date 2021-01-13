@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 02:16:30 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/30 16:24:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 12:56:57 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ int				ft_isalpha(int c);
 int				ft_isascii(int c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
+int				ft_strisall(char *str, int (*f)(int));
+int				ft_strisalnum(char *str);
+int				ft_strisalpha(char *str);
+int				ft_strisascii(char *str);
+int				ft_strisdigit(char *str);
+int				ft_strisprint(char *str);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);

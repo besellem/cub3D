@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc_hex_min.c                                 :+:      :+:    :+:   */
+/*   ft_alloc_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 16:23:26 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/27 14:52:43 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/12 23:04:02 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ void		ft_alloc_hex_min(t_data **s, t_indicators t, va_list ap)
 
 	n = u_spec(&t, ap);
 	data = conv_x(t, n, 0);
+	add_lstd(s, data);
+	ft_free(1, data);
+}
+
+void		ft_alloc_hex_maj(t_data **s, t_indicators t, va_list ap)
+{
+	char				*data;
+	unsigned long long	n;
+
+	n = u_spec(&t, ap);
+	data = conv_x(t, n, 0);
+	ft_strupcase(data);
 	add_lstd(s, data);
 	ft_free(1, data);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: besellem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 22:27:52 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/16 21:26:04 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/12 22:41:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ char			*ft_itoa(int n)
 	int				div;
 	int				i;
 
-	len = n < 0 ? nblen(-n) + 1 : nblen(n);
+	if (n < 0)
+		len = nblen(-n) + 1;
+	else
+		len = nblen(n);
 	if (!(s = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
 	i = -1;

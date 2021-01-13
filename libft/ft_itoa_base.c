@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: besellem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/15 12:51:37 by besellem          #+#    #+#             */
-/*   Updated: 2020/11/15 13:05:52 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/12 22:35:56 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_itoa_base(long long n, char *base)
 	int			i;
 	int			len;
 
-	len = ft_nblen_base(n, ft_strlen(base)) + (n < 0 ? 1 : 0) + 1;
+	len = ft_nblen_base(n, ft_strlen(base)) + (n < 0) + 1;
 	if (!(data = (char *)malloc(sizeof(char) * len)))
 		return (NULL);
 	len = ft_strlen(base);

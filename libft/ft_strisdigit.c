@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nblen.c                                         :+:      :+:    :+:   */
+/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/13 22:32:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/12 22:37:20 by besellem         ###   ########.fr       */
+/*   Created: 2021/01/13 12:32:32 by besellem          #+#    #+#             */
+/*   Updated: 2021/01/13 12:57:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_nblen(long long n)
-{
-	int len;
+/*
+** Check if each characters of the string are numbers
+*/
 
-	if (n < 0)
-		n = -n;
-	len = 1;
-	while (n / 10 > 0)
+int	ft_strisdigit(char *str)
+{
+	size_t i;
+
+	i = 0;
+	while (str[i])
 	{
-		n /= 10;
-		++len;
+		if (ft_isdigit(str[i]) == 0)
+			return (0);
+		++i;
 	}
-	return (len);
+	return (1);
 }
