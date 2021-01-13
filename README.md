@@ -10,7 +10,7 @@ clang, GNU make
 - [x] Raycasting
 - [x] Textures
 - [ ] Sprites
-- [ ] --save option
+- [x] --save option
 - [ ] Fix memory leaks
 
 ## Compilation
