@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncat.c                                       :+:      :+:    :+:   */
+/*   ft_stridx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/13 18:58:23 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 14:17:24 by besellem         ###   ########.fr       */
+/*   Created: 2021/01/13 15:07:49 by besellem          #+#    #+#             */
+/*   Updated: 2021/01/13 15:26:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncat(char *s1, const char *s2, size_t n)
-{
-	size_t len;
-	size_t i;
+/*
+** Find the index of the first character from needle that is found in haystack
+** If not found, returns -1
+*/
 
-	len = ft_strlen(s1);
+int	ft_stridx(const char *haystack, const char *needle)
+{
+	size_t i;
+	size_t j;
+
+	if (!haystack || !needle)
+		return (0);
 	i = 0;
-	while (s2[i] && i < n)
+	while (haystack[i])
 	{
-		s1[len + i] = s2[i];
+		j = 0;
+		while (needle[j])
+			if (needle[j++] == haystack[i])
+				return (i);
 		++i;
 	}
-	s1[len + i] = '\0';
-	return (s1);
+	return (-1);
 }

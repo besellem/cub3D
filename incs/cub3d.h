@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 12:10:34 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:55:56 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define BMP_FILEPATH "./saved.bmp"
 # define CUB_ERR "\033[1;31mError\033[0m"
 # define MAP_CHARSET " 012NEWS"
+# define DRXIONS "NSEW"
 # define TEXTURES_COUNT 5
 
 /*
@@ -112,11 +113,6 @@ typedef	unsigned char		t_uint8;
 typedef	unsigned short		t_uint16;
 typedef	unsigned int		t_uint32;
 typedef	unsigned long long	t_uint64;
-
-typedef struct	s_map_checker
-{
-	int got_player_pos;
-}				t_map_checker;
 
 /*
 ** ratio:			nb of pixels to draw for a wall in the ray (eg: 400px)

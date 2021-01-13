@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncat.c                                       :+:      :+:    :+:   */
+/*   ft_stroc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/13 18:58:23 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 14:17:24 by besellem         ###   ########.fr       */
+/*   Created: 2021/01/13 15:08:04 by besellem          #+#    #+#             */
+/*   Updated: 2021/01/13 15:10:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncat(char *s1, const char *s2, size_t n)
-{
-	size_t len;
-	size_t i;
+/*
+** Find the number of occurences of a character in a string
+*/
 
-	len = ft_strlen(s1);
+size_t	ft_stroc(const char *haystack, char c)
+{
+	size_t i;
+	size_t oc;
+
+	if (!haystack)
+		return (0);
+	oc = 0;
 	i = 0;
-	while (s2[i] && i < n)
+	while (haystack[i])
 	{
-		s1[len + i] = s2[i];
+		if (haystack[i] == c)
+			++oc;
 		++i;
 	}
-	s1[len + i] = '\0';
-	return (s1);
+	return (oc);
 }

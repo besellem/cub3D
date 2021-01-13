@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/13 02:01:30 by besellem          #+#    #+#              #
-#    Updated: 2021/01/13 13:06:08 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/13 15:16:20 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS		+=	ft_strchr.c
 SRCS		+=	ft_strcmp.c
 SRCS		+=	ft_strcpy.c
 SRCS		+=	ft_strdup.c
+SRCS		+=	ft_stridx.c
 SRCS		+=	ft_strisall.c
 SRCS		+=	ft_strisalnum.c
 SRCS		+=	ft_strisalpha.c
@@ -86,6 +87,7 @@ SRCS		+=	ft_strncpy.c
 SRCS		+=	ft_strndup.c
 SRCS		+=	ft_strnlen.c
 SRCS		+=	ft_strnstr.c
+SRCS		+=	ft_stroc.c
 SRCS		+=	ft_strpbrk.c
 SRCS		+=	ft_strrchr.c
 SRCS		+=	ft_strsplit.c

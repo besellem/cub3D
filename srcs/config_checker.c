@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 12:27:12 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:04:34 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 	int x_tmp;
 	int y_tmp;
 
-	if (ft_strs_size(split) != 3)
+	if (ft_strs_size(split) != 3 || !ft_strisdigit(split[1]) ||
+		!ft_strisdigit(split[2]))
 		ft_error("Bad resolution configuration", cub, NULL, line_c);
 	cub->parsed_w = ft_atoi(split[1]);
 	cub->parsed_h = ft_atoi(split[2]);
@@ -36,6 +37,22 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 	cub->dist_plane = (cub->win_w / 2) / tan(FOV / 2);
 }
 
+int			check_rgb(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] == ' ')
+		++i;
+	while (s[i] && ft_isdigit(s[i]))
+		++i;
+	while (s[i] && s[i] == ' ')
+		++i;
+	if (s[i])
+		return (0);
+	return (1);
+}
+
 /*
 ** The rgb variables are int type because we need to know if the rgb color
 ** from the config overflowed an unsigned char or not
@@ -48,7 +65,8 @@ static void	color_specs(char where, char **split, t_cub *cub, int line_c)
 	int		g;
 	int		b;
 
-	if (ft_strs_size(split) != 3)
+	if (ft_strs_size(split) != 3 || !check_rgb(split[0] + 2) ||
+		!check_rgb(split[1]) || !check_rgb(split[2]))
 		ft_error("Bad color configuration", cub, NULL, line_c);
 	r = ft_atoi(split[0] + 2);
 	g = ft_atoi(split[1]);
