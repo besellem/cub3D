@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/12 15:58:54 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 09:24:44 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	window_size_spec(char **split, t_cub *cub, int line_c)
 	if (cub->win_w <= 0 || cub->win_h <= 0)
 		ft_error("Bad resolution configuration", cub, NULL, line_c);
 	mlx_get_screen_size(cub->mlx, &x_tmp, &y_tmp);
-	if (cub->win_w > x_tmp)
+	if (cub->save_opt == 0 && cub->win_w > x_tmp)
 		cub->win_w = x_tmp;
-	if (cub->win_h > y_tmp)
+	if (cub->save_opt == 0 && cub->win_h > y_tmp)
 		cub->win_h = y_tmp;
 	if (!(cub->rays = (t_ray *)malloc(sizeof(t_ray) * cub->win_w)))
 		ft_error("Malloc error", cub, __FILE__, line_c);

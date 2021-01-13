@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/11 15:24:54 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 09:45:56 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,22 @@ int			are_specs_complete(t_cub *cub)
 		cub->txtr_s);
 }
 
-void		cub_parser(char *file, t_cub *cub)
+void		cub_parser(int ac, char **av, t_cub *cub)
 {
 	int fd;
 
+	if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
+		cub->save_opt = 1;
+	else if (ac == 3)
+		ft_error("Argument error", cub, __FILE__, __LINE__);
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		ft_error("Unable to start mlx", cub, __FILE__, __LINE__);
-	if ((fd = open(file, O_RDONLY)) == -1 ||
-		ft_strcmp(file + (ft_strlen(file) - 4), ".cub") != 0)
+	if ((fd = open(av[1], O_RDONLY)) == -1 ||
+		ft_strcmp(av[1] + (ft_strlen(av[1]) - 4), ".cub") != 0)
 	{
 		ft_putendl_fd(CUB_ERR, 2);
-		perror(file);
+		perror(av[1]);
 		exit(EXIT_FAILURE);
 	}
 	cub_fill_specs(fd, cub);

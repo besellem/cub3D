@@ -6,19 +6,37 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:33:49 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/12 16:00:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 10:52:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	update_cursor(t_uint64 current, t_uint64 max)
+{
+	t_uint64 line_length;
+	t_uint64 i;
+
+	line_length = 30;
+	i = -1;
+	ft_putstr(CLR_LINE);
+	write(1, "[", 1);
+	while (++i < ((double)current / max) * line_length)
+		write(1, "#", 1);
+	while (i++ < line_length)
+		write(1, " ", 1);
+	write(1, "] ", 2);
+	ft_printf("%.2f %%", ((double)current / max) * 100);
+}
 
 static void	ft_bmp_header(t_cub *cub, int fd)
 {
 	t_uint64 nb;
 
 	write(fd, "BM", 2);
-	nb = (cub->img->bits_per_pixel / 8) * cub->parsed_h * cub->parsed_w * cub->img->size_line;
-	ft_printf(B_RED"bmp_size: %u bits, %u bytes\n"CLR_COLOR, nb, nb / 8);
+	nb = cub->img->bits_per_pixel * cub->parsed_h * cub->parsed_w + 54 * 8;
+	ft_printf("# Generating "B_GREEN"%s"CLR_COLOR" (%.2f mb) ...\n",
+			BMP_FILEPATH, (double)nb / 8000000);
 	write(fd, &nb, 4);
 	nb = 0;
 	write(fd, &nb, 4);
@@ -28,7 +46,8 @@ static void	ft_bmp_header(t_cub *cub, int fd)
 
 static void	ft_bmp_dib_header(t_cub *cub, int fd)
 {
-	t_uint64 nb;
+	t_uint64	nb;
+	int			i;
 
 	nb = 40;
 	write(fd, &nb, 4);
@@ -38,7 +57,9 @@ static void	ft_bmp_dib_header(t_cub *cub, int fd)
 	write(fd, &nb, 2);
 	write(fd, &cub->img->bits_per_pixel, 2);
 	nb = 0;
-	write(fd, &nb, 24);
+	i = -1;
+	while (++i < 6)
+		write(fd, &nb, 4);
 }
 
 static void	ft_bmp_pixel_array(t_cub *cub, int fd)
@@ -60,7 +81,9 @@ static void	ft_bmp_pixel_array(t_cub *cub, int fd)
 			ptr = addr + i * img->size_line + j * (img->bits_per_pixel / 8);
 			write(fd, &(*(t_uint32 *)ptr), 4);
 		}
+		update_cursor(cub->parsed_h - i, cub->parsed_h);
 	}
+	write(1, "\n", 1);
 }
 
 int			ft_save(t_cub *cub)
@@ -77,10 +100,11 @@ int			ft_save(t_cub *cub)
 	if ((fd = open(BMP_FILEPATH, O_WRONLY | O_CREAT, 0644)) == 1)
 		return (0);
 	ft_bmp_header(cub, fd);
+	update_cursor(0, cub->parsed_h);
 	ft_bmp_dib_header(cub, fd);
 	ft_bmp_pixel_array(cub, fd);
 	close(fd);
 	ft_free_cub(cub);
-	ft_printf("BMP file created -> "B_GREEN"%s\n"CLR_COLOR, BMP_FILEPATH);
+	ft_putendl(B_GREEN"Done !"CLR_COLOR);
 	return (1);
 }

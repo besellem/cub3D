@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/12 14:35:00 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 09:36:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ typedef struct	s_img
 */
 typedef	struct	s_cub
 {
+	int		save_opt;
 	int		win_w;
 	int		win_h;
 	int		parsed_w;
@@ -297,7 +298,7 @@ int				are_specs_complete(t_cub *cub);
 void			cub_fill_specs(int fd, t_cub *cub);
 void			parse_map(int fd, t_cub *cub);
 int				check_map(t_cub *cub);
-void			cub_parser(char *file, t_cub *cub);
+void			cub_parser(int ac, char **av, t_cub *cub);
 
 /*
 ** Events handlers

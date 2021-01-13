@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/12 10:34:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 09:41:05 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,11 @@ int			main(int ac, char **av)
 		ft_putendl(ENV_MSG);
 		if (init_cub(&cub))
 			ft_error("Malloc err while initializing", &cub, __FILE__, __LINE__);
-		cub_parser(av[1], &cub);
-		if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
-		{
-			if (!ft_save(&cub))
-				ft_error("Enable to create the .bmp file", &cub, NULL, 0);
+		cub_parser(ac, av, &cub);
+		if (cub.save_opt && ft_save(&cub))
 			return (0);
-		}
-		else if (ac == 3)
-			ft_error("Argument error", &cub, NULL, 0);
+		else if (cub.save_opt)
+			ft_error("Enable to create the .bmp file", &cub, NULL, 0);
 		ft_mlx_start(&cub);
 	}
 	else

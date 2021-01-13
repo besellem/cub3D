@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 20:11:02 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 09:51:01 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_error(char *err, t_cub *cub, char *file, int line)
 	else if (file && line <= 0)
 		ft_dprintf(2, B_YELLOW"%s: "CLR_COLOR, file);
 	else if (!file && line > 0)
-		ft_dprintf(2, B_YELLOW"line %d: "CLR_COLOR, line);
+		ft_dprintf(2, B_YELLOW"line %d in .cub file: "CLR_COLOR, line);
 	ft_putendl_fd(err, 2);
 	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 23:34:13 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/13 10:50:00 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	print_specs(t_cub *cub)
 	ft_putendl("{");
 	ft_printf("    cub->mlx:        %p\n", cub->mlx);
 	ft_printf("    cub->win:        %p\n", cub->win);
-	ft_printf("    cub->win_w:      %d\n", cub->win_w);
-	ft_printf("    cub->win_h:      %d\n", cub->win_h);
+	ft_printf("    cub->win_w:      %d -> %d\n", cub->parsed_w, cub->win_w);
+	ft_printf("    cub->win_h:      %d -> %d\n", cub->parsed_h, cub->win_h);
 	ft_printf("    cub->sky_color:  0b%.32b\n", cub->sky_color);
 	ft_printf("    cub->grnd_color: 0b%.32b\n", cub->grnd_color);
 	ft_printf("    cub->txtr_no:    [%p] %s\n", cub->txtr_no, cub->txtr_no);
@@ -56,7 +56,5 @@ void	print_specs(t_cub *cub)
 	ft_printf("    cub->increment:  %f\n", cub->increment);
 	ft_putendl("}\n");
 	print_map(cub);
-	ft_putendl("----\n");
-	ft_print_memory(cub, 256);
 	ft_putendl("\n----\n");
 }
