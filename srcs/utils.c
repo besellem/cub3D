@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 10:50:00 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 14:55:00 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	print_specs(t_cub *cub)
 	ft_printf("    cub->win:        %p\n", cub->win);
 	ft_printf("    cub->win_w:      %d -> %d\n", cub->parsed_w, cub->win_w);
 	ft_printf("    cub->win_h:      %d -> %d\n", cub->parsed_h, cub->win_h);
-	ft_printf("    cub->sky_color:  0b%.32b\n", cub->sky_color);
-	ft_printf("    cub->grnd_color: 0b%.32b\n", cub->grnd_color);
+	ft_printf("    cub->sky_color:  %#x\n", cub->sky_color);
+	ft_printf("    cub->grnd_color: %#x\n", cub->grnd_color);
 	ft_printf("    cub->txtr_no:    [%p] %s\n", cub->txtr_no, cub->txtr_no);
 	ft_printf("    cub->txtr_so:    [%p] %s\n", cub->txtr_so, cub->txtr_so);
 	ft_printf("    cub->txtr_ea:    [%p] %s\n", cub->txtr_ea, cub->txtr_ea);

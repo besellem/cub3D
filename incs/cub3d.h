@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: besellem@student.42.fr <besellem>          +#+  +:+       +#+        */
+/*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 10:35:01 by besellem@st      ###   ########.fr       */
+/*   Updated: 2021/01/17 16:02:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ void			ft_error(char *err, t_cub *cub, char *file, int line);
 void			ft_quit(t_cub *cub);
 int				ft_red_cross(t_cub *cub);
 void			ft_free_cub(t_cub *cub);
-void			ft_free_strs(char **strs);
+int				ft_free_strs(char **strs);
 int				ft_strs_size(char **strs);
 int				file_got_ext(char *file, char *extension);
 int				in_charset(char *charset, int c);
@@ -279,7 +279,7 @@ double			ft_norm_angle(double angle);
 double			get_dist(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
 int				safe_min(int nb1, int nb2);
-void			*ft_print_memory(void *addr, unsigned int size);
+int				check_rgb(char *s);
 
 /*
 ** Utils

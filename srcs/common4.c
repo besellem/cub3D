@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:18:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 16:01:45 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,30 @@ int		safe_min(int nb1, int nb2)
 	if (nb1 - nb2 < 0)
 		return (0);
 	return (nb1 - nb2);
+}
+
+/*
+** Check if a line is rgb without any other character than spaces or digits at
+** the right places
+**
+** ex:
+** "  0234   " -> 1
+** "    0234s" -> 0
+** "0"         -> 1
+*/
+
+int			check_rgb(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] && s[i] == ' ')
+		++i;
+	while (s[i] && ft_isdigit(s[i]))
+		++i;
+	while (s[i] && s[i] == ' ')
+		++i;
+	if (s[i])
+		return (0);
+	return (1);
 }
