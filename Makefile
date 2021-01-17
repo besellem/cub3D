@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
+#    By: besellem@student.42.fr <besellem>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/13 14:31:59 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/17 10:40:14 by besellem@st      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,11 @@ $(NAME):
 			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 endif
 
-# Does not work yet
 ifeq ($(UNAME), Linux)
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
-			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx_linux $(SRCS) -Lmlx_linux -lmlx_Linux -lm -I $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME) 
 endif
 
 all:		$(NAME)

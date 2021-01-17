@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: besellem@student.42.fr <besellem>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:55:56 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 10:35:01 by besellem@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@
 #  define EVT_RED_CROSS 17
 # else
 #  define ENV_MSG "\033[1;32m[Linux (default) environnement]\033[0m"
-#  define KEY_ESC 53
+#  define KEY_ESC 65307
 #  define KEY_LEFT 65361
 #  define KEY_RIGHT 65363
 #  define KEY_W 119
