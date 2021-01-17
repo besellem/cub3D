@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 23:18:04 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 16:52:44 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int			file_got_ext(char *file, char *extension)
 	size_t file_len;
 	size_t ext_len;
 
+	if (!file || !extension)
+		return (0);
 	file_len = ft_strlen(file);
 	ext_len = ft_strlen(extension);
 	if (file_len < ext_len)
 		return (0);
-	if (ft_strncmp(file + file_len - ext_len, extension, ext_len) == 0)
-		return (1);
-	return (0);
+	return (ft_strncmp(file + file_len - ext_len, extension, ext_len) == 0);
 }
 
 int			in_charset(char *charset, int c)

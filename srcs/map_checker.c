@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 00:26:39 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:55:49 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 20:04:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** +0.5 to be in the center of the cube we're in
 */
 
-static void		update_pos(t_cub *cub, int x, int y, char pos)
+static void	update_pos(t_cub *cub, int x, int y, char pos)
 {
 	cub->pos_x = x + 0.5;
 	cub->pos_y = y + 0.5;
@@ -31,7 +31,7 @@ static void		update_pos(t_cub *cub, int x, int y, char pos)
 		cub->drxion = DRXION_S;
 }
 
-static int		is_valid_charset(t_cub *cub, int *got_player_pos)
+static int	is_valid_charset(t_cub *cub, int *got_player_pos)
 {
 	size_t	tst;
 	int		i;
@@ -60,7 +60,7 @@ static int		is_valid_charset(t_cub *cub, int *got_player_pos)
 	return (1);
 }
 
-int				check_map(t_cub *cub)
+int			check_map(t_cub *cub)
 {
 	int got_player_pos;
 
