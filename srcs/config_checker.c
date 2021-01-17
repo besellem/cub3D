@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:04:34 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 14:21:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ static int  texture_specs(char *line, t_cub *cub, int line_c)
 
 	nfos = ft_split(line, ' ');
 	if (ft_strs_size(nfos) != 2)
-    {
-        free(line);
-        ft_free_strs(nfos);
+	{
+		free(line);
+		ft_free_strs(nfos);
 		ft_error("Bad texture configuration", cub, NULL, line_c);
-    }
-	if ((!file_got_ext(nfos[1], ".xpm") && !file_got_ext(nfos[1], ".png")) ||
-		(fd = open(nfos[1], O_RDONLY)) == -1 || read(fd, NULL, 0) || close(fd))
+	}
+	if (!file_got_ext(nfos[1], ".xpm") || (fd = open(nfos[1], O_RDONLY)) == -1
+		|| read(fd, NULL, 0) || close(fd))
 		ft_error("Cannot open or read a texture file", cub, NULL, line_c);
 	if (!ft_strncmp(line, "NO ", 3) && !cub->txtr_no)
 		cub->txtr_no = ft_strdup(nfos[1]);
@@ -110,10 +110,10 @@ static int  texture_specs(char *line, t_cub *cub, int line_c)
 		cub->txtr_ea = ft_strdup(nfos[1]);
 	else if (!ft_strncmp(line, "S ", 2) && !cub->txtr_s)
 		cub->txtr_s = ft_strdup(nfos[1]);
-    else
-        return (0);
+	else
+		return (0);
 	ft_free_strs(nfos);
-    return (1);
+	return (1);
 }
 
 static void	check_line(char *line, t_cub *cub, int *specs_completed, int line_c)
@@ -127,13 +127,13 @@ static void	check_line(char *line, t_cub *cub, int *specs_completed, int line_c)
 	else if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3) ||
 			!ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3) ||
 			!ft_strncmp(line, "S ", 2))
-    {
+	{
 		if (!texture_specs(line, cub, line_c))
-        {
-            free(line);
-            ft_error("Doubles in configuration", cub, NULL, line_c);
-        }
-    }
+		{
+			free(line);
+			ft_error("Doubles in configuration", cub, NULL, line_c);
+		}
+	}
 	else if (ft_strlen(line) > 0)
 	{
 		free(line);

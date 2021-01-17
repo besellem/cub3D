@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:57:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/17 13:58:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	check_map(cub);
 	
 	// TO REMOVE
-	// print_specs(cub);
-	// ft_free_cub(cub);
-	// ft_printf(B_BLUE"-> ALL GOOD\n"CLR_COLOR);
-	// exit(EXIT_SUCCESS);
+	print_specs(cub);
+	ft_free_cub(cub);
+	printf(B_BLUE"-> ALL GOOD\n"CLR_COLOR);
+	exit(EXIT_SUCCESS);
 }
