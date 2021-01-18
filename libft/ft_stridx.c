@@ -23,7 +23,7 @@ int	ft_stridx(const char *haystack, const char *needle)
 	size_t j;
 
 	if (!haystack || !needle)
-		return (0);
+		return (-1);
 	i = 0;
 	while (haystack[i])
 	{

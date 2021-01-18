@@ -24,6 +24,7 @@ SRCS		+=	ft_bzero.c
 SRCS		+=	ft_calloc.c
 SRCS		+=	ft_factorial.c
 SRCS		+=	ft_find_next_prime.c
+SRCS		+=	ft_incharset.c
 SRCS		+=	ft_is_prime.c
 SRCS		+=	ft_isalnum.c
 SRCS		+=	ft_isalpha.c

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 16:02:17 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/18 14:03:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,21 +98,6 @@
 /*
 ** -- TYPEDEFS & STRUCTURES --
 */
-/*
-** INTEGER TYPES
-** Signed
-*/
-typedef	signed char	t_int8;
-typedef	short		t_int16;
-typedef	int			t_int32;
-typedef	long long	t_int64;
-/*
-** Unsigned
-*/
-typedef	unsigned char		t_uint8;
-typedef	unsigned short		t_uint16;
-typedef	unsigned int		t_uint32;
-typedef	unsigned long long	t_uint64;
 
 /*
 ** ratio:			nb of pixels to draw for a wall in the ray (eg: 400px)

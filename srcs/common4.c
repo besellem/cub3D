@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 16:01:45 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/18 09:51:45 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ double	get_dist(double x1, double y1, double x2, double y2)
 
 /*
 ** GET THE INTEGRAL PART OF A DECIMAL NUMBER
+** ex: 12.44 -> 12.00
 */
 
 double	get_dec(double n)

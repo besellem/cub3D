@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 02:16:30 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:27:03 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/18 12:28:46 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,77 @@
 ** #define TOSTRING(x) STRINGIFY(x)
 ** #define ERR_MSG(s) "\033[1;31m" __FILE__ ":" TOSTRING(__LINE__) ":\033[0m " s
 */
+
+/*
+** PI constant and its variables
+** Scheme:
+**
+**        T_PI_2
+**          |   T_PI_4
+**          | /
+** T_PI ---- ---- T_2PI
+**          |
+**          |
+**       T_3PI_2
+*/
+/*
+** PI/4
+*/
+# define T_PI_4 0.785398163397448309615660845819875721
+
+/*
+** PI/2
+*/
+# define T_PI_2 1.57079632679489661923132169163975144
+
+/*
+** PI
+*/
+# define T_PI 3.14159265358979323846264338327950288
+
+/*
+** (3*PI)/2 or PI+(PI/2)
+*/
+# define T_3PI_2 4.71238898038468967399694520281627774
+
+/*
+** 2*PI
+*/
+# define T_2PI 6.28318530717958623199592693708837032
+
+/*
+** 1/PI
+*/
+# define T_1_PI 0.318309886183790671537767526745028724
+
+/*
+** 2/PI
+*/
+# define T_2_PI 0.636619772367581343075535053490057448
+
+/*
+** E constant
+*/
+# define T_E 2.71828182845904523536028747135266250
+
+/*
+** -- TYPEDEFS --
+*/
+/*
+** INTEGER TYPES
+** Signed
+*/
+typedef	signed char			t_int8;
+typedef	short				t_int16;
+typedef	int					t_int32;
+typedef	long long			t_int64;
+/*
+** Unsigned
+*/
+typedef	unsigned char		t_uint8;
+typedef	unsigned short		t_uint16;
+typedef	unsigned int		t_uint32;
+typedef	unsigned long long	t_uint64;
 
 /*
 ** -- PROTOTYPES --
@@ -84,6 +155,7 @@ int				ft_strisalpha(char *str);
 int				ft_strisascii(char *str);
 int				ft_strisdigit(char *str);
 int				ft_strisprint(char *str);
+int				ft_incharset(const char *charset, int c);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);

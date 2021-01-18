@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/10 14:20:06 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/18 12:33:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	init_ray(t_ray *ray, double angle)
 {
 	ft_memset(ray, 0, sizeof(t_ray));
 	ray->angle = angle;
-	ray->is_down = angle > 0 && angle < M_PI;
-	ray->is_right = !(angle > M_PI_2 && angle < (1.5 * M_PI));
+	ray->is_down = angle > 0 && angle < T_PI;
+	ray->is_right = !(angle > T_PI_2 && angle < (1.5 * T_PI));
 	ray->distance = -1.0;
 	ray->sp_distance = -1.0;
 }

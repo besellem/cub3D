@@ -6,24 +6,26 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 20:05:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/18 16:01:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	fill_texture(t_cub *cub, t_img *txtre, char *path)
+static void	fill_texture(t_cub *cub, t_img *tx, char *path)
 {
 	if (file_got_ext(path, ".xpm"))
 	{
-		if (!(txtre->ptr = mlx_xpm_file_to_image(cub->mlx, path, &(txtre->x),
-											&(txtre->y))))
+		tx->ptr = mlx_xpm_file_to_image(cub->mlx, path, &tx->x, &tx->y);
+		if (!tx->ptr)
 			ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
 	}
 	else
 		ft_error("Not a valid texture file", cub, __FILE__, __LINE__);
-	txtre->addr = mlx_get_data_addr(txtre->ptr, &(txtre->bits_per_pixel),
-									&(txtre->size_line), &(txtre->endian));
+	tx->addr = mlx_get_data_addr(tx->ptr, &tx->bits_per_pixel, &tx->size_line,
+								&tx->endian);
+	if (!tx->addr)
+		ft_error("Malloc error", cub, __FILE__, __LINE__);
 }
 
 static void	load_textures(t_cub *cub)
@@ -34,10 +36,7 @@ static void	load_textures(t_cub *cub)
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
 	i = -1;
 	while (++i < TEXTURES_COUNT)
-	{
-		(&(cub->txtrs[i]))->ptr = NULL;
-		(&(cub->txtrs[i]))->addr = NULL;
-	}
+		ft_memset(&cub->txtrs[i], 0, sizeof(t_img));
 	fill_texture(cub, &(cub->txtrs[0]), cub->txtr_no);
 	fill_texture(cub, &(cub->txtrs[1]), cub->txtr_so);
 	fill_texture(cub, &(cub->txtrs[2]), cub->txtr_ea);
@@ -56,6 +55,64 @@ int			are_specs_complete(t_cub *cub)
 		cub->txtr_ea &&
 		cub->txtr_we &&
 		cub->txtr_s);
+}
+
+int			check_around(char **map, size_t x, size_t y)
+{
+	if (map[y][x - 1] && map[y][x + 1] && (map[y][x - 1] == ' ' ||
+		map[y][x + 1] == ' '))
+		return (0);
+	if (map[y - 1][x] && map[y + 1][x] && (map[y - 1][x] == ' ' ||
+		map[y + 1][x] == ' '))
+		return (0);
+	return (1);
+}
+
+int			check_line(t_cub *cub, char *line, size_t y)
+{
+	size_t i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		ft_putchar(line[i++]);
+	if (line[i] == '0')
+		return (i);
+	while (line[i])
+	{
+		if ((line[i] == '2' || line[i] == '0') && !check_around(cub->map, i, y))
+			return (i);
+		// if (line[i] == ' ' && !check_space())
+		// 	return (i);
+		if (line[i] == '0')
+		{
+			while (line[i] && line[i] == '0')
+				ft_putchar(line[i++]);
+			if (!line[i] || line[i] == ' ')
+				return (i);
+		}
+		ft_putchar(line[i++]);
+	}
+	return (-1);
+}
+
+int			validate_map(t_cub *cub)
+{
+	size_t	y;
+	int		check;
+
+	y = 0;
+	while (cub->map[y] != NULL)
+	{
+		if ((check = check_line(cub, cub->map[y], y)) != -1)
+		{
+			ft_printf(B_RED"%c\n"CLR_COLOR, cub->map[y][check]);
+			ft_printf("[%d;%d]\n", check + 1, y + 1);
+			return (0);
+		}
+		ft_putendl("");
+		++y;
+	}
+	return (1);
 }
 
 void		cub_parser(int ac, char **av, t_cub *cub)
@@ -81,10 +138,12 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	parse_map(fd, cub);
 	close(fd);
 	check_map(cub);
+	if (!validate_map(cub))
+		ft_error("Invalid Map", cub, __FILE__, __LINE__);
 	
 	// TO REMOVE
-	// print_specs(cub);
-	// ft_free_cub(cub);
-	// printf(B_BLUE"-> ALL GOOD\n"CLR_COLOR);
-	// exit(EXIT_SUCCESS);
+	print_specs(cub);
+	ft_free_cub(cub);
+	printf(B_BLUE"-> ALL GOOD\n"CLR_COLOR);
+	exit(EXIT_SUCCESS);
 }
