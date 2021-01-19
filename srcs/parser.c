@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 13:28:09 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 22:50:29 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ static void	load_textures(t_cub *cub)
 
 	if (!(cub->txtrs = (t_img *)malloc(sizeof(t_img) * TEXTURES_COUNT)))
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
+	ft_memset(cub->txtrs, 0, sizeof(t_img *));
 	i = -1;
 	while (++i < TEXTURES_COUNT)
 		ft_memset(&cub->txtrs[i], 0, sizeof(t_img));
-	fill_texture(cub, &(cub->txtrs[0]), cub->txtr_no);
-	fill_texture(cub, &(cub->txtrs[1]), cub->txtr_so);
-	fill_texture(cub, &(cub->txtrs[2]), cub->txtr_ea);
-	fill_texture(cub, &(cub->txtrs[3]), cub->txtr_we);
-	fill_texture(cub, &(cub->txtrs[4]), cub->txtr_s);
+	fill_texture(cub, &cub->txtrs[0], cub->txtr_no);
+	fill_texture(cub, &cub->txtrs[1], cub->txtr_so);
+	fill_texture(cub, &cub->txtrs[2], cub->txtr_ea);
+	fill_texture(cub, &cub->txtrs[3], cub->txtr_we);
+	fill_texture(cub, &cub->txtrs[4], cub->txtr_s);
 }
 
 int			are_specs_complete(t_cub *cub)
@@ -77,6 +78,7 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	}
 	cub_fill_specs(fd, cub);
 	load_textures(cub);
+	// ft_error("DEBUGGER", cub, __FILE__, __LINE__);
 	map_parser(fd, cub);
 	close(fd);
 	map_checker(cub);

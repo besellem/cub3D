@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:18:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 14:32:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 22:32:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	handle_key_press(int key, t_cub *cub)
 		cub->keys->key_right = 1;
 	else
 		return (1);
-	// ft_printf("key pressed: [%d]\n", key);
 	return (0);
 }
 
@@ -52,6 +51,5 @@ int	handle_key_release(int key, t_cub *cub)
 		cub->turn = 0;
 	else
 		return (1);
-	// ft_printf("key released: [%d]\n", key);
 	return (0);
 }

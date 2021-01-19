@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 16:52:44 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 21:18:01 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ static void	free_textures(t_cub *cub)
 	if (cub->txtrs)
 	{
 		i = -1;
-		while (++i < TEXTURES_COUNT && cub->txtrs[i].ptr)
-			mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
+		while (++i < TEXTURES_COUNT)
+		{
+			if (cub->txtrs[i].ptr)
+				mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
+		}
 		free(cub->txtrs);
 	}
 }
@@ -44,7 +47,7 @@ void		ft_free_cub(t_cub *cub)
 	free_textures(cub);
 	if (cub->map)
 		ft_free_strs(cub->map);
-	if (cub->img->ptr)
+	if (cub->img && cub->img->ptr)
 		mlx_destroy_image(cub->mlx, cub->img->ptr);
 	if (cub->img)
 		free(cub->img);
