@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 09:51:45 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:26:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		safe_min(int nb1, int nb2)
 ** "0"         -> 1
 */
 
-int			check_rgb(char *s)
+int		check_rgb(char *s)
 {
 	int i;
 

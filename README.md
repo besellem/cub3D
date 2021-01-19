@@ -6,7 +6,7 @@ clang, GNU make
 
 ## To do
 - [x] Check .cub file
-- [ ] Check map
+- [x] Check map
 - [x] Raycasting
 - [x] Textures
 - [ ] Sprites

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 13:48:16 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:27:19 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ void		update_view(t_cub *cub)
 	cast_all_rays(cub);
 	update_cubs(cub);
 	// update_minimap(cub);
-	/*
-	ft_printf("[ %.3f ; %.3f ] [ %d° ]\n",
-			cub->pos_x,
-			cub->pos_y,
-			(int)ft_rad2deg(cub->drxion));
-	*/
 }
 
 int			ft_refresh(t_cub *cub)

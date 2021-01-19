@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 14:03:58 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:31:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,8 +277,9 @@ void			print_map(t_cub *cub);
 */
 int				are_specs_complete(t_cub *cub);
 void			cub_fill_specs(int fd, t_cub *cub);
-void			parse_map(int fd, t_cub *cub);
-int				check_map(t_cub *cub);
+void			map_parser(int fd, t_cub *cub);
+int				map_checker(t_cub *cub);
+int				map_validator(t_cub *cub);
 void			cub_parser(int ac, char **av, t_cub *cub);
 
 /*
@@ -286,6 +287,12 @@ void			cub_parser(int ac, char **av, t_cub *cub);
 */
 int				handle_key_press(int key, t_cub *cub);
 int				handle_key_release(int key, t_cub *cub);
+
+/*
+** Raycasting
+*/
+void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
+void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
 
 /*
 ** Display

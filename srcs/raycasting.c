@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 12:33:40 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:30:32 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** Init a ray struct
 ** Use of memset to (re)set all variables to 0
 */
+
 static void	init_ray(t_ray *ray, double angle)
 {
 	ft_memset(ray, 0, sizeof(t_ray));
@@ -24,20 +25,6 @@ static void	init_ray(t_ray *ray, double angle)
 	ray->is_right = !(angle > T_PI_2 && angle < (1.5 * T_PI));
 	ray->distance = -1.0;
 	ray->sp_distance = -1.0;
-}
-
-void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
-{
-	ray->hit_wall_x = x;
-	ray->hit_wall_y = y;
-	ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
-}
-
-void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
-{
-	ray->hit_sp_x = x;
-	ray->hit_sp_y = y;
-	ray->sp_distance = get_dist(cub->pos_x, cub->pos_y, x, y);
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)
@@ -117,9 +104,9 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 	else if (hor.distance < ver.distance)
 		*ray = hor;
 	if (!ray->hit_vertical && !ray->is_down)
-		ray->hit_drxion = HIT_SOUTH;
-	else if (!ray->hit_vertical && ray->is_down)
 		ray->hit_drxion = HIT_NORTH;
+	else if (!ray->hit_vertical && ray->is_down)
+		ray->hit_drxion = HIT_SOUTH;
 	else if (ray->hit_vertical && ray->is_right)
 		ray->hit_drxion = HIT_WEST;
 	else if (ray->hit_vertical && !ray->is_right)

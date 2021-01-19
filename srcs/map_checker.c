@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 00:26:39 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 15:45:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:24:18 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	is_valid_charset(t_cub *cub, int *got_player_pos)
 	return (1);
 }
 
-int			check_map(t_cub *cub)
+int			map_checker(t_cub *cub)
 {
 	int got_player_pos;
 

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 16:01:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:28:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,64 +57,6 @@ int			are_specs_complete(t_cub *cub)
 		cub->txtr_s);
 }
 
-int			check_around(char **map, size_t x, size_t y)
-{
-	if (map[y][x - 1] && map[y][x + 1] && (map[y][x - 1] == ' ' ||
-		map[y][x + 1] == ' '))
-		return (0);
-	if (map[y - 1][x] && map[y + 1][x] && (map[y - 1][x] == ' ' ||
-		map[y + 1][x] == ' '))
-		return (0);
-	return (1);
-}
-
-int			check_line(t_cub *cub, char *line, size_t y)
-{
-	size_t i;
-
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		ft_putchar(line[i++]);
-	if (line[i] == '0')
-		return (i);
-	while (line[i])
-	{
-		if ((line[i] == '2' || line[i] == '0') && !check_around(cub->map, i, y))
-			return (i);
-		// if (line[i] == ' ' && !check_space())
-		// 	return (i);
-		if (line[i] == '0')
-		{
-			while (line[i] && line[i] == '0')
-				ft_putchar(line[i++]);
-			if (!line[i] || line[i] == ' ')
-				return (i);
-		}
-		ft_putchar(line[i++]);
-	}
-	return (-1);
-}
-
-int			validate_map(t_cub *cub)
-{
-	size_t	y;
-	int		check;
-
-	y = 0;
-	while (cub->map[y] != NULL)
-	{
-		if ((check = check_line(cub, cub->map[y], y)) != -1)
-		{
-			ft_printf(B_RED"%c\n"CLR_COLOR, cub->map[y][check]);
-			ft_printf("[%d;%d]\n", check + 1, y + 1);
-			return (0);
-		}
-		ft_putendl("");
-		++y;
-	}
-	return (1);
-}
-
 void		cub_parser(int ac, char **av, t_cub *cub)
 {
 	int fd;
@@ -135,15 +77,9 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	}
 	cub_fill_specs(fd, cub);
 	load_textures(cub);
-	parse_map(fd, cub);
+	map_parser(fd, cub);
 	close(fd);
-	check_map(cub);
-	if (!validate_map(cub))
+	map_checker(cub);
+	if (!map_validator(cub))
 		ft_error("Invalid Map", cub, __FILE__, __LINE__);
-	
-	// TO REMOVE
-	print_specs(cub);
-	ft_free_cub(cub);
-	printf(B_BLUE"-> ALL GOOD\n"CLR_COLOR);
-	exit(EXIT_SUCCESS);
 }

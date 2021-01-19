@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 22:41:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 15:57:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:24:55 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	check_line(char *line, int *map_started, int check)
 	return (1);
 }
 
-void		parse_map(int fd, t_cub *cub)
+void		map_parser(int fd, t_cub *cub)
 {
 	t_list	*lst;
 	char	*ret;

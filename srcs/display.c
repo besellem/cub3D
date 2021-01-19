@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/12 11:05:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:32:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** PRINT A PIXEL AT THE COORDINATES INTO mlx->img
 */
 
-void		ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
+void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 {
 	char *px;
 
@@ -82,7 +82,7 @@ void	print_sprite_ray(t_cub *cub, t_ray *ray, int x, double px)
 	}
 }
 
-void		update_cubs(t_cub *cub)
+void	update_cubs(t_cub *cub)
 {
 	double	ratio;
 	int		x;

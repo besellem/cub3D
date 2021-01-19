@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 15:40:09 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 13:27:39 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		ft_strs_size(char **strs)
 ** DO NOT CHANGE THE RETURN VALUE -> IT'S A NORM TRICK
 */
 
-int	ft_free_strs(char **strs)
+int		ft_free_strs(char **strs)
 {
 	int i;
 
