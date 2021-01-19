@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 13:31:23 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:29:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,27 @@
 
 /*
 ** Get the 4 cardinal values whithin a circle:
-**            N (PI / 2)
-**            |
-**            |
-** W (PI) ---- ---- E (0.0)
-**            |
-**            |
-**            S (PI + (PI / 2) OR (3 * PI) / 2)
+**
+**             N (PI / 2)
+**             |
+**             |
+** W (PI) ----   ---- E (0.0)
+**             |
+**             |
+**             S (PI + (PI / 2) OR (3 * PI) / 2)
+**
+** But y-> is inversed, so NORTH & SOUTH position must be inversed too
 */
+
 # define DRXION_E 0.0
-# define DRXION_N M_PI_2
-# define DRXION_W M_PI
-# define DRXION_S 4.71238898038468967399694520281627774
+# define DRXION_N T_3PI_2
+# define DRXION_W T_PI
+# define DRXION_S T_PI_2
 
 # define HIT_NORTH 0
 # define HIT_SOUTH 1
 # define HIT_EAST 2
 # define HIT_WEST 3
-
-/*
-** (2 * PI)
-*/
-# define M_2PI 6.28318530717958623199592693708837032
 
 /*
 ** FOV (field of view)

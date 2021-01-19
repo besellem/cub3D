@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 13:32:17 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:14:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,29 @@ void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 ** PRINT A RAY OF TEXTURE
 */
 
-void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
-{
-	t_img	tx;
-	char	*ptr;
-	int		tmp;
-	double	i;
-	int		j;
+// void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
+// {
+// 	t_img	tx;
+// 	char	*ptr;
+// 	int		tmp;
+// 	double	i;
+// 	int		j;
 
-	tx = cub->txtrs[ray->hit_drxion];
-	j = 0;
-	i = 0.;
-	while (i < tx.y - .01)
-	{
-		if (ray->hit_drxion == HIT_NORTH || ray->hit_drxion == HIT_SOUTH)
-			tmp = tx.x * get_dec(ray->hit_wall_x);
-		else if (ray->hit_drxion == HIT_EAST || ray->hit_drxion == HIT_WEST)
-			tmp = tx.x * get_dec(ray->hit_wall_y);
-		ptr = tx.addr + (int)i * tx.size_line + tmp * (tx.bits_per_pixel / 8);
-		ft_pixel_put(cub, x, ((cub->win_h - px) / 2) + j, *(unsigned int *)ptr);
-		i += tx.y / px;
-		++j;
-	}
-}
+// 	tx = cub->txtrs[ray->hit_drxion];
+// 	j = 0;
+// 	i = 0.;
+// 	while (i < tx.y - .01)
+// 	{
+// 		if (ray->hit_drxion == HIT_NORTH || ray->hit_drxion == HIT_SOUTH)
+// 			tmp = tx.x * get_dec(ray->hit_wall_x);
+// 		else if (ray->hit_drxion == HIT_EAST || ray->hit_drxion == HIT_WEST)
+// 			tmp = tx.x * get_dec(ray->hit_wall_y);
+// 		ptr = tx.addr + (int)i * tx.size_line + tmp * (tx.bits_per_pixel / 8);
+// 		ft_pixel_put(cub, x, ((cub->win_h - px) / 2) + j, *(unsigned int *)ptr);
+// 		i += tx.y / px;
+// 		++j;
+// 	}
+// }
 
 /*
 ** (?) PRINT A RAY OF SPRITE
@@ -81,6 +81,33 @@ void	print_sprite_ray(t_cub *cub, t_ray *ray, int x, double px)
 		++j;
 	}
 }
+
+
+//	TEXTURE TEST
+void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
+{
+	t_img	tx;
+	char	*ptr;
+	int		tmp;
+	double	i;
+	int		j;
+
+	tx = cub->txtrs[ray->hit_drxion];
+	j = 0;
+	i = 0.0;//(cub->win_h - px) / 2;
+	while (i < tx.y - .01)
+	{
+		if (ray->hit_drxion == HIT_NORTH || ray->hit_drxion == HIT_SOUTH)
+			tmp = tx.x * get_dec(ray->hit_wall_x);
+		else if (ray->hit_drxion == HIT_EAST || ray->hit_drxion == HIT_WEST)
+			tmp = tx.x * get_dec(ray->hit_wall_y);
+		ptr = tx.addr + (int)i * tx.size_line + tmp * (tx.bits_per_pixel / 8);
+		ft_pixel_put(cub, x, ((cub->win_h - px) / 2) + j, *(unsigned int *)ptr);
+		i += tx.y / px;
+		++j;
+	}
+}
+//	END
 
 void	update_cubs(t_cub *cub)
 {

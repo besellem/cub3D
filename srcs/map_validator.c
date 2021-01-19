@@ -6,13 +6,17 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:22:27 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 13:24:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:55:44 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	check_around(t_cub *cub, char **map, size_t x, size_t y)
+/*
+** Check 0 or 2 case
+*/
+
+static int	chk_rnd(t_cub *cub, char **map, size_t x, size_t y)
 {
 	if (x - 1 >= 0 && x + 1 < cub->map_size_x &&
 		y - 1 >= 0 && y + 1 < cub->map_size_y)
@@ -29,7 +33,11 @@ static int	check_around(t_cub *cub, char **map, size_t x, size_t y)
 	return (1);
 }
 
-static int	check_space(t_cub *cub, char **map, size_t x, size_t y)
+/*
+** Check space case
+*/
+
+static int	chk_sp(t_cub *cub, char **map, size_t x, size_t y)
 {
 	if (((int)x - 1 >= 0 && map[y][x - 1] != ' ' && map[y][x - 1] != '1') ||
 		(x + 1 < cub->map_size_x && map[y][x + 1] != ' ' &&
@@ -52,24 +60,23 @@ static int	check_line(t_cub *cub, char *line, size_t y)
 
 	i = 0;
 	while (line[i] && line[i] == ' ')
-		ft_putchar(line[i++]);
+		++i;
 	if (line[i] == '0')
 		return (i);
 	while (line[i])
 	{
-		if ((line[i] == '2' || line[i] == '0') &&
-			!check_around(cub, cub->map, i, y))
+		if ((line[i] == '2' || line[i] == '0') && !chk_rnd(cub, cub->map, i, y))
 			return (i);
-		else if (line[i] == ' ' && !check_space(cub, cub->map, i, y))
+		else if (line[i] == ' ' && !chk_sp(cub, cub->map, i, y))
 			return (i);
 		if (line[i] == '0')
 		{
 			while (line[i] && line[i] == '0')
-				ft_putchar(line[i++]);
+				++i;
 			if (!line[i] || line[i] == ' ')
 				return (i);
 		}
-		ft_putchar(line[i++]);
+		++i;
 	}
 	return (-1);
 }
@@ -84,12 +91,12 @@ int			map_validator(t_cub *cub)
 	{
 		if ((check = check_line(cub, cub->map[y], y)) != -1)
 		{
-			ft_printf(B_RED"%c\n"CLR_COLOR, cub->map[y][check]);
-			ft_printf(B_GREEN"%*.d^ error here "CLR_COLOR, check, 0);
-			ft_printf("[%d;%d]\n", check + 1, y + 1);
+			// ft_printf(B_RED"%c\n"CLR_COLOR, cub->map[y][check]);
+			// ft_printf(B_GREEN"%*.d^ error here "CLR_COLOR, check, 0);
+			// ft_printf("[%d;%d]\n", check + 1, y + 1);
 			return (0);
 		}
-		ft_putendl("");
+		// ft_putendl("");
 		++y;
 	}
 	return (1);
