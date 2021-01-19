@@ -6,12 +6,12 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/19 13:57:15 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/19 16:11:04 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MUTE		=	
-NAME		=	Cub3D
+NAME		=	cub3D
 BMP_FILE	=	./saved.bmp
 
 ## Sources

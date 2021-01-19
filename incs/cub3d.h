@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 14:29:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/19 16:11:11 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 /*
 ** -- DEFINES --
 */
-# define NAME "Cub3D"
+# define NAME "cub3D"
 # define BMP_FILEPATH "./saved.bmp"
 # define CUB_ERR "\033[1;31mError\033[0m"
 # define MAP_CHARSET " 012NEWS"
