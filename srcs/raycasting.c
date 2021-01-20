@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 14:56:07 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 21:11:19 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	init_ray(t_ray *ray, double angle)
 {
 	ft_memset(ray, 0, sizeof(t_ray));
 	ray->angle = angle;
-	ray->is_down = angle > 0 && angle < T_PI;
-	ray->is_right = !(angle > T_PI_2 && angle < (1.5 * T_PI));
+	ray->is_down = angle >= 0 && angle <= T_PI;
+	ray->is_right = !(angle >= T_PI_2 && angle <= T_3PI_2);
 	ray->distance = -1.0;
 	ray->sp_distance = -1.0;
 }
@@ -101,7 +101,7 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		*ray = hor;
 	else if (hor.distance >= ver.distance)
 		*ray = ver;
-	else //if (hor.distance < ver.distance)
+	else if (hor.distance < ver.distance)
 		*ray = hor;
 	if (!ray->hit_vertical && !ray->is_down)
 		ray->hit_drxion = HIT_NORTH;

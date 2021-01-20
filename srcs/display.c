@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 15:53:07 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 21:10:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 }
 
 /*
-** /!\ PRINT SPRITE COLUMN
+** /!\ PRINT SPRITE COLUMN /!\
 ** -- IN PROCESS --
 */
 
@@ -77,22 +77,19 @@ void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 	start = 0.0;
 	end = tx.y;
 	idx = (cub->win_h - scale) / 2;
-	if (cub->win_h <= scale)
+	if (cub->win_h < scale)
 	{
-		idx = 0.0;
+		idx = 0;
 		start = (tx.y * (1 - cub->win_h / scale)) / 2;
 		end -= start;
 	}
-	while (start < end)// - .01)
+	while (start < end && idx < cub->win_h)// - .01)
 	{
-		// ft_printf("start: [%.3f], end: [%.3f], x_calc: [%d]\n", start, end, hit_x_calc(tx, ray));
-		// ft_printf("  y: [%d], scale: [%.3f], drx: [%d]\n\n", idx, scale, ray.hit_drxion);
 		ft_pixel_put(cub, x, idx++,
 			*(unsigned int *)(tx.addr + (int)start * tx.size_line + \
 			hit_x_calc(tx, ray) * (tx.bits_per_pixel / 8)));
-		start += (tx.y / scale); // MAY BE EXTREMELY SMALL -> TAKE A MINIMUM VALUE MAYBE
+		start += fabs(tx.y / scale); // fabs() not necessary
 	}
-	// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 }
 
 void	update_cubs(t_cub *cub)
@@ -100,24 +97,36 @@ void	update_cubs(t_cub *cub)
 	double	scale;
 	int		x;
 	int		y;
-	int		h_start;
+	double		h_start;
 
 	x = -1;
 	while (++x < cub->win_w)
 	{
 		scale = cub->win_h / (cub->rays[x].distance * cub->rays[x].distortion);
+		// if (cub->rays[x].distance >= 0 && cub->rays[x].distance < 0.01)
+		// 	scale = 1; //0.01 * cub->rays[x].distortion;
+		// else
+		// 	scale = cub->rays[x].distance * cub->rays[x].distortion;
+		// scale = cub->win_h / scale;
 		h_start = (cub->win_h - scale) / 2;
 
-		if (scale > 10000)
+		if (scale > 1000)
 		{
-			ft_printf("scale:                   [%f]\n", scale);
-			ft_printf("distance * distortion:   [%f]\n", cub->rays[x].distance * cub->rays[x].distortion);
-			ft_printf("h_start:                 [%d]\n", h_start);
-			ft_printf("cub->rays[x].angle:      [%f]\n", cub->rays[x].angle);
-			ft_printf("cub->rays[x].distance:   [%.32f]\n", cub->rays[x].distance);
-			ft_printf("cub->rays[x].distortion: [%f]\n", cub->rays[x].distortion);
-			ft_printf("cub->rays[x].hit_wall_x: [%f]\n", cub->rays[x].hit_wall_x);
-			ft_printf("cub->rays[x].hit_wall_y: [%f]\n\n", cub->rays[x].hit_wall_y);
+			printf("cub->win_h:              [%d]\n", cub->win_h);
+			printf("scale:                   [%f]\n", scale);
+			printf("cub->win_h - scale:      [%f]\n", cub->win_h - scale);
+			printf("h_start:                 [%f]\n", h_start);
+			printf("cub->rays[x].angle:      [%f]\n", cub->rays[x].angle);
+			printf("distance * distortion:   [%f]\n", cub->rays[x].distance * cub->rays[x].distortion);
+			printf("cub->rays[x].distance:   [%.24f]\n", cub->rays[x].distance);
+			printf("cub->rays[x].distortion: [%f]\n", cub->rays[x].distortion);
+			printf("cub->rays[x].hit_drxion: [%d]\n", cub->rays[x].hit_drxion);
+			printf("cub->rays[x].xintcpt:    [%.10f]\n", cub->rays[x].xintcpt);
+			printf("cub->rays[x].yintcpt:    [%.10f]\n", cub->rays[x].yintcpt);
+			printf("cub->rays[x].xstep:      [%.10f]\n", cub->rays[x].xstep);
+			printf("cub->rays[x].ystep:      [%.10f]\n", cub->rays[x].ystep);
+			printf("cub->rays[x].hit_wall_x: [%f]\n", cub->rays[x].hit_wall_x);
+			printf("cub->rays[x].hit_wall_y: [%f]\n\n", cub->rays[x].hit_wall_y);
 		}
 
 		y = 0;
@@ -131,3 +140,67 @@ void	update_cubs(t_cub *cub)
 	}
 	// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 }
+
+
+// // OLD
+// void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
+// {
+// 	t_img	tx;
+// 	char	*ptr;
+// 	int		tmp;
+// 	double	i;
+// 	int		j;
+
+// 	tx = cub->txtrs[ray->hit_drxion];
+// 	j = 0;
+// 	i = 0.0;//(cub->win_h - px) / 2;
+// 	while (i < tx.y - .01)
+// 	{
+// 		if (ray->hit_drxion == HIT_NORTH || ray->hit_drxion == HIT_SOUTH)
+// 			tmp = tx.x * get_dec(ray->hit_wall_x);
+// 		else if (ray->hit_drxion == HIT_EAST || ray->hit_drxion == HIT_WEST)
+// 			tmp = tx.x * get_dec(ray->hit_wall_y);
+// 		ptr = tx.addr + (int)i * tx.size_line + tmp * (tx.bits_per_pixel / 8);
+// 		ft_pixel_put(cub, x, ((cub->win_h - px) / 2) + j, *(unsigned int *)ptr);
+// 		i += tx.y / px;
+// 		++j;
+// 	}
+// }
+
+// void	update_cubs(t_cub *cub)
+// {
+// 	double	ratio;
+// 	int		x;
+// 	int		y;
+// 	int		h_start;
+
+// 	x = -1;
+// 	while (++x < cub->win_w)
+// 	{
+// 		ratio = cub->rays[x].distance * cub->rays[x].distortion;
+// 		if (ratio < 1)
+// 			ratio = cub->win_h;
+// 		else
+// 			ratio = cub->win_h / ratio;
+// 		h_start = (cub->win_h - ratio) / 2;
+
+// 		printf("scale:                   [%f]\n", ratio);
+// 		printf("distance * distortion:   [%f]\n", cub->rays[x].distance * cub->rays[x].distortion);
+// 		printf("h_start:                 [%d]\n", h_start);
+// 		printf("cub->rays[x].angle:      [%f]\n", cub->rays[x].angle);
+// 		printf("cub->rays[x].distance:   [%.32f]\n", cub->rays[x].distance);
+// 		printf("cub->rays[x].distortion: [%f]\n", cub->rays[x].distortion);
+// 		printf("cub->rays[x].hit_wall_x: [%f]\n", cub->rays[x].hit_wall_x);
+// 		printf("cub->rays[x].hit_wall_y: [%f]\n\n", cub->rays[x].hit_wall_y);
+
+// 		y = 0;
+// 		while (y < h_start)
+// 			ft_pixel_put(cub, x, y++, cub->sky_color);
+// 		print_txtre_ray(cub, &(cub->rays[x]), x, ratio);
+// 		// print_sprite_ray(cub, &(cub->rays[x]), x, ratio);
+// 		y = ratio + h_start;
+// 		while (y < cub->win_h)
+// 			ft_pixel_put(cub, x, y++, cub->grnd_color);
+// 	}
+// }
+// // END OLD
