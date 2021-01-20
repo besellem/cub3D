@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/19 16:11:04 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/20 09:58:39 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,15 @@ SRCS		=	main.c srcs/*.c
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror# -fsanitize=address#Check leak option in Linux
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address
 RM			=	rm -f
 RMRF		=	rm -rf
+
+# Get system name
 UNAME		:=	$(shell uname)
 
 ## Targets
-# Check system -- macOS or Linux --
+# Check system -- macOS or Linux -- & compilation
 ifeq ($(UNAME), Darwin)
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
@@ -42,7 +44,7 @@ ifeq ($(UNAME), Linux)
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
-			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME) 
+			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
 endif
 
 all:		$(NAME)
@@ -55,6 +57,7 @@ ifeq ($(UNAME), Darwin)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx clean
+			# To remove along with the -g flag at compilation
 			$(MUTE) $(RMRF) Cub3D.dSYM
 			$(MUTE) $(RM) $(BMP_FILE)
 endif
@@ -63,6 +66,7 @@ ifeq ($(UNAME), Linux)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx_linux clean
+			# To remove along with the -g flag at compilation
 			$(MUTE) $(RMRF) Cub3D.dSYM
 			$(MUTE) $(RM) $(BMP_FILE)
 endif

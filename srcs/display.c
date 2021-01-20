@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 14:14:50 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 10:30:12 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,32 +82,65 @@ void	print_sprite_ray(t_cub *cub, t_ray *ray, int x, double px)
 	}
 }
 
+// void	update_cubs(t_cub *cub)
+// {
+// 	double	ratio;
+// 	int		x;
+// 	int		y;
+// 	int		h_start;
+
+// 	x = -1;
+// 	while (++x < cub->win_w)
+// 	{
+// 		ratio = cub->rays[x].distance * cub->rays[x].distortion;
+// 		if (ratio < 1)
+// 			ratio = cub->win_h;
+// 		else
+// 			ratio = cub->win_h / ratio;
+// 		h_start = (cub->win_h - ratio) / 2;
+// 		y = 0;
+// 		while (y < h_start)
+// 			ft_pixel_put(cub, x, y++, cub->sky_color);
+// 		print_txtre_ray(cub, cub->rays[x], x, ratio);
+// 		// print_sprite_ray(cub, &(cub->rays[x]), x, ratio);
+// 		y = ratio + h_start;
+// 		while (y < cub->win_h)
+// 			ft_pixel_put(cub, x, y++, cub->grnd_color);
+// 	}
+// }
 
 //	TEXTURE TEST
-void	print_txtre_ray(t_cub *cub, t_ray *ray, int x, double px)
+void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double px)
 {
 	t_img	tx;
 	char	*ptr;
-	int		tmp;
+	int		hit_x;
 	double	i;
+	int		end;
 	int		j;
 
-	tx = cub->txtrs[ray->hit_drxion];
+	tx = cub->txtrs[ray.hit_drxion];
 	j = 0;
-	i = 0.0;//(cub->win_h - px) / 2;
-	while (i < tx.y - .01)
+	i = 0.0;
+	end = tx.y;
+	printf("px: [%.3f], padding: [%.2f]\n", px, (cub->win_h - px));
+	if ((cub->win_h - px) < 0)
 	{
-		if (ray->hit_drxion == HIT_NORTH || ray->hit_drxion == HIT_SOUTH)
-			tmp = tx.x * get_dec(ray->hit_wall_x);
-		else if (ray->hit_drxion == HIT_EAST || ray->hit_drxion == HIT_WEST)
-			tmp = tx.x * get_dec(ray->hit_wall_y);
-		ptr = tx.addr + (int)i * tx.size_line + tmp * (tx.bits_per_pixel / 8);
+		i = ((tx.x / (cub->win_h - px)) * 100) / 2;
+		end -= ((tx.y / (cub->win_h - px)) * 100) / 2;
+	}
+	while (i < end - .01)
+	{
+		if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
+			hit_x = tx.x * get_dec(ray.hit_wall_x);
+		else if (ray.hit_drxion == HIT_EAST || ray.hit_drxion == HIT_WEST)
+			hit_x = tx.x * get_dec(ray.hit_wall_y);
+		ptr = tx.addr + (int)i * tx.size_line + hit_x * (tx.bits_per_pixel / 8);
 		ft_pixel_put(cub, x, ((cub->win_h - px) / 2) + j, *(unsigned int *)ptr);
-		i += tx.y / px;
+		i += fabs(tx.y / px);
 		++j;
 	}
 }
-//	END
 
 void	update_cubs(t_cub *cub)
 {
@@ -119,22 +152,21 @@ void	update_cubs(t_cub *cub)
 	x = -1;
 	while (++x < cub->win_w)
 	{
-		ratio = cub->rays[x].distance * cub->rays[x].distortion;
-		if (ratio < 1)
-			ratio = cub->win_h;
-		else
-			ratio = cub->win_h / ratio;
+		ratio = cub->win_h / (cub->rays[x].distance * cub->rays[x].distortion);
 		h_start = (cub->win_h - ratio) / 2;
 		y = 0;
 		while (y < h_start)
 			ft_pixel_put(cub, x, y++, cub->sky_color);
-		print_txtre_ray(cub, &(cub->rays[x]), x, ratio);
+		print_txtre_ray(cub, cub->rays[x], x, ratio);
 		// print_sprite_ray(cub, &(cub->rays[x]), x, ratio);
 		y = ratio + h_start;
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);
 	}
 }
+//	END
+
+
 
 // void	init_display(t_cub *cub, t_ray *ray, t_display *dsp)
 // {
