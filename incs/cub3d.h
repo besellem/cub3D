@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 16:11:11 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 11:12:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,6 @@
 /*
 ** -- TYPEDEFS & STRUCTURES --
 */
-
-/*
-** ratio:			nb of pixels to draw for a wall in the ray (eg: 400px)
-** t_start:			first pixel to draw in the column from the texture file
-**					(might not be 0)
-** t_end:			last pixel to draw in the column from the texture file
-**					(might not be the t_img->y)
-** t_win_start:		where to start in the main window
-** t_win_end:		where to end in the main window
-*/
-typedef	struct	s_display
-{
-	double ratio;
-	double t_start;
-	double t_end;
-	double t_win_start;
-	double t_win_end;
-}				t_display;
 
 /*
 ** angle:			angle of the ray in radians
