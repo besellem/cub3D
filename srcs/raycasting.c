@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 14:19:32 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 14:56:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		*ray = ver;
 	else if (ver.distance < 0 && hor.distance >= 0)
 		*ray = hor;
-	else if (hor.distance > ver.distance)
+	else if (hor.distance >= ver.distance)
 		*ray = ver;
-	else if (hor.distance < ver.distance)
+	else //if (hor.distance < ver.distance)
 		*ray = hor;
 	if (!ray->hit_vertical && !ray->is_down)
 		ray->hit_drxion = HIT_NORTH;
@@ -126,6 +126,15 @@ void		cast_all_rays(t_cub *cub)
 		tmp_angle = ft_norm_angle(ray_angle);
 		cast_ray(cub, &(cub->rays[i]), tmp_angle);
 		(&cub->rays[i])->distortion = cos(cub->rays[i].angle - cub->drxion);
+
+		// printf("cub->win_h:              [%d]\n", cub->win_h);
+		// printf("cub->rays[x].angle:      [%f]\n", cub->rays[i].angle);
+		// printf("ray_angle:               [%f]\n", ray_angle);
+		// printf("tmp_angle:               [%f]\n", tmp_angle);
+		// printf("cub->rays[x].distance:   [%f]\n", cub->rays[i].distance);
+		// printf("cub->rays[x].distortion: [%f]\n", cub->rays[i].distortion);
+
+		// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
 }

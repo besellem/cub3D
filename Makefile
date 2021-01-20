@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/20 09:58:39 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/20 12:34:01 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
+			# -D BONUS -> TO ENABLE BONUSES (to add)
 			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 endif
 
@@ -44,6 +45,7 @@ ifeq ($(UNAME), Linux)
 $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
+			# -D BONUS -> TO ENABLE BONUSES (to add)
 			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
 endif
 

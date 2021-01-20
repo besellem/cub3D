@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 11:12:40 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 14:39:15 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,13 @@
 #  define KEY_S 115
 #  define KEY_D 100
 #  define EVT_RED_CROSS 33
+# endif
+
+/*
+** Maybe define this macro at compile time to enable bonuses
+*/
+# ifndef BONUS
+#  define BONUS 0
 # endif
 
 /*

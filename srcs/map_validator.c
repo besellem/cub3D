@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:22:27 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 14:55:44 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 12:22:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@
 
 static int	chk_rnd(t_cub *cub, char **map, size_t x, size_t y)
 {
-	if (x - 1 >= 0 && x + 1 < cub->map_size_x &&
-		y - 1 >= 0 && y + 1 < cub->map_size_y)
+	if ((int)x - 1 >= 0 && x + 1 < cub->map_size_x &&
+		(int)y - 1 >= 0 && y + 1 < cub->map_size_y)
 	{
-		if (map[y][x - 1] && map[y][x + 1] && (map[y][x - 1] == ' ' ||
-			map[y][x + 1] == ' '))
+		if ((map[y][x - 1] == ' ' || map[y][x + 1] == ' '))
 			return (0);
-		if (map[y - 1][x] && map[y + 1][x] && (map[y - 1][x] == ' ' ||
-			map[y + 1][x] == ' '))
+		if ((map[y - 1][x] == ' ' || map[y + 1][x] == ' '))
 			return (0);
 	}
 	else
@@ -81,6 +79,33 @@ static int	check_line(t_cub *cub, char *line, size_t y)
 	return (-1);
 }
 
+static void	map_print_error(t_cub *cub, size_t x, size_t y)
+{
+	size_t i;
+	size_t j;
+
+	i = 0;
+	while (i < cub->map_size_y)
+	{
+		j = 0;
+		while (j < cub->map_size_x)
+		{
+			if (y == i && x == j)
+				ft_printf(B_RED"%c"CLR_COLOR, cub->map[i][j]);
+			else
+				write(1, &cub->map[i][j], 1);
+			++j;
+		}
+		write(1, "\n", 1);
+		if (i == y)
+		{
+			ft_printf(B_GREEN"%*.d^ error here\n"CLR_COLOR, x, 0);
+			break ;
+		}
+		++i;
+	}
+}
+
 int			map_validator(t_cub *cub)
 {
 	size_t	y;
@@ -91,12 +116,9 @@ int			map_validator(t_cub *cub)
 	{
 		if ((check = check_line(cub, cub->map[y], y)) != -1)
 		{
-			// ft_printf(B_RED"%c\n"CLR_COLOR, cub->map[y][check]);
-			// ft_printf(B_GREEN"%*.d^ error here "CLR_COLOR, check, 0);
-			// ft_printf("[%d;%d]\n", check + 1, y + 1);
+			map_print_error(cub, check, y);
 			return (0);
 		}
-		// ft_putendl("");
 		++y;
 	}
 	return (1);

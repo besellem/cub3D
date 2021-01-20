@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 22:50:29 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 12:51:26 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	}
 	cub_fill_specs(fd, cub);
 	load_textures(cub);
-	// ft_error("DEBUGGER", cub, __FILE__, __LINE__);
+	// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 	map_parser(fd, cub);
 	close(fd);
 	map_checker(cub);

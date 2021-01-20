@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 14:31:04 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 14:46:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	move_player(t_cub *cub)
 	double step;
 
 	if (cub->turn != 0)
-		cub->drxion = ft_norm_angle(cub->drxion + cub->turn * ft_deg2rad(4));
+		cub->drxion = ft_norm_angle(cub->drxion + cub->turn * ft_deg2rad(5));
 	if (cub->dh != 0)
 	{
 		step = cub->pos_x + cos(cub->drxion) * cub->dh * cub->increment;
@@ -48,7 +48,10 @@ void		update_view(t_cub *cub)
 	move_player(cub);
 	cast_all_rays(cub);
 	update_cubs(cub);
-	// update_minimap(cub);
+	if (BONUS)
+	{
+		update_minimap(cub);
+	}
 }
 
 int			ft_refresh(t_cub *cub)

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 11:16:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/20 15:53:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 }
 
 /*
-** (?) PRINT A RAY OF SPRITE
+** /!\ PRINT SPRITE COLUMN
 ** -- IN PROCESS --
 */
 
@@ -55,38 +55,44 @@ void	print_sprite_ray(t_cub *cub, t_ray *ray, int x, double px)
 }
 
 /*
-** PRINT A RAY OF TEXTURE
+** PRINT A TEXTURE COLUMN DEFINED BY A RAY
 */
 
-void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double sc)
+int		hit_x_calc(t_img tx, t_ray ray)
+{
+	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
+		return (tx.x * get_dec(ray.hit_wall_x));
+	else
+		return (tx.x * get_dec(ray.hit_wall_y));
+}
+
+void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 {
 	t_img	tx;
-	char	*ptr;
-	int		hit_x;
-	double	i;
+	double	start;
 	double	end;
-	int		j;
+	int		idx;
 
 	tx = cub->txtrs[ray.hit_drxion];
-	j = (cub->win_h - sc) / 2;
-	i = 0.0;
+	start = 0.0;
 	end = tx.y;
-	if (cub->win_h < sc)
+	idx = (cub->win_h - scale) / 2;
+	if (cub->win_h <= scale)
 	{
-		j = 0.0;
-		i = (tx.y * (1 - cub->win_h / sc)) / 2;
-		end -= i;
+		idx = 0.0;
+		start = (tx.y * (1 - cub->win_h / scale)) / 2;
+		end -= start;
 	}
-	while (i < end)
+	while (start < end)// - .01)
 	{
-		if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
-			hit_x = tx.x * get_dec(ray.hit_wall_x);
-		else if (ray.hit_drxion == HIT_EAST || ray.hit_drxion == HIT_WEST)
-			hit_x = tx.x * get_dec(ray.hit_wall_y);
-		ptr = tx.addr + (int)i * tx.size_line + hit_x * (tx.bits_per_pixel / 8);
-		ft_pixel_put(cub, x, j++, *(unsigned int *)ptr);
-		i += (tx.y / sc);
+		// ft_printf("start: [%.3f], end: [%.3f], x_calc: [%d]\n", start, end, hit_x_calc(tx, ray));
+		// ft_printf("  y: [%d], scale: [%.3f], drx: [%d]\n\n", idx, scale, ray.hit_drxion);
+		ft_pixel_put(cub, x, idx++,
+			*(unsigned int *)(tx.addr + (int)start * tx.size_line + \
+			hit_x_calc(tx, ray) * (tx.bits_per_pixel / 8)));
+		start += (tx.y / scale); // MAY BE EXTREMELY SMALL -> TAKE A MINIMUM VALUE MAYBE
 	}
+	// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 }
 
 void	update_cubs(t_cub *cub)
@@ -101,13 +107,27 @@ void	update_cubs(t_cub *cub)
 	{
 		scale = cub->win_h / (cub->rays[x].distance * cub->rays[x].distortion);
 		h_start = (cub->win_h - scale) / 2;
+
+		if (scale > 10000)
+		{
+			ft_printf("scale:                   [%f]\n", scale);
+			ft_printf("distance * distortion:   [%f]\n", cub->rays[x].distance * cub->rays[x].distortion);
+			ft_printf("h_start:                 [%d]\n", h_start);
+			ft_printf("cub->rays[x].angle:      [%f]\n", cub->rays[x].angle);
+			ft_printf("cub->rays[x].distance:   [%.32f]\n", cub->rays[x].distance);
+			ft_printf("cub->rays[x].distortion: [%f]\n", cub->rays[x].distortion);
+			ft_printf("cub->rays[x].hit_wall_x: [%f]\n", cub->rays[x].hit_wall_x);
+			ft_printf("cub->rays[x].hit_wall_y: [%f]\n\n", cub->rays[x].hit_wall_y);
+		}
+
 		y = 0;
 		while (y < h_start)
 			ft_pixel_put(cub, x, y++, cub->sky_color);
 		print_txtre_ray(cub, cub->rays[x], x, scale);
-		// print_sprite_ray(cub, &(cub->rays[x]), x, scale);
+		// print_sprite_ray(cub, cub->rays[x], x, scale);
 		y = scale + h_start;
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);
 	}
+	// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 }
