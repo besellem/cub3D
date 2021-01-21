@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 12:51:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:38:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,51 @@ static void	load_textures(t_cub *cub)
 	fill_texture(cub, &cub->txtrs[4], cub->txtr_s);
 }
 
+static void	get_sprites_oc(t_cub *cub)
+{
+	int i;
+	int j;
+	int ocs;
+
+	ocs = 0;
+	i = -1;
+	while (cub->map[++i])
+	{
+		j = -1;
+		while (cub->map[i][++j])
+			if (cub->map[i][j] == '2')
+				++ocs;
+	}
+	cub->sp_ocs = ocs;
+}
+
+static int	alloc_sprites(t_cub *cub)
+{
+	int i;
+	int j;
+	int k;
+
+	if (!(cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (cub->sp_ocs))))
+		return (0);
+	k = 0;
+	i = -1;
+	while (cub->map[++i])
+	{
+		j = -1;
+		while (cub->map[i][++j])
+		{
+			if (cub->map[i][j] == '2')
+			{
+				ft_memset(&cub->sprites[k], 0, sizeof(t_sprite));
+				cub->sprites[k].x = j;
+				cub->sprites[k].y = i;
+				++k;
+			}
+		}
+	}
+	return (1);
+}
+
 int			are_specs_complete(t_cub *cub)
 {
 	return (cub->grnd_color != -1 &&
@@ -78,10 +123,12 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	}
 	cub_fill_specs(fd, cub);
 	load_textures(cub);
-	// ft_error("DEBUGGER -> OK UNTIL THIS POINT", cub, __FILE__, __LINE__);
 	map_parser(fd, cub);
 	close(fd);
 	map_checker(cub);
 	if (!map_validator(cub))
 		ft_error("Invalid Map", cub, __FILE__, __LINE__);
+	get_sprites_oc(cub);
+	if (!alloc_sprites(cub))
+		ft_error("Malloc error", cub, __FILE__, __LINE__);
 }

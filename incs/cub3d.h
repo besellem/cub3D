@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 14:39:15 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:36:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,9 @@ typedef struct	s_ray
 
 typedef	struct	s_sprite
 {
-	double	x;
-	double	y;
-	int		hit;
+	int x;
+	int y;
+	int hit;
 }				t_sprite;
 
 typedef struct	s_keys
@@ -169,12 +169,14 @@ typedef struct	s_img
 }				t_img;
 
 /*
+** save_opt:		check if the option '--save' is defined
 ** win_w:			resolution width (if > screen, is troncated)
 ** win_h:			resolution heigh (if > screen, is troncated)
 ** parsed_w:		resolution width from the .cub file
 ** parsed_h:		resolution heigh from the .cub file
 ** sky_color:		sky color
 ** grnd_color:		ground color
+** sp_ocs:			sprites occurences in the map
 ** txtr_no:			path to the north texture file
 ** txtr_so:			path to the south texture file
 ** txtr_ea:			path to the east texture file
@@ -186,49 +188,54 @@ typedef struct	s_img
 ** mlx:				pointer created by mlx_init()
 ** win:				pointer of the window
 ** drxion:			direction of the player in radians
-** turn:			(key press): none (0), left angle (-1), right angle (1)
-** dw:				(key press): none (0), left (-1), right (1)
-** dh:				(key press): none (0), down (-1), up (1)
 ** pos_x:			player position horizontally
 ** pos_y:			player position vertically
 ** increment:		player's speed
 ** dist_plane:		distance to the projection plane
 ** cub_size:		size of a cube in pixels (for the minimap only)
+** turn:			(key press): none (0), left angle (-1), right angle (1)
+** dw:				(key press): none (0), left (-1), right (1)
+** dh:				(key press): none (0), down (-1), up (1)
+** keys:			keys struct
 ** img:				image to print out
-** txtrs:			all the textures and their infos
+** txtrs:			all the textures and their specs
+** rays:			re-calculated each time we update the view
+** sprites:			sprites infos
 */
 typedef	struct	s_cub
 {
-	int		save_opt;
-	int		win_w;
-	int		win_h;
-	int		parsed_w;
-	int		parsed_h;
-	int		sky_color;
-	int		grnd_color;
-	char	*txtr_no;
-	char	*txtr_so;
-	char	*txtr_ea;
-	char	*txtr_we;
-	char	*txtr_s;
-	char	**map;
-	size_t	map_size_x;
-	size_t	map_size_y;
-	void	*mlx;
-	void	*win;
-	double	drxion;
-	double	pos_x;
-	double	pos_y;
-	double	increment;
-	double	dist_plane;
-	int		cub_size;
-	int		turn;
-	int		dw;
-	int		dh;
-	t_keys	*keys;
-	t_img	*img;
-	t_img	*txtrs;
-	t_ray	*rays;
+	int			save_opt;
+	int			win_w;
+	int			win_h;
+	int			parsed_w;
+	int			parsed_h;
+	int			sky_color;
+	int			grnd_color;
+	int			sp_ocs;
+	char		*txtr_no;
+	char		*txtr_so;
+	char		*txtr_ea;
+	char		*txtr_we;
+	char		*txtr_s;
+	char		**map;
+	size_t		map_size_x;
+	size_t		map_size_y;
+	void		*mlx;
+	void		*win;
+	double		drxion;
+	double		pos_x;
+	double		pos_y;
+	double		increment;
+	double		dist_plane;
+	int			cub_size;
+	int			turn;
+	int			dw;
+	int			dh;
+	t_keys		*keys;
+	t_img		*img;
+	t_img		*txtrs;
+	t_ray		*rays;
+	t_sprite	*sprites;
 }				t_cub;
 
 /*
@@ -259,6 +266,7 @@ int				check_rgb(char *s);
 */
 void			print_specs(t_cub *cub);
 void			print_map(t_cub *cub);
+void			sprites_dump(t_cub *cub);
 
 /*
 ** Parser & Checkers

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/21 09:31:03 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:40:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 		start = (tx.y * (1 - cub->win_h / scale)) / 2;
 		end -= start;
 	}
-	while (start < end && idx < cub->win_h)// - .01)
+	while (start < end && idx < cub->win_h)
 	{
 		ft_pixel_put(cub, x, idx++,
 			*(unsigned int *)(tx.addr + (int)start * tx.size_line + \
@@ -103,8 +103,8 @@ void	update_cubs(t_cub *cub)
 	while (++x < cub->win_w)
 	{
 		scale = cub->win_h / (cub->rays[x].distance * cub->rays[x].distortion);
-		if (cub->rays[x].distance >= 0 && cub->rays[x].distance < 0.001)
-			scale = 0.001; //0.01 * cub->rays[x].distortion;
+		if (cub->rays[x].distance >= 0 && cub->rays[x].distance < 0.0001)
+			scale = 0.0001;
 		else
 			scale = cub->rays[x].distance * cub->rays[x].distortion;
 		scale = cub->win_h / scale;

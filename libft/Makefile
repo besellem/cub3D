@@ -6,11 +6,11 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/13 02:01:30 by besellem          #+#    #+#              #
-#    Updated: 2021/01/13 15:16:20 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/21 13:31:24 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MUTE		=	
+MUTE		=	@
 NAME		=	libft.a
 
 # Main srcs

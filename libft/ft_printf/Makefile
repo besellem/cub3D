@@ -6,11 +6,11 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/17 21:13:07 by besellem          #+#    #+#              #
-#    Updated: 2021/01/12 23:08:57 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/21 13:31:30 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MUTE		=	
+MUTE		=	@
 NAME		=	libftprintf.a
 
 ## Mandatory

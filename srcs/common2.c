@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 21:18:01 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:38:55 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void		ft_free_cub(t_cub *cub)
 		free(cub->rays);
 	if (cub->keys)
 		free(cub->keys);
+	if (cub->sprites)
+		free(cub->sprites);
 	if (cub->mlx)
 		free(cub->mlx);
 }

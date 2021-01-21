@@ -6,11 +6,11 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/20 19:04:49 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/21 14:47:13 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MUTE		=	
+MUTE		=	@
 NAME		=	cub3D
 BMP_FILE	=	./saved.bmp
 
@@ -30,10 +30,12 @@ RMRF		=	rm -rf
 # Get system name
 UNAME		:=	$(shell uname)
 
+
 ## Targets
-# Check system -- macOS or Linux -- & compilation
+# Checking system -- macOS or Linux -- & compilation
 ifeq ($(UNAME), Darwin)
 $(NAME):
+			@echo "\033[31;1mCompiling for macOS...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
@@ -43,6 +45,7 @@ endif
 
 ifeq ($(UNAME), Linux)
 $(NAME):
+			@echo "\033[31;1mCompiling for Linux...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
 			# -D BONUS -> TO ENABLE BONUSES (to add)

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 14:55:00 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:36:45 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,19 @@ void	print_specs(t_cub *cub)
 	ft_putendl("}\n");
 	print_map(cub);
 	ft_putendl("\n----\n");
+}
+
+void		sprites_dump(t_cub *cub)
+{
+	int i;
+
+	ft_putendl("-- Sprites Dump --");
+	ft_putendl("{");
+	i = -1;
+	while (++i < cub->sp_ocs)
+	{
+		ft_printf("    cub->sprites[%2d] => x[%2d] y[%2d]\n",
+				i, cub->sprites[i].x, cub->sprites[i].y);
+	}
+	ft_putendl("}\n");
 }
