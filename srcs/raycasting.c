@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 10:35:55 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 15:50:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	init_ray(t_ray *ray, double angle)
 	ray->is_down = angle >= 0 && angle <= T_PI;
 	ray->is_right = !(angle >= T_PI_2 && angle <= T_3PI_2);
 	ray->distance = -1.0;
-	ray->sp_distance = -1.0;
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)
@@ -49,7 +48,6 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 		}
 		else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
 			sprite_intersect(cub, ray, x, y);
-		// printf("%c, ", cub->map[safe_min(y, !ray->is_down)][(int)x]);
 		x += ray->xstep;
 		y += ray->ystep;
 	}

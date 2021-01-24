@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 13:19:40 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 15:10:05 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		update_view(t_cub *cub)
 	move_player(cub);
 	cast_all_rays(cub);
 	update_cubs(cub);
-	if (BONUS && !cub->save_opt)
+	if (BONUS)// && !cub->save_opt)
 	{
 		update_minimap(cub);
 	}

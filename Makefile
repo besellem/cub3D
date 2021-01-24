@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/01/24 10:12:00 by besellem         ###   ########.fr        #
+#    Updated: 2021/01/24 15:12:16 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS		=	main.c srcs/*.c
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror# -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address
 RM			=	rm -f
 RMRF		=	rm -rf
 
@@ -32,14 +32,14 @@ UNAME		:=	$(shell uname)
 
 
 ## Targets
-# Checking system -- macOS or Linux -- & compilation
+# Check the system -- macOS or Linux -- for compilation
 ifeq ($(UNAME), Darwin)
 $(NAME):
 			@echo "\033[31;1mCompiling for macOS...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
-			# -D BONUS -> TO ENABLE BONUSES (to add)
+			@ # -D BONUS -> TO ENABLE BONUSES (to add)
 			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 endif
 
@@ -48,7 +48,7 @@ $(NAME):
 			@echo "\033[31;1mCompiling for Linux...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
-			# -D BONUS -> TO ENABLE BONUSES (to add)
+			@ # -D BONUS -> TO ENABLE BONUSES (to add)
 			$(MUTE) $(CC) $(CFLAGS) -Ofast -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
 endif
 

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 13:21:05 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 15:36:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,20 +131,28 @@ typedef struct	s_ray
 	double	distance;
 	double	hit_wall_x;
 	double	hit_wall_y;
-	double	hit_sp_x;
-	double	hit_sp_y;
-	double	sp_distance;
 	int		is_down;
 	int		is_right;
 	int		hit_vertical;
 	int		hit_drxion;
 }				t_ray;
 
+/*
+** x:			index x in cub->map
+** y:			index y in cub->map
+** hit:			if it was hit or not
+** distance:	distance from the player
+** hit_x:		x coordinate of the hit
+** hit_y:		y coordinate of the hit
+*/
 typedef	struct	s_sprite
 {
-	int x;
-	int y;
-	int hit;
+	int		x;
+	int		y;
+	int		hit;
+	double	distance;
+	double	hit_x;
+	double	hit_y;
 }				t_sprite;
 
 typedef struct	s_keys
@@ -276,6 +284,7 @@ void			cub_fill_specs(int fd, t_cub *cub);
 void			map_parser(int fd, t_cub *cub);
 int				map_checker(t_cub *cub);
 int				map_validator(t_cub *cub);
+void			add_bonus(t_cub *cub);
 void			cub_parser(int ac, char **av, t_cub *cub);
 
 /*
