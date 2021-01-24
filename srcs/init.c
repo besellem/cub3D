@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 16:53:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 10:57:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	init_keys(t_cub *cub)
 }
 
 /*
-** cub->rays is malloc in the parser as we don't know win_w & win_h yet
+** all variables that are not set here will be set in the parser
 */
 
 int			init_cub(t_cub *cub)
@@ -44,7 +44,6 @@ int			init_cub(t_cub *cub)
 	cub->sky_color = -1;
 	cub->grnd_color = -1;
 	cub->increment = 0.1;
-	cub->cub_size = 8;
 	if (init_keys(cub))
 		return (1);
 	return (0);

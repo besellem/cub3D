@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 12:26:36 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 10:41:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,11 @@ static void	put_map(t_cub *cub)
 		j = 0;
 		while (j < cub->map_size_x)
 		{
-			if (cub->map[i][j] == '0' ||
+			if (cub->map[i][j] == '0' || cub->map[i][j] == '2' ||
 				in_charset("NEWS", cub->map[i][j]) >= 0)
 				put_cub(cub, j, i, UCOLOR_GREY);
 			else if (cub->map[i][j] == '1')
 				put_cub(cub, j, i, UCOLOR_BLACK);
-			else if (cub->map[i][j] == '2')
-				put_cub(cub, j, i, UCOLOR_BLUE);
 			++j;
 		}
 		++i;

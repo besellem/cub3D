@@ -6,16 +6,16 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:33:49 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/17 13:47:54 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 13:18:03 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	update_cursor(t_uint64 current, t_uint64 max)
+static void	update_cursor(int current, int max)
 {
-	t_uint64 line_length;
-	t_uint64 i;
+	int line_length;
+	int i;
 
 	line_length = 30;
 	i = -1;
@@ -31,35 +31,29 @@ static void	update_cursor(t_uint64 current, t_uint64 max)
 
 static void	ft_bmp_header(t_cub *cub, int fd)
 {
-	t_uint64 nb;
+	int nb;
 
 	write(fd, "BM", 2);
 	nb = cub->img->bits_per_pixel * cub->parsed_h * cub->parsed_w + 54 * 8;
+	ft_putn_fd(fd, nb, 4);
+	ft_putn_fd(fd, 0, 4);
+	ft_putn_fd(fd, 54, 4);
 	ft_printf("# Generating "B_GREEN"%s"CLR_COLOR" (%.2f mb) ...\n",
 			BMP_FILEPATH, (double)nb / 8000000);
-	write(fd, &nb, 4);
-	nb = 0;
-	write(fd, &nb, 4);
-	nb = 54;
-	write(fd, &nb, 4);
 }
 
 static void	ft_bmp_dib_header(t_cub *cub, int fd)
 {
-	t_uint64	nb;
-	int			i;
+	int i;
 
-	nb = 40;
-	write(fd, &nb, 4);
-	write(fd, &cub->parsed_w, 4);
-	write(fd, &cub->parsed_h, 4);
-	nb = 1;
-	write(fd, &nb, 2);
-	write(fd, &cub->img->bits_per_pixel, 2);
-	nb = 0;
+	ft_putn_fd(fd, 40, 4);
+	ft_putn_fd(fd, cub->parsed_w, 4);
+	ft_putn_fd(fd, cub->parsed_h, 4);
+	ft_putn_fd(fd, 1, 2);
+	ft_putn_fd(fd, cub->img->bits_per_pixel, 2);
 	i = -1;
 	while (++i < 6)
-		write(fd, &nb, 4);
+		ft_putn_fd(fd, 0, 4);
 }
 
 static void	ft_bmp_pixel_array(t_cub *cub, int fd)
@@ -79,7 +73,7 @@ static void	ft_bmp_pixel_array(t_cub *cub, int fd)
 		while (++j < cub->parsed_w)
 		{
 			ptr = addr + i * img->size_line + j * (img->bits_per_pixel / 8);
-			write(fd, &(*(t_uint32 *)ptr), 4);
+			write(fd, &(*(unsigned int *)ptr), 4);
 		}
 		update_cursor(cub->parsed_h - i, cub->parsed_h);
 	}

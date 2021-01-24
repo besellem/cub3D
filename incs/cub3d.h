@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/21 14:36:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 13:21:05 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 # define FOV 90
 
 /*
-** Colors (for testing - to remove)
+** Colors (for minimap - not all are needed)
 */
 # define UCOLOR_GREY 0xE0E0E0
 # define UCOLOR_BLACK 0x0
@@ -98,7 +98,7 @@
 ** Maybe define this macro at compile time to enable bonuses
 */
 # ifndef BONUS
-#  define BONUS 0
+#  define BONUS 1 // SET TO 0 before push
 # endif
 
 /*

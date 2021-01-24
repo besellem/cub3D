@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/13 02:16:30 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/18 12:28:46 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 13:04:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,10 @@ char			*ft_itoa_base(long long n, char *base);
 /*
 ** I/O
 */
+void			ft_putc(int c);
+void			ft_putc_fd(int c, int fd);
+void			ft_putn(int c, int bytes);
+void			ft_putn_fd(int fd, int c, int bytes);
 void			ft_putchar(char c);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr(char *s);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/21 14:38:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 13:20:30 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static int	alloc_sprites(t_cub *cub)
 	int j;
 	int k;
 
+	get_sprites_oc(cub);
 	if (!(cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (cub->sp_ocs))))
 		return (0);
 	k = 0;
@@ -103,6 +104,29 @@ int			are_specs_complete(t_cub *cub)
 		cub->txtr_s);
 }
 
+
+// -> minimap.c
+void		set_cub_size(t_cub *cub)
+{
+	int max_w;
+	int max_h;
+
+	max_w = (cub->win_w / 3) / cub->map_size_x;
+	max_h = (cub->win_h / 3) / cub->map_size_y;
+	if (max_w > max_h)
+		cub->cub_size = max_h;
+	else
+		cub->cub_size = max_w;
+}
+
+void	handle_bonus(t_cub *cub)
+{
+	if (BONUS)
+	{
+		set_cub_size(cub);
+	}
+}
+
 void		cub_parser(int ac, char **av, t_cub *cub)
 {
 	int fd;
@@ -128,7 +152,7 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	map_checker(cub);
 	if (!map_validator(cub))
 		ft_error("Invalid Map", cub, __FILE__, __LINE__);
-	get_sprites_oc(cub);
 	if (!alloc_sprites(cub))
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
+	handle_bonus(cub);
 }

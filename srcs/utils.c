@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/21 14:36:45 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 10:53:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	print_specs(t_cub *cub)
 	ft_printf("    cub->pos_x:      %f\n", cub->pos_x);
 	ft_printf("    cub->pos_y:      %f\n", cub->pos_y);
 	ft_printf("    cub->increment:  %f\n", cub->increment);
+	ft_printf("    cub->cub_size:   %d\n", cub->cub_size);
 	ft_putendl("}\n");
 	print_map(cub);
 	ft_putendl("\n----\n");
@@ -63,6 +64,8 @@ void		sprites_dump(t_cub *cub)
 {
 	int i;
 
+	if (cub->sp_ocs <= 0)
+		return ;
 	ft_putendl("-- Sprites Dump --");
 	ft_putendl("{");
 	i = -1;

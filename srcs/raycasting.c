@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/21 13:42:32 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/24 10:35:55 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 		}
 		else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
 			sprite_intersect(cub, ray, x, y);
+		// printf("%c, ", cub->map[safe_min(y, !ray->is_down)][(int)x]);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -119,6 +120,9 @@ void		cast_all_rays(t_cub *cub)
 	double	tmp_angle;
 	int		i;
 
+	i = -1;
+	while (++i < cub->sp_ocs)
+		cub->sprites[i].hit = 0;
 	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
 	i = -1;
 	while (++i < cub->win_w)
