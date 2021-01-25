@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 13:17:19 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 15:10:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@
 ** Maybe define this macro at compile time to enable bonuses
 */
 # ifndef BONUS
-#  define BONUS 1 // SET TO 0 before push
+#  define BONUS 1 // Set to 0 before push
 # endif
 
 /*
@@ -107,6 +107,7 @@
 
 /*
 ** angle:			angle of the ray in radians
+** tan_angle:		tan(angle). instead of doing it ~4 times
 ** distortion:		cos(ray->angle - cub->drxion) -> is used 2 times per ray
 ** xintcpt:			next cube from cub->pos_x
 ** yintcpt:			next cube from cub->pos_y
@@ -124,6 +125,7 @@
 typedef struct	s_ray
 {
 	double		angle;
+	double		tan_angle;
 	double		distortion;
 	double		xintcpt;
 	double		yintcpt;
@@ -133,6 +135,7 @@ typedef struct	s_ray
 	double		hit_wall_x;
 	double		hit_wall_y;
 	t_uint32	*sp_ray;
+	int			ray_nb;
 	int			is_down;
 	int			is_right;
 	int			hit_vertical;

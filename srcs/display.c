@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 13:25:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 15:32:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 /*
 ** PRINT A SPRITE COLUMN
 */
-
-static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
+// static
+void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	t_uint32	*ptr;
 	int			y;
@@ -99,7 +99,7 @@ void	update_cubs(t_cub *cub)
 		while (y < h_start)
 			ft_pixel_put(cub, x, y++, cub->sky_color);
 		print_txtre_ray(cub, cub->rays[x], x, scale);
-		print_sprite_ray(cub, cub->rays[x], x);
+		// print_sprite_ray(cub, cub->rays[x], x);
 		y = scale + h_start;
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);

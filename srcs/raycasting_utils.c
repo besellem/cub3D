@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 13:26:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 15:08:39 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	ptr = ray->sp_ray;
 	while (++i < cub->win_h)
 	{
-		
 		// cub->sprites[idx];
 		++ptr;
 	}
