@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 15:10:05 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 09:40:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,12 @@ static void	move_player(t_cub *cub)
 	}
 }
 
-static int	need_update(t_cub *cub)
-{
-	return (cub->dh != 0 || cub->dw != 0 || cub->turn != 0);
-}
-
 void		update_view(t_cub *cub)
 {
 	move_player(cub);
 	cast_all_rays(cub);
 	update_cubs(cub);
-	if (BONUS)// && !cub->save_opt)
+	if (BONUS)
 	{
 		update_minimap(cub);
 	}
@@ -56,7 +51,7 @@ void		update_view(t_cub *cub)
 
 int			ft_refresh(t_cub *cub)
 {
-	if (need_update(cub))
+	if (cub->dh || cub->dw || cub->turn)
 	{
 		update_view(cub);
 		mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);

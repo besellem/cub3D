@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/21 14:38:55 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 12:04:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ static void	free_textures(t_cub *cub)
 	if (cub->txtrs)
 	{
 		i = -1;
-		while (++i < TEXTURES_COUNT)
-		{
-			if (cub->txtrs[i].ptr)
-				mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
-		}
+		while (++i < TEXTURES_COUNT && cub->txtrs[i].ptr)
+			mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
 		free(cub->txtrs);
 	}
 }
@@ -44,6 +41,8 @@ static void	free_textures(t_cub *cub)
 
 void		ft_free_cub(t_cub *cub)
 {
+	int i;
+
 	free_textures(cub);
 	if (cub->map)
 		ft_free_strs(cub->map);
@@ -52,7 +51,12 @@ void		ft_free_cub(t_cub *cub)
 	if (cub->img)
 		free(cub->img);
 	if (cub->rays)
+	{
+		i = -1;
+		while (++i < cub->win_w && &cub->rays[i])
+			free((&cub->rays[i])->sp_ray);
 		free(cub->rays);
+	}
 	if (cub->keys)
 		free(cub->keys);
 	if (cub->sprites)

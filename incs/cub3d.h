@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 15:36:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 13:17:19 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@
 ** distance:		distance from the player to a wall for that angle
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
+** sp_ray:			contains a ray of all the sprites combinated
 ** is_down:			is the angle pointing up (0) or down (1)
 ** is_right:		is the angle pointing left (0) or right (1)
 ** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
@@ -122,19 +123,20 @@
 */
 typedef struct	s_ray
 {
-	double	angle;
-	double	distortion;
-	double	xintcpt;
-	double	yintcpt;
-	double	xstep;
-	double	ystep;
-	double	distance;
-	double	hit_wall_x;
-	double	hit_wall_y;
-	int		is_down;
-	int		is_right;
-	int		hit_vertical;
-	int		hit_drxion;
+	double		angle;
+	double		distortion;
+	double		xintcpt;
+	double		yintcpt;
+	double		xstep;
+	double		ystep;
+	double		distance;
+	double		hit_wall_x;
+	double		hit_wall_y;
+	t_uint32	*sp_ray;
+	int			is_down;
+	int			is_right;
+	int			hit_vertical;
+	int			hit_drxion;
 }				t_ray;
 
 /*
@@ -150,7 +152,6 @@ typedef	struct	s_sprite
 	int		x;
 	int		y;
 	int		hit;
-	double	distance;
 	double	hit_x;
 	double	hit_y;
 }				t_sprite;
@@ -303,6 +304,7 @@ void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
 ** Display
 */
 void			ft_pixel_put(t_cub *cub, int x, int y, unsigned int color);
+void			init_sprites_hit(t_cub *cub);
 void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);
 void			update_minimap(t_cub *cub);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 15:53:28 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 13:26:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,20 @@ static int	get_sprite_idx(t_cub *cub, int x, int y)
 
 void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
-	int idx;
+	t_uint32	*ptr;
+	int			idx;
+	int			i;
 
 	idx = get_sprite_idx(cub, (int)x, (int)y);
-	// ft_printf("sprites ocs: %d\n", cub->sp_ocs);
-	// ft_printf("idx: %d, x: %d, y: %d\n", idx, (int)x, (int)y);
-	// ft_printf("x: %d, y: %d\n\n", cub->sprites[idx].x, cub->sprites[idx].y);
+	if (cub->sprites[idx].hit == 0)
+		return ;
 	cub->sprites[idx].hit = 1;
-	cub->sprites[idx].hit_x = x;
-	cub->sprites[idx].hit_y = y;
-	(void)ray;
-	// ray->sp_distance = get_dist(cub->pos_x, cub->pos_y, x, y);
+	i = -1;
+	ptr = ray->sp_ray;
+	while (++i < cub->win_h)
+	{
+		
+		// cub->sprites[idx];
+		++ptr;
+	}
 }

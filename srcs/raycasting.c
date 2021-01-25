@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 15:50:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 09:15:30 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,7 @@ void		cast_all_rays(t_cub *cub)
 	double	tmp_angle;
 	int		i;
 
-	i = -1;
-	while (++i < cub->sp_ocs)
-		cub->sprites[i].hit = 0;
+	init_sprites_hit(cub);
 	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
 	i = -1;
 	while (++i < cub->win_w)

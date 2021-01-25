@@ -6,11 +6,26 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 10:47:53 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 11:52:41 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	alloc_sprite_rays(t_cub *cub)
+{
+	int i;
+
+	i = 0;
+	while (i < cub->win_h)
+	{
+		(&cub->rays[i])->sp_ray = (t_uint32 *)malloc(sizeof(t_uint32) * cub->win_h);
+		if (!(&cub->rays[i])->sp_ray)
+			return (1);
+		++i;
+	}
+	return (0);
+}
 
 static int	window_size_spec(char **split, t_cub *cub)
 {
@@ -32,7 +47,8 @@ static int	window_size_spec(char **split, t_cub *cub)
 		cub->win_w = x_tmp;
 	if (cub->save_opt == 0 && cub->win_h > y_tmp)
 		cub->win_h = y_tmp;
-	if (!(cub->rays = (t_ray *)malloc(sizeof(t_ray) * cub->win_w)))
+	cub->rays = (t_ray *)malloc(sizeof(t_ray) * cub->win_w);
+	if (!cub->rays || alloc_sprite_rays(cub))
 		return (0);
 	cub->dist_plane = (cub->win_w / 2) / tan(FOV / 2);
 	return (1);

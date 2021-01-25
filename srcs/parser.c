@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 15:09:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 12:36:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	get_sprites_oc(t_cub *cub)
 	cub->sp_ocs = ocs;
 }
 
+//	NOT SURE OF THE REAL USE
 static int	alloc_sprites(t_cub *cub)
 {
 	int i;
@@ -70,7 +71,8 @@ static int	alloc_sprites(t_cub *cub)
 	int k;
 
 	get_sprites_oc(cub);
-	if (!(cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (cub->sp_ocs))))
+	cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * cub->sp_ocs);
+	if (!cub->sprites)
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
 	k = 0;
 	i = -1;
@@ -82,14 +84,15 @@ static int	alloc_sprites(t_cub *cub)
 			if (cub->map[i][j] == '2')
 			{
 				ft_memset(&cub->sprites[k], 0, sizeof(t_sprite));
-				cub->sprites[k].x = j;
-				cub->sprites[k].y = i;
+				(&cub->sprites[k])->x = j;
+				(&cub->sprites[k])->y = i;
 				++k;
 			}
 		}
 	}
 	return (1);
 }
+//	END
 
 int			are_specs_complete(t_cub *cub)
 {
