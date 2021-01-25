@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 12:04:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 21:31:27 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void		ft_free_cub(t_cub *cub)
 	if (cub->rays)
 	{
 		i = -1;
-		while (++i < cub->win_w && &cub->rays[i])
-			free((&cub->rays[i])->sp_ray);
+		while (++i < cub->win_h)
+			free(cub->rays[i].sp_ray);
 		free(cub->rays);
 	}
 	if (cub->keys)

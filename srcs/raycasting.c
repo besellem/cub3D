@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 15:03:18 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/25 21:30:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,19 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		ray->hit_drxion = HIT_EAST;
 }
 
+/*
+** Cast all rays and update the sprites rays too.
+** vertical). We keep and then set the new ray pointer (horizontal or vertical)
+** with cub->rays[i].sp_ray because otherwise it's lost as we memset all rays
+** each time.
+*/
+
 void		cast_all_rays(t_cub *cub)
 {
-	double	ray_angle;
-	double	tmp_angle;
-	int		i;
+	double		ray_angle;
+	double		tmp_angle;
+	t_uint32	*sp_ray_ptr;
+	int			i;
 
 	init_sprites_hit(cub);
 	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
@@ -125,7 +133,9 @@ void		cast_all_rays(t_cub *cub)
 	while (++i < cub->win_w)
 	{
 		tmp_angle = ft_norm_angle(ray_angle);
+		sp_ray_ptr = cub->rays[i].sp_ray;
 		cast_ray(cub, &(cub->rays[i]), tmp_angle);
+		cub->rays[i].sp_ray = sp_ray_ptr;
 		(&cub->rays[i])->distortion = cos(cub->rays[i].angle - cub->drxion);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
