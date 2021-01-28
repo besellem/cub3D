@@ -14,7 +14,7 @@ clang, GNU make
 - [ ] Fix memory leaks
 
 ## Compilation
-Just run `make` for macOS or Linux compilation (check the system automatically).
+Just run `make` to compile on macOS or Linux (it checks the system automatically).
 
 ## Usage
 ```sh

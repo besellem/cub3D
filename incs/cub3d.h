@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 18:25:14 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/28 14:40:57 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,12 @@ typedef struct	s_ray
 	double		distance;
 	double		hit_wall_x;
 	double		hit_wall_y;
+	t_uint32	*sp_ray;
 	int			is_down;
 	int			is_right;
 	int			hit_vertical;
 	int			hit_drxion;
-	t_uint32	*sp_ray;
+	int			hit_sprite;
 }				t_ray;
 
 /*
@@ -299,6 +300,7 @@ int				handle_key_release(int key, t_cub *cub);
 /*
 ** Raycasting
 */
+int				hit_x_calc(t_img tx, t_ray ray);
 void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
 

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 21:45:06 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/28 15:53:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	print_specs(t_cub *cub)
 void		sprites_dump(t_cub *cub)
 {
 	int i;
+	int j;
 
 	if (cub->sp_ocs <= 0)
 		return ;
@@ -73,6 +74,17 @@ void		sprites_dump(t_cub *cub)
 	{
 		ft_printf("    cub->sprites[%2d] => x[%2d] y[%2d]\n",
 				i, cub->sprites[i].x, cub->sprites[i].y);
+	}
+	ft_putendl("}\n");
+	ft_putendl("{");
+	i = -1;
+	while (++i < cub->win_w)
+	{
+		printf(B_RED"ray[%d]\n"CLR_COLOR, i);
+		j = -1;
+		while (++j < cub->win_h - 1)
+			printf("ray[%d]->sp_ray[%d]: [%u]\n", i, j, cub->rays[i].sp_ray + j);
+		ft_putendl("");
 	}
 	ft_putendl("}\n");
 }

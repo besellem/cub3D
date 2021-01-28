@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:33:49 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/24 15:00:13 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/28 10:10:19 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	update_cursor(int current, int max)
 
 static void	ft_bmp_header(t_cub *cub, int fd)
 {
-	int nb;
+	t_uint64 nb;
 
 	write(fd, "BM", 2);
 	nb = cub->img->bits_per_pixel * cub->parsed_h * cub->parsed_w + 54 * 8;

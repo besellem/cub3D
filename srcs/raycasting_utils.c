@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 15:08:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/28 14:25:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,14 @@ static int	get_sprite_idx(t_cub *cub, int x, int y)
 	return (i);
 }
 
+//	Not sure if it's actually useful
 void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
-	t_uint32	*ptr;
-	int			idx;
-	int			i;
+	int idx;
 
 	idx = get_sprite_idx(cub, (int)x, (int)y);
 	if (cub->sprites[idx].hit == 0)
 		return ;
 	cub->sprites[idx].hit = 1;
-	i = -1;
-	ptr = ray->sp_ray;
-	while (++i < cub->win_h)
-	{
-		// cub->sprites[idx];
-		++ptr;
-	}
+	ray->hit_sprite = 1;
 }
