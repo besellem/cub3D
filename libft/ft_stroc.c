@@ -6,14 +6,14 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 15:08:04 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/13 15:10:17 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:14:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-** Find the number of occurences of a character in a string
+** Find the number of occurrences of a character in a string
 */
 
 size_t	ft_stroc(const char *haystack, char c)

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/28 14:40:57 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:14:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define TEXTURES_COUNT 5
 
 /*
-** Get the 4 cardinal values whithin a circle:
+** Get the 4 cardinal values within a circle:
 **
 **             N (PI / 2)
 **             |
@@ -73,7 +73,7 @@
 ** Key mapping for macOS & Linux envs
 */
 # if defined(__APPLE__) && defined(__MACH__)
-#  define ENV_MSG "\033[1;32m[macOS environnement]\033[0m"
+#  define ENV_MSG "\033[1;32m[macOS environment]\033[0m"
 #  define KEY_ESC 53
 #  define KEY_LEFT 123
 #  define KEY_RIGHT 124
@@ -83,7 +83,7 @@
 #  define KEY_D 2
 #  define EVT_RED_CROSS 17
 # else
-#  define ENV_MSG "\033[1;32m[Linux (default) environnement]\033[0m"
+#  define ENV_MSG "\033[1;32m[Linux (default) environment]\033[0m"
 #  define KEY_ESC 65307
 #  define KEY_LEFT 65361
 #  define KEY_RIGHT 65363
@@ -116,7 +116,7 @@
 ** distance:		distance from the player to a wall for that angle
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
-** sp_ray:			contains a ray of all the sprites combinated
+** sp_ray:			contains a ray of all the sprites combined
 ** is_down:			is the angle pointing up (0) or down (1)
 ** is_right:		is the angle pointing left (0) or right (1)
 ** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
@@ -182,13 +182,13 @@ typedef struct	s_img
 
 /*
 ** save_opt:		check if the option '--save' is defined
-** win_w:			resolution width (if > screen, is troncated)
-** win_h:			resolution heigh (if > screen, is troncated)
+** win_w:			resolution width (if > screen, is truncated)
+** win_h:			resolution height (if > screen, is truncated)
 ** parsed_w:		resolution width from the .cub file
-** parsed_h:		resolution heigh from the .cub file
+** parsed_h:		resolution height from the .cub file
 ** sky_color:		sky color
 ** grnd_color:		ground color
-** sp_ocs:			sprites occurences in the map
+** sp_ocs:			sprites occurrences in the map
 ** txtr_no:			path to the north texture file
 ** txtr_so:			path to the south texture file
 ** txtr_ea:			path to the east texture file

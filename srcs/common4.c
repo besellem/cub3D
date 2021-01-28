@@ -33,7 +33,7 @@ double	get_dec(double n)
 
 /*
 ** DO NB1 - NB2 WITHOUT BEING < 0. IF THIS IS THE CASE, RETURN 0
-** (mainly used in the raycasting calculations - prevents segaulting)
+** (mainly used in the raycasting calculations - prevents segv)
 */
 
 int		safe_min(int nb1, int nb2)
