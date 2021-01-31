@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/28 15:57:45 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/31 14:30:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 static int	alloc_sprite_rays(t_cub *cub)
 {
 	int i;
+	int j;
 
 	i = 0;
 	while (i < cub->win_h)
 	{
-		(&cub->rays[i])->sp_ray = (t_uint32 *)malloc(sizeof(t_uint32) * cub->win_h);
-		if (!(&cub->rays[i])->sp_ray)
+		cub->rays[i].sp_ray = (t_uint32 *)malloc(sizeof(t_uint32) * cub->win_h);
+		if (!cub->rays[i].sp_ray)
 			return (1);
-
-
-		//	WHY NOT A MEMSET HERE ?
-		//	I think I deleted it because of something, but what ?
-
-		
+		j = -1;
+		while (++j < cub->win_h)
+			(&cub->rays[i])->sp_ray[j] = 0;
 		++i;
 	}
 	return (0);

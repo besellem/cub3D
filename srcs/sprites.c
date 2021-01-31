@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 10:28:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/25 21:23:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/31 11:56:36 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,4 @@ void	init_sprites_hit(t_cub *cub)
 		(&cub->sprites[i])->x = tmp_x;
 		(&cub->sprites[i])->y = tmp_y;
 	}
-}
-
-void	get_sprites(t_cub *cub)
-{
-	(void)cub;
 }

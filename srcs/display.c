@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/28 14:34:12 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/31 10:54:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	update_cubs(t_cub *cub)
 		while (y < h_start)
 			ft_pixel_put(cub, x, y++, cub->sky_color);
 		print_txtre_ray(cub, cub->rays[x], x, scale);
-		print_sprite_ray(cub, cub->rays[x], x);
+		// print_sprite_ray(cub, cub->rays[x], x);
 		y = scale + h_start;
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);

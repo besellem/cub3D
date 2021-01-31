@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/28 15:10:19 by besellem         ###   ########.fr       */
+/*   Updated: 2021/01/31 15:38:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,7 @@
 
 static void	init_ray(t_ray *ray, double angle)
 {
-	t_uint32 *sp_ray_ptr;
-
-	sp_ray_ptr = ray->sp_ray;
 	ft_memset(ray, 0, sizeof(t_ray));
-	ray->sp_ray = sp_ray_ptr;
 	ray->angle = angle;
 	ray->tan_angle = tan(angle);
 	ray->is_down = angle >= 0 && angle <= T_PI;
@@ -154,9 +150,12 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 
 	x = ray->hit_wall_x;
 	y = ray->hit_wall_y;
-	while ((int)x != (int)cub->pos_x - !ray->is_right && (int)y != (int)cub->pos_y - !ray->is_down)
+	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
+		// &&
+		// (int)x != (int)cub->pos_x - !ray->is_right &&
+		// (int)y != (int)cub->pos_y - !ray->is_down)
 	{
-		ft_error("DEBUG", cub, __FILE__, __LINE__);
+		printf(B_YELLOW"x: [%f], y: [%f]"CLR_COLOR"\n", x, y);
 		if ((ray->hit_vertical &&
 			cub->map[(int)y][safe_min(x, !ray->is_right)] == '2') ||
 			(!ray->hit_vertical &&
@@ -176,14 +175,18 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 	}
 }
 
-void	init_sp_ray(t_cub *cub, t_uint32 *sp_ray)
+void	init_sp_rays(t_cub *cub)
 {
 	int i;
+	int j;
 
-	i = -1;
-	while (++i < cub->win_h)
+	i = 0;
+	while (i < cub->win_h)
 	{
-		*(sp_ray + i) = 0;
+		j = -1;
+		while (++j < cub->win_h)
+			(&cub->rays[i])->sp_ray[j] = 0;
+		++i;
 	}
 }
 
@@ -198,22 +201,21 @@ void		cast_all_rays(t_cub *cub)
 {
 	double		ray_angle;
 	double		tmp_angle;
-	// t_uint32	*sp_ray_ptr;
+	t_uint32	*sp_ray_ptr;
 	int			i;
 
 	init_sprites_hit(cub);
+	init_sp_rays(cub);
 	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
 	i = -1;
 	while (++i < cub->win_w)
 	{
+		sp_ray_ptr = (&cub->rays[i])->sp_ray;
 		tmp_angle = ft_norm_angle(ray_angle);
-		// init_sp_ray(cub, cub->rays[i].sp_ray);
-		// sp_ray_ptr = cub->rays[i].sp_ray;
 		cast_ray(cub, &cub->rays[i], tmp_angle);
-		// cub->rays[i].sp_ray = sp_ray_ptr;
-		// ft_bzero(cub->rays[i].sp_ray, sizeof(unsigned int));
+		(&cub->rays[i])->sp_ray = sp_ray_ptr;
 		(&cub->rays[i])->distortion = cos(cub->rays[i].angle - cub->drxion);
-		// fill_sprite_ray(cub, &cub->rays[i]);
+		fill_sprite_ray(cub, &cub->rays[i]);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
 }
