@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/31 10:54:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:43:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** PRINT A PIXEL AT THE COORDINATES INTO mlx->img
 */
 
-void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
+void		ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 {
 	char *px;
 
@@ -29,7 +29,7 @@ void	ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
 ** PRINT A SPRITE COLUMN
 */
 // static
-void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
+void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	t_uint32	*ptr;
 	int			y;
@@ -39,14 +39,21 @@ void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 	ptr = ray.sp_ray;
 	y = -1;
 	while (++y < cub->win_h)
-		ft_pixel_put(cub, x, y, *ptr++);
+	{
+		if (*ptr != 0U)
+		{
+			ft_printf(B_BLUE"row: %d, color: %#x, [line: %d]\n"CLR_COLOR, y, *ptr, __LINE__);
+			ft_pixel_put(cub, x, y, *ptr);
+		}
+		++ptr;
+	}
 }
 
 /*
 ** PRINT A TEXTURE COLUMN DEFINED BY A RAY
 */
 
-int		hit_x_calc(t_img tx, t_ray ray)
+static inline int	hit_x_calc(t_img tx, t_ray ray)
 {
 	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
 		return (tx.x * get_dec(ray.hit_wall_x));
@@ -54,7 +61,7 @@ int		hit_x_calc(t_img tx, t_ray ray)
 		return (tx.x * get_dec(ray.hit_wall_y));
 }
 
-void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
+void		print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 {
 	t_img	tx;
 	double	start;
@@ -80,7 +87,32 @@ void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 	}
 }
 
-void	update_cubs(t_cub *cub)
+void		print_sprite(t_cub *cub)
+{
+	t_img		tx;
+	char		*ptr;
+	t_uint32	color;
+	int			i;
+	int			j;
+
+	tx = cub->txtrs[4];
+	i = 0;
+	while (i < tx.x)
+	{
+		j = 0;
+		while (j < tx.y)
+		{
+			ptr = tx.addr + (j * tx.size_line) + i * (tx.bits_per_pixel / 8);
+			color = *(t_uint32 *)ptr;
+			if (color != 0U)
+				ft_pixel_put(cub, i, j, color);
+			++j;
+		}
+		++i;
+	}
+}
+
+void		update_cubs(t_cub *cub)
 {
 	double	scale;
 	double	h_start;
@@ -105,4 +137,5 @@ void	update_cubs(t_cub *cub)
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);
 	}
+	print_sprite(cub);
 }

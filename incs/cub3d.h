@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/31 11:16:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:23:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@
 ** Maybe define this macro at compile time to enable bonuses
 */
 # ifndef BONUS
-#  define BONUS 1 // Set to 0 before push
+#  define BONUS 0 // Set to 0 before push
 # endif
 
 /*
@@ -300,7 +300,6 @@ int				handle_key_release(int key, t_cub *cub);
 /*
 ** Raycasting
 */
-int				hit_x_calc(t_img tx, t_ray ray);
 void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
 

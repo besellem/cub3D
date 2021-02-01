@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/31 15:38:42 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:25:36 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,21 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		ray->hit_drxion = HIT_EAST;
 }
 
-void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale)
+int		hit_x_sprite_calc(t_img tx, t_ray ray, double x, double y)
 {
-	t_img	tx;
-	double	start;
-	double	end;
-	int		idx;
+	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
+		return (tx.x * get_dec(x));
+	else
+		return (tx.x * get_dec(y));
+}
+
+void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
+{
+	t_img		tx;
+	double		start;
+	double		end;
+	int			idx;
+	t_uint32	color;
 
 	tx = cub->txtrs[4];
 	start = 0.0;
@@ -133,10 +142,15 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale)
 	}
 	while (start < end && idx < cub->win_h)
 	{
-		ray->sp_ray[idx] += *(unsigned int *)(tx.addr + (int)start * tx.size_line + hit_x_calc(tx, *ray) * (tx.bits_per_pixel / 8));
-		// ft_pixel_put(cub, x, idx++,
-		// 	*(unsigned int *)(tx.addr + (int)start * tx.size_line + \
-		// 	hit_x_calc(tx, ray) * (tx.bits_per_pixel / 8)));
+		// ft_printf("idx: => %d\n", idx);
+		// ft_printf(B_YELLOW"ray->sp_ray[%d], [%#X] [%.32b]"CLR_COLOR"\n", idx, ray->sp_ray[idx], ray->sp_ray[idx]);
+		color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
+		// ft_printf("idx: [%d] => [%#x]\n", idx, color);
+		if (color != 0U)
+		{
+			ft_printf("idx: %d, color: [%#x]\n", idx, color);
+			ray->sp_ray[idx] = color;
+		}
 		start += tx.y / scale;
 	}
 }
@@ -146,29 +160,25 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 	double x;
 	double y;
 	double scale;
-	double h_start;
 
 	x = ray->hit_wall_x;
 	y = ray->hit_wall_y;
-	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
-		// &&
-		// (int)x != (int)cub->pos_x - !ray->is_right &&
-		// (int)y != (int)cub->pos_y - !ray->is_down)
+	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
+		(int)x != (int)cub->pos_x - !ray->is_right &&
+		(int)y != (int)cub->pos_y - !ray->is_down)
 	{
-		printf(B_YELLOW"x: [%f], y: [%f]"CLR_COLOR"\n", x, y);
 		if ((ray->hit_vertical &&
 			cub->map[(int)y][safe_min(x, !ray->is_right)] == '2') ||
 			(!ray->hit_vertical &&
 			cub->map[safe_min(y, !ray->is_down)][(int)x] == '2'))
 		{
-			scale = get_dist(cub->pos_x, cub->pos_y, x, y) * ray->distortion;
+			scale = get_dist(cub->pos_x, cub->pos_y, x, y);
 			if (scale >= 0 && scale < 0.0001)
 				scale = 0.0001;
 			else
 				scale *= ray->distortion;
 			scale = cub->win_h / scale;
-			h_start = (cub->win_h - scale) / 2;
-			fill_sprite_ptr(cub, ray, scale);
+			fill_sprite_ptr(cub, ray, scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
 		}
 		x -= ray->xstep;
 		y -= ray->ystep;
@@ -185,7 +195,7 @@ void	init_sp_rays(t_cub *cub)
 	{
 		j = -1;
 		while (++j < cub->win_h)
-			(&cub->rays[i])->sp_ray[j] = 0;
+			(&cub->rays[i])->sp_ray[j] = 0U;
 		++i;
 	}
 }
@@ -214,8 +224,8 @@ void		cast_all_rays(t_cub *cub)
 		tmp_angle = ft_norm_angle(ray_angle);
 		cast_ray(cub, &cub->rays[i], tmp_angle);
 		(&cub->rays[i])->sp_ray = sp_ray_ptr;
-		(&cub->rays[i])->distortion = cos(cub->rays[i].angle - cub->drxion);
-		fill_sprite_ray(cub, &cub->rays[i]);
+		(&cub->rays[i])->distortion = cos(tmp_angle - cub->drxion);
+		// fill_sprite_ray(cub, &cub->rays[i]);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
 }

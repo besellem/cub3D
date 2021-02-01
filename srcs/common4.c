@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 13:26:23 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/01 10:35:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,9 @@ int		check_rgb(char *s)
 	if (s[i])
 		return (0);
 	return (1);
+}
+
+t_uint32	ft_rgba(t_uint8 r, t_uint8 g, t_uint8 b, t_uint8 a)
+{
+	return (r | (g << 8) | (b << 16) | (a << 24));
 }
