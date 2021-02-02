@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 14:21:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:17:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int			ft_refresh(t_cub *cub)
 	{
 		update_view(cub);
 		mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);
-		mlx_string_put(cub->mlx, cub->win, 0, 15, 0xffffff, "CUB3D - (c) Liena 2021");
 		return (0);
 	}
 	return (1);

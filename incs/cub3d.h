@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 14:24:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:40:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct	s_ray
 	double		distance;
 	double		hit_wall_x;
 	double		hit_wall_y;
+	double		sp_scale;
 	t_uint32	*sp_ray;
 	int			is_down;
 	int			is_right;

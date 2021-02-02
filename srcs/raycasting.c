@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 13:53:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:02:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	init_ray(t_ray *ray, double angle)
 	ray->is_down = angle >= 0 && angle <= T_PI;
 	ray->is_right = !(angle >= T_PI_2 && angle <= T_3PI_2);
 	ray->distance = -1.0;
+	ray->sp_scale = -1.0;
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)
@@ -155,9 +156,8 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 
 void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 {
-	double x;
-	double y;
-	double scale;
+	double	x;
+	double	y;
 
 	x = ray->hit_wall_x;
 	y = ray->hit_wall_y;
@@ -170,13 +170,30 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 			(!ray->hit_vertical &&
 			cub->map[safe_min(y, !ray->is_down)][(int)x] == '2'))
 		{
-			scale = get_dist(cub->pos_x, cub->pos_y, x, y);
-			if (scale >= 0 && scale < 0.0001)
-				scale = 0.0001;
-			else
-				scale *= ray->distortion;
-			scale = cub->win_h / scale;
-			fill_sprite_ptr(cub, ray, scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
+			
+			// IDEA IN PROCESS
+			if (ray->sp_scale == -1 && ray->hit_vertical)
+			{
+				if (get_dec(x) < 0.5)
+					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 + get_dec(x));
+				else
+					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 - get_dec(x));
+			}
+			else if (ray->sp_scale == -1 && !ray->hit_vertical)
+			{
+				if (get_dec(y) < 0.5)
+					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 + get_dec(y), y);
+				else
+					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 - get_dec(y), y);
+			}
+			// END IDEA
+
+			if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
+				ray->sp_scale = 0.0001;
+			// else
+			// 	ray->sp_scale *= ray->distortion;
+			ray->sp_scale = cub->win_h / ray->sp_scale;
+			fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
 		}
 		x -= ray->xstep;
 		y -= ray->ystep;

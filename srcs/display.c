@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 14:15:54 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:56:04 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void		ft_pixel_put(t_cub *cub, int x, int y, t_uint32 color)
 /*
 ** PRINT A SPRITE COLUMN
 */
-// static
-void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
+
+static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	t_uint32	*ptr;
 	int			y;
@@ -41,11 +41,7 @@ void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
 	while (++y < cub->win_h)
 	{
 		if (*ptr != 0U)
-		{
 			ft_pixel_put(cub, x, y, *ptr);
-			// ft_error("DEBUG", cub, __FILE__, __LINE__);
-		}
-		// ft_printf(B_BLUE"row: %d, color: %#x, [line: %d]\n"CLR_COLOR, y, *ptr, __LINE__);
 		++ptr;
 	}
 }
@@ -54,7 +50,7 @@ void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
 ** PRINT A TEXTURE COLUMN DEFINED BY A RAY
 */
 
-static inline int	hit_x_calc(t_img tx, t_ray ray)
+static int	hit_x_calc(t_img tx, t_ray ray)
 {
 	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
 		return (tx.x * get_dec(ray.hit_wall_x));
@@ -108,9 +104,9 @@ void		update_cubs(t_cub *cub)
 		while (y < h_start)
 			ft_pixel_put(cub, x, y++, cub->sky_color);
 		print_txtre_ray(cub, cub->rays[x], x, scale);
-		print_sprite_ray(cub, cub->rays[x], x);
 		y = scale + h_start;
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);
+		print_sprite_ray(cub, cub->rays[x], x);
 	}
 }
