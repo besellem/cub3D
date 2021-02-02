@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 15:40:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:04:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ typedef struct	s_img
 */
 typedef	struct	s_cub
 {
-	int			save_opt;
+	int			save_opt : 1;
 	int			win_w;
 	int			win_h;
 	int			parsed_w;
