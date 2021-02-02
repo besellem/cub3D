@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/01 15:43:14 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 14:15:54 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 ** PRINT A PIXEL AT THE COORDINATES INTO mlx->img
 */
 
-void		ft_pixel_put(t_cub *cub, int x, int y, unsigned int color)
+void		ft_pixel_put(t_cub *cub, int x, int y, t_uint32 color)
 {
 	char *px;
 
 	px = cub->img->addr;
 	px += (y * cub->img->size_line + x * (cub->img->bits_per_pixel / 8));
-	*(unsigned int *)px = color;
+	*(t_uint32 *)px = color;
 }
 
 /*
@@ -42,9 +42,10 @@ void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
 	{
 		if (*ptr != 0U)
 		{
-			ft_printf(B_BLUE"row: %d, color: %#x, [line: %d]\n"CLR_COLOR, y, *ptr, __LINE__);
 			ft_pixel_put(cub, x, y, *ptr);
+			// ft_error("DEBUG", cub, __FILE__, __LINE__);
 		}
+		// ft_printf(B_BLUE"row: %d, color: %#x, [line: %d]\n"CLR_COLOR, y, *ptr, __LINE__);
 		++ptr;
 	}
 }
@@ -81,34 +82,9 @@ void		print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 	while (start < end && idx < cub->win_h)
 	{
 		ft_pixel_put(cub, x, idx++,
-			*(unsigned int *)(tx.addr + (int)start * tx.size_line + \
+			*(t_uint32 *)(tx.addr + (int)start * tx.size_line + \
 			hit_x_calc(tx, ray) * (tx.bits_per_pixel / 8)));
 		start += tx.y / scale;
-	}
-}
-
-void		print_sprite(t_cub *cub)
-{
-	t_img		tx;
-	char		*ptr;
-	t_uint32	color;
-	int			i;
-	int			j;
-
-	tx = cub->txtrs[4];
-	i = 0;
-	while (i < tx.x)
-	{
-		j = 0;
-		while (j < tx.y)
-		{
-			ptr = tx.addr + (j * tx.size_line) + i * (tx.bits_per_pixel / 8);
-			color = *(t_uint32 *)ptr;
-			if (color != 0U)
-				ft_pixel_put(cub, i, j, color);
-			++j;
-		}
-		++i;
 	}
 }
 
@@ -132,10 +108,9 @@ void		update_cubs(t_cub *cub)
 		while (y < h_start)
 			ft_pixel_put(cub, x, y++, cub->sky_color);
 		print_txtre_ray(cub, cub->rays[x], x, scale);
-		// print_sprite_ray(cub, cub->rays[x], x);
+		print_sprite_ray(cub, cub->rays[x], x);
 		y = scale + h_start;
 		while (y < cub->win_h)
 			ft_pixel_put(cub, x, y++, cub->grnd_color);
 	}
-	print_sprite(cub);
 }

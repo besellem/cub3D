@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:33:49 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/28 10:10:19 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 10:22:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	ft_bmp_pixel_array(t_cub *cub, int fd)
 		while (++j < cub->parsed_w)
 		{
 			ptr = addr + i * img->size_line + j * (img->bits_per_pixel / 8);
-			write(fd, &(*(unsigned int *)ptr), 4);
+			write(fd, &(*(t_uint32 *)ptr), 4);
 		}
 		update_cursor(cub->parsed_h - i, cub->parsed_h);
 	}

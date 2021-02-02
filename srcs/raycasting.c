@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/01 15:25:36 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 13:53:41 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,16 +142,14 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 	while (start < end && idx < cub->win_h)
 	{
-		// ft_printf("idx: => %d\n", idx);
-		// ft_printf(B_YELLOW"ray->sp_ray[%d], [%#X] [%.32b]"CLR_COLOR"\n", idx, ray->sp_ray[idx], ray->sp_ray[idx]);
 		color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
-		// ft_printf("idx: [%d] => [%#x]\n", idx, color);
 		if (color != 0U)
 		{
-			ft_printf("idx: %d, color: [%#x]\n", idx, color);
 			ray->sp_ray[idx] = color;
+			ray->hit_sprite = 1;
 		}
 		start += tx.y / scale;
+		++idx;
 	}
 }
 
@@ -164,8 +162,8 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 	x = ray->hit_wall_x;
 	y = ray->hit_wall_y;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
-		(int)x != (int)cub->pos_x - !ray->is_right &&
-		(int)y != (int)cub->pos_y - !ray->is_down)
+		(int)x != (int)cub->pos_x + !ray->is_right &&
+		(int)y != (int)cub->pos_y + !ray->is_down)
 	{
 		if ((ray->hit_vertical &&
 			cub->map[(int)y][safe_min(x, !ray->is_right)] == '2') ||
@@ -191,7 +189,7 @@ void	init_sp_rays(t_cub *cub)
 	int j;
 
 	i = 0;
-	while (i < cub->win_h)
+	while (i < cub->win_w)
 	{
 		j = -1;
 		while (++j < cub->win_h)
@@ -225,7 +223,7 @@ void		cast_all_rays(t_cub *cub)
 		cast_ray(cub, &cub->rays[i], tmp_angle);
 		(&cub->rays[i])->sp_ray = sp_ray_ptr;
 		(&cub->rays[i])->distortion = cos(tmp_angle - cub->drxion);
-		// fill_sprite_ray(cub, &cub->rays[i]);
+		fill_sprite_ray(cub, &cub->rays[i]);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
 }

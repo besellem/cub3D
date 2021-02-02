@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/01 15:23:58 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 14:24:26 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@
 ** Maybe define this macro at compile time to enable bonuses
 */
 # ifndef BONUS
-#  define BONUS 0 // Set to 0 before push
+#  define BONUS 1 // Set to 0 before push
 # endif
 
 /*
@@ -306,7 +306,7 @@ void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
 /*
 ** Display
 */
-void			ft_pixel_put(t_cub *cub, int x, int y, unsigned int color);
+void			ft_pixel_put(t_cub *cub, int x, int y, t_uint32 color);
 void			init_sprites_hit(t_cub *cub);
 void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);

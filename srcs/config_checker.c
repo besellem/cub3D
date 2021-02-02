@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/01 10:19:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 10:41:46 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	alloc_sprite_rays(t_cub *cub)
 	int i;
 
 	i = 0;
-	while (i < cub->win_h)
+	while (i < cub->win_w)
 	{
 		cub->rays[i].sp_ray = (t_uint32 *)malloc(sizeof(t_uint32) * cub->win_h);
 		if (!cub->rays[i].sp_ray)
