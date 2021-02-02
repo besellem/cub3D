@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 16:04:28 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:37:39 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,15 @@
 # endif
 
 /*
-** Maybe define this macro at compile time to enable bonuses
+** Defined at compile time if wanted
 */
 # ifndef BONUS
-#  define BONUS 1 // Set to 0 before push
+#  define BONUS 1 // Set to 0 before push && define this macro at compile time to enable bonuses
+
+#  ifndef GUN_PATH
+#   define GUN_PATH "./assets/pistol.xpm"
+#  endif
+
 # endif
 
 /*
@@ -107,8 +112,8 @@
 
 /*
 ** angle:			angle of the ray in radians
-** tan_angle:		tan(angle). instead of doing it ~4 times
-** distortion:		cos(ray->angle - cub->drxion) -> is used 2 times per ray
+** tan_angle:		tan(angle): instead of doing it ~4 times later
+** distortion:		cos(ray->angle - cub->drxion): instead of doing it ~2 times
 ** xintcpt:			next cube from cub->pos_x
 ** yintcpt:			next cube from cub->pos_y
 ** xstep:			increment with xstep to check if we hit something
@@ -155,9 +160,8 @@ typedef	struct	s_sprite
 {
 	int		x;
 	int		y;
-	int		hit;
-	double	hit_x;
-	double	hit_y;
+	int		hit : 1;
+	double	distance;
 }				t_sprite;
 
 typedef struct	s_keys
@@ -190,12 +194,13 @@ typedef struct	s_img
 ** sky_color:		sky color
 ** grnd_color:		ground color
 ** sp_ocs:			sprites occurrences in the map
+** life:			between 0 and 100 (thus needs only 8 bits)
 ** txtr_no:			path to the north texture file
 ** txtr_so:			path to the south texture file
 ** txtr_ea:			path to the east texture file
 ** txtr_we:			path to the west texture file
 ** txtr_s:			path to the sprite texture file
-** map:				map
+** map:				map[row][column]
 ** map_size_x:		horizontal size of the map
 ** map_size_y:		vertical size of the map
 ** mlx:				pointer created by mlx_init()
@@ -218,6 +223,7 @@ typedef struct	s_img
 typedef	struct	s_cub
 {
 	int			save_opt : 1;
+	t_uint8		life : 7;
 	int			win_w;
 	int			win_h;
 	int			parsed_w;
@@ -245,8 +251,10 @@ typedef	struct	s_cub
 	int			dw;
 	int			dh;
 	t_keys		*keys;
-	t_img		*img;
-	t_img		*txtrs;
+	t_img		img;
+	t_img		txtrs[TEXTURES_COUNT];
+	t_img		txtr_gun;
+	t_img		txtr_life;
 	t_ray		*rays;
 	t_sprite	*sprites;
 }				t_cub;
@@ -273,6 +281,7 @@ double			get_dist(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
 int				safe_min(int nb1, int nb2);
 int				check_rgb(char *s);
+void			*ft_ternary(int condition, void *if_true, void *if_false);
 
 /*
 ** Utils
@@ -285,11 +294,12 @@ void			sprites_dump(t_cub *cub);
 ** Parser & Checkers
 */
 int				are_specs_complete(t_cub *cub);
-void			cub_fill_specs(int fd, t_cub *cub);
-void			map_parser(int fd, t_cub *cub);
 int				map_checker(t_cub *cub);
 int				map_validator(t_cub *cub);
-void			add_bonus(t_cub *cub);
+void			map_parser(int fd, t_cub *cub);
+void			fill_texture(t_cub *cub, t_img *tx, char *path);
+void			cub_fill_specs(int fd, t_cub *cub);
+void			init_bonus(t_cub *cub);
 void			cub_parser(int ac, char **av, t_cub *cub);
 
 /*
@@ -301,8 +311,9 @@ int				handle_key_release(int key, t_cub *cub);
 /*
 ** Raycasting
 */
-void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
+int				get_sprite_idx(t_cub *cub, int x, int y);
 void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
+void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 
 /*
 ** Display
@@ -320,5 +331,11 @@ int				ft_refresh(t_cub *cub);
 */
 int				init_cub(t_cub *cub);
 int				ft_save(t_cub *cub);
+
+/*
+** Bonuses
+*/
+void			display_gun(t_cub *cub);
+void			display_life(t_cub *cub);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/01 15:38:31 by besellem         ###   ########.fr        #
+#    Updated: 2021/02/02 23:43:38 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,11 @@ SRCS		+=	$(SRCS_PATH)/common.c
 SRCS		+=	$(SRCS_PATH)/common2.c
 SRCS		+=	$(SRCS_PATH)/common3.c
 SRCS		+=	$(SRCS_PATH)/common4.c
+SRCS		+=	$(SRCS_PATH)/common5.c
 SRCS		+=	$(SRCS_PATH)/config_checker.c
 SRCS		+=	$(SRCS_PATH)/display.c
 SRCS		+=	$(SRCS_PATH)/events.c
+SRCS		+=	$(SRCS_PATH)/gun.c
 SRCS		+=	$(SRCS_PATH)/handle_bonus.c
 SRCS		+=	$(SRCS_PATH)/handle_keys.c
 SRCS		+=	$(SRCS_PATH)/init.c

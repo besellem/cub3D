@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 15:17:07 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:40:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void		update_view(t_cub *cub)
 	if (BONUS)
 	{
 		update_minimap(cub);
+		display_gun(cub);
 	}
 }
 
@@ -54,7 +55,7 @@ int			ft_refresh(t_cub *cub)
 	if (cub->dh || cub->dw || cub->turn)
 	{
 		update_view(cub);
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);
+		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);
 		return (0);
 	}
 	return (1);

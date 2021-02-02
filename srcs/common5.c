@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.c                                          :+:      :+:    :+:   */
+/*   common5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/10 10:28:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 22:11:53 by besellem         ###   ########.fr       */
+/*   Created: 2021/02/02 21:23:11 by besellem          #+#    #+#             */
+/*   Updated: 2021/02/02 21:25:26 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** REINITIALIZE EACH SPRITE'S STRUCT (EXCEPT ITS COORDINATES)
-** The use of memset is useful here in case of modifications on t_sprite struct
+** Replace ternary operation (because of norm v3)
 */
 
-void	init_sprites_hit(t_cub *cub)
+void	*ft_ternary(int condition, void *if_true, void *if_false)
 {
-	int tmp_x;
-	int tmp_y;
-	int i;
-
-	i = -1;
-	while (++i < cub->sp_ocs)
-	{
-		tmp_x = cub->sprites[i].x;
-		tmp_y = cub->sprites[i].y;
-		ft_memset(&cub->sprites[i], 0, sizeof(t_sprite));
-		(&cub->sprites[i])->x = tmp_x;
-		(&cub->sprites[i])->y = tmp_y;
-	}
+	if (condition != 0)
+		return (if_true);
+	else
+		return (if_false);
 }

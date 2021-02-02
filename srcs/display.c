@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 15:56:04 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:40:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void		ft_pixel_put(t_cub *cub, int x, int y, t_uint32 color)
 {
 	char *px;
 
-	px = cub->img->addr;
-	px += (y * cub->img->size_line + x * (cub->img->bits_per_pixel / 8));
+	px = cub->img.addr;
+	px += (y * cub->img.size_line + x * (cub->img.bits_per_pixel / 8));
 	*(t_uint32 *)px = color;
 }
 

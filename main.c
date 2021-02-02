@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/01 11:55:28 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:40:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static void	ft_mlx_start(t_cub *cub)
 {
 	mlx_do_key_autorepeaton(cub->mlx);
 	cub->win = mlx_new_window(cub->mlx, cub->win_w, cub->win_h, NAME);
-	cub->img->ptr = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
-	cub->img->addr = mlx_get_data_addr(cub->img->ptr,
-										&(cub->img->bits_per_pixel),
-										&(cub->img->size_line),
-										&(cub->img->endian));
+	cub->img.ptr = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
+	cub->img.addr = mlx_get_data_addr(cub->img.ptr,
+										&(cub->img.bits_per_pixel),
+										&(cub->img.size_line),
+										&(cub->img.endian));
 	// To remove
 	print_specs(cub);
-	// sprites_dump(cub);
+	sprites_dump(cub);
 	// end
 	update_view(cub);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->img->ptr, 0, 0);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);
 	// ft_error(B_BLUE"DEBUG"CLR_COLOR, cub, __FILE__, __LINE__);
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);

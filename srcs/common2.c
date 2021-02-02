@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/31 11:07:03 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:40:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,9 @@ static void	free_textures(t_cub *cub)
 		free(cub->txtr_we);
 	if (cub->txtr_s)
 		free(cub->txtr_s);
-	if (cub->txtrs)
-	{
-		i = -1;
-		while (++i < TEXTURES_COUNT && cub->txtrs[i].ptr)
-			mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
-		free(cub->txtrs);
-	}
+	i = -1;
+	while (++i < TEXTURES_COUNT && cub->txtrs[i].ptr)
+		mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
 }
 
 /*
@@ -46,10 +42,12 @@ void		ft_free_cub(t_cub *cub)
 	free_textures(cub);
 	if (cub->map)
 		ft_free_strs(cub->map);
-	if (cub->img && cub->img->ptr)
-		mlx_destroy_image(cub->mlx, cub->img->ptr);
-	if (cub->img)
-		free(cub->img);
+	if (cub->keys)
+		free(cub->keys);
+	if (cub->img.ptr)
+		mlx_destroy_image(cub->mlx, cub->img.ptr);
+	if (cub->txtr_gun.ptr)
+		mlx_destroy_image(cub->mlx, cub->txtr_gun.ptr);
 	if (cub->rays)
 	{
 		i = -1;
@@ -57,8 +55,6 @@ void		ft_free_cub(t_cub *cub)
 			free(cub->rays[i].sp_ray);
 		free(cub->rays);
 	}
-	if (cub->keys)
-		free(cub->keys);
 	if (cub->sprites)
 		free(cub->sprites);
 	if (cub->mlx)

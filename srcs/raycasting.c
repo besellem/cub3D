@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 16:02:40 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:15:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 	ray->ystep = ray->tan_angle;
 	ray->ystep *= (!ray->is_down && ray->ystep > 0 ? -1 : 1);
 	ray->ystep *= (ray->is_down && ray->ystep < 0 ? -1 : 1);
+	ray->hit_vertical = 1;
 	x = ray->xintcpt;
 	y = ray->yintcpt;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
@@ -73,7 +74,6 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 		if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '1')
 		{
 			wall_intersect(cub, ray, x, y);
-			ray->hit_vertical = 1;
 			return ;
 		}
 		else if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
@@ -154,6 +154,47 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 }
 
+// void		change_sprite_distance(t_cub *cub, t_ray *ray, double x, double y)
+// {
+// 	int i;
+
+// 	i = -1;
+// 	(void)x;
+// 	(void)y;
+// 	(void)ray;
+// 	while (++i < cub->sp_ocs)
+// 	{
+		
+// 	}
+// }
+
+int			check_sp_map_coords(t_cub *cub, t_ray *ray, double x, double y)
+{
+	const int sprite_index = get_sprite_idx(cub, x, y);
+
+	if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
+	{
+		if (ray->sp_scale == -1.0)
+		{
+			(&cub->sprites[sprite_index])->hit = 1;
+			(&cub->sprites[sprite_index])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
+			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
+		}
+	}
+	else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
+	{
+		if (ray->sp_scale == -1.0)
+		{
+			(&cub->sprites[sprite_index])->hit = 1;
+			(&cub->sprites[sprite_index])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
+			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
+		}
+	}
+	else
+		return (0);
+	return (1);
+}
+
 void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 {
 	double	x;
@@ -162,39 +203,50 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 	x = ray->hit_wall_x;
 	y = ray->hit_wall_y;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
-		(int)x != (int)cub->pos_x + !ray->is_right &&
-		(int)y != (int)cub->pos_y + !ray->is_down)
+		(int)x != (int)cub->pos_x &&
+		(int)y != (int)cub->pos_y)
 	{
-		if ((ray->hit_vertical &&
-			cub->map[(int)y][safe_min(x, !ray->is_right)] == '2') ||
-			(!ray->hit_vertical &&
-			cub->map[safe_min(y, !ray->is_down)][(int)x] == '2'))
+		if (check_sp_map_coords(cub, ray, x, y))
 		{
-			
-			// IDEA IN PROCESS
-			if (ray->sp_scale == -1 && ray->hit_vertical)
-			{
-				if (get_dec(x) < 0.5)
-					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 + get_dec(x));
-				else
-					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 - get_dec(x));
-			}
-			else if (ray->sp_scale == -1 && !ray->hit_vertical)
-			{
-				if (get_dec(y) < 0.5)
-					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 + get_dec(y), y);
-				else
-					ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 - get_dec(y), y);
-			}
-			// END IDEA
-
 			if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
 				ray->sp_scale = 0.0001;
-			// else
-			// 	ray->sp_scale *= ray->distortion;
 			ray->sp_scale = cub->win_h / ray->sp_scale;
 			fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
 		}
+
+		// if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2' ||
+		// 	cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
+		// {
+			// if (ray->sp_scale == -1.0)
+			// {
+			// 	printf(B_RED"x: [%.2f], y: [%.2f]\n"CLR_COLOR, (int)x + 0.5, (int)y + 0.5);
+			// 	ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y + 0.5);
+			// }
+			
+			// IDEA IN PROCESS
+			// if (ray->sp_scale == -1 && ray->hit_vertical)
+			// {
+			// 	if (get_dec(x) < 0.5)
+			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 + get_dec(x));
+			// 	else
+			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 - get_dec(x));
+			// }
+			// else if (ray->sp_scale == -1 && !ray->hit_vertical)
+			// {
+			// 	if (get_dec(y) < 0.5)
+			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 + get_dec(y), y);
+			// 	else
+			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 - get_dec(y), y);
+			// }
+			// END IDEA
+
+			// if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
+			// 	ray->sp_scale = 0.0001;
+			// /*else
+			// 	ray->sp_scale *= ray->distortion;*/
+			// ray->sp_scale = cub->win_h / ray->sp_scale;
+			// fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
+		// }
 		x -= ray->xstep;
 		y -= ray->ystep;
 	}

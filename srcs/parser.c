@@ -6,13 +6,13 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/31 15:44:47 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/02 22:45:04 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	fill_texture(t_cub *cub, t_img *tx, char *path)
+void		fill_texture(t_cub *cub, t_img *tx, char *path)
 {
 	if (file_got_ext(path, ".xpm"))
 	{
@@ -22,7 +22,9 @@ static void	fill_texture(t_cub *cub, t_img *tx, char *path)
 	}
 	else
 		ft_error("Not a valid texture file", cub, __FILE__, __LINE__);
-	tx->addr = mlx_get_data_addr(tx->ptr, &tx->bits_per_pixel, &tx->size_line,
+	tx->addr = mlx_get_data_addr(tx->ptr,
+								&tx->bits_per_pixel,
+								&tx->size_line,
 								&tx->endian);
 	if (!tx->addr)
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
@@ -32,9 +34,6 @@ static void	load_textures(t_cub *cub)
 {
 	int i;
 
-	if (!(cub->txtrs = (t_img *)malloc(sizeof(t_img) * TEXTURES_COUNT)))
-		ft_error("Malloc error", cub, __FILE__, __LINE__);
-	ft_memset(cub->txtrs, 0, sizeof(t_img *));
 	i = -1;
 	while (++i < TEXTURES_COUNT)
 		ft_memset(&cub->txtrs[i], 0, sizeof(t_img));
@@ -63,7 +62,6 @@ static void	get_sprites_oc(t_cub *cub)
 	cub->sp_ocs = ocs;
 }
 
-//	NOT SURE OF THE REAL USE
 static int	alloc_sprites(t_cub *cub)
 {
 	int i;
@@ -92,7 +90,6 @@ static int	alloc_sprites(t_cub *cub)
 	}
 	return (1);
 }
-//	END
 
 int			are_specs_complete(t_cub *cub)
 {
@@ -133,5 +130,5 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 	if (!map_validator(cub))
 		ft_error("Invalid Map", cub, __FILE__, __LINE__);
 	alloc_sprites(cub);
-	add_bonus(cub);
+	init_bonus(cub);
 }
