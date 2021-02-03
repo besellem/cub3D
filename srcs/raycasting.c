@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 23:15:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:50:15 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,20 +153,6 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 		++idx;
 	}
 }
-
-// void		change_sprite_distance(t_cub *cub, t_ray *ray, double x, double y)
-// {
-// 	int i;
-
-// 	i = -1;
-// 	(void)x;
-// 	(void)y;
-// 	(void)ray;
-// 	while (++i < cub->sp_ocs)
-// 	{
-		
-// 	}
-// }
 
 int			check_sp_map_coords(t_cub *cub, t_ray *ray, double x, double y)
 {
