@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 10:22:44 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/03 15:24:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	print_player(t_cub *cub)
 	int i;
 	int j;
 
-	size = cub->cub_size / 2;
+	size = cub->cub_size;
 	i = -(size / 2);
 	while (++i < size / 2)
 	{

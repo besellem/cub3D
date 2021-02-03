@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 10:50:15 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:34:18 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		ray->hit_drxion = HIT_EAST;
 }
 
-int		hit_x_sprite_calc(t_img tx, t_ray ray, double x, double y)
+int			hit_x_sprite_calc(t_img tx, t_ray ray, double x, double y)
 {
 	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
 		return (tx.x * get_dec(x));
@@ -123,15 +123,14 @@ int		hit_x_sprite_calc(t_img tx, t_ray ray, double x, double y)
 		return (tx.x * get_dec(y));
 }
 
-void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
+void		fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 {
-	t_img		tx;
+	const t_img	tx = cub->txtrs[4];
 	double		start;
 	double		end;
 	int			idx;
 	t_uint32	color;
 
-	tx = cub->txtrs[4];
 	start = 0.0;
 	end = tx.y;
 	idx = (cub->win_h - scale) / 2 - 0.1;
@@ -156,14 +155,14 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 
 int			check_sp_map_coords(t_cub *cub, t_ray *ray, double x, double y)
 {
-	const int sprite_index = get_sprite_idx(cub, x, y);
+	const int sprite_idx = get_sprite_idx(cub, x, y);
 
 	if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
 	{
 		if (ray->sp_scale == -1.0)
 		{
-			(&cub->sprites[sprite_index])->hit = 1;
-			(&cub->sprites[sprite_index])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
+			(&cub->sprites[sprite_idx])->hit = 1;
+			(&cub->sprites[sprite_idx])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
 			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
 		}
 	}
@@ -171,8 +170,8 @@ int			check_sp_map_coords(t_cub *cub, t_ray *ray, double x, double y)
 	{
 		if (ray->sp_scale == -1.0)
 		{
-			(&cub->sprites[sprite_index])->hit = 1;
-			(&cub->sprites[sprite_index])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
+			(&cub->sprites[sprite_idx])->hit = 1;
+			(&cub->sprites[sprite_idx])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
 			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
 		}
 	}
@@ -238,7 +237,42 @@ void		fill_sprite_ray(t_cub *cub, t_ray *ray)
 	}
 }
 
-void	init_sp_rays(t_cub *cub)
+void		sort_sprites(t_cub *cub)
+{
+	int			i;
+	t_sprite	tmp;
+
+	i = -1;
+	while (++i < cub->sp_ocs - 1)
+	{
+		if (cub->sprites[i].distance < cub->sprites[i + 1].distance)
+		{
+			tmp = cub->sprites[i];
+			cub->sprites[i] = cub->sprites[i + 1];
+			cub->sprites[i + 1] = tmp;
+			i = -1;
+		}
+	}
+
+	// x = ray->hit_wall_x;
+	// y = ray->hit_wall_y;
+	// while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
+	// 	(int)x != (int)cub->pos_x &&
+	// 	(int)y != (int)cub->pos_y)
+	// {
+	// 	if (check_sp_map_coords(cub, ray, x, y))
+	// 	{
+	// 		if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
+	// 			ray->sp_scale = 0.0001;
+	// 		ray->sp_scale = cub->win_h / ray->sp_scale;
+	// 		fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
+	// 	}
+	// 	x -= ray->xstep;
+	// 	y -= ray->ystep;
+	// }
+}
+
+void		init_sp_rays(t_cub *cub)
 {
 	int i;
 	int j;
@@ -281,4 +315,5 @@ void		cast_all_rays(t_cub *cub)
 		fill_sprite_ray(cub, &cub->rays[i]);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
+	sort_sprites(cub);
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 23:37:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/03 15:42:21 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 */
 # if defined(__APPLE__) && defined(__MACH__)
 #  define ENV_MSG "\033[1;32m[macOS environment]\033[0m"
+#  define SOUND_CMD "afplay"
 #  define KEY_ESC 53
 #  define KEY_LEFT 123
 #  define KEY_RIGHT 124
@@ -81,9 +82,11 @@
 #  define KEY_A 0
 #  define KEY_S 1
 #  define KEY_D 2
+#  define KEY_F 3
 #  define EVT_RED_CROSS 17
 # else
 #  define ENV_MSG "\033[1;32m[Linux (default) environment]\033[0m"
+#  define SOUND_CMD "aplay"
 #  define KEY_ESC 65307
 #  define KEY_LEFT 65361
 #  define KEY_RIGHT 65363
@@ -91,6 +94,7 @@
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
+#  define KEY_F 3 // TO REDEFINE
 #  define EVT_RED_CROSS 33
 # endif
 
@@ -158,9 +162,9 @@ typedef struct	s_ray
 */
 typedef	struct	s_sprite
 {
+	int		hit : 1;
 	int		x;
 	int		y;
-	int		hit : 1;
 	double	distance;
 }				t_sprite;
 

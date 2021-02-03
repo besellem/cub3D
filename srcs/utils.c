@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 23:49:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/03 13:56:24 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	sprites_dump(t_cub *cub)
 	i = -1;
 	while (++i < cub->sp_ocs)
 	{
-		ft_printf("    cub->sprites[%2d] => x[%2d] y[%2d]\n",
-				i, cub->sprites[i].x, cub->sprites[i].y);
+		ft_printf("    cub->sprites[%2d] => dist[%.3] x[%2d] y[%2d]\n",
+			i, cub->sprites[i].distance, cub->sprites[i].x, cub->sprites[i].y);
 	}
 	ft_putendl("}\n");
 }
