@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:18:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 15:41:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 16:06:24 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	handle_key_press(int key, t_cub *cub)
 	else if (key == KEY_RIGHT && cub->keys->key_left == 0 && (cub->turn = 1))
 		cub->keys->key_right = 1;
 	else if (key == KEY_F)
-		system(SOUND_CMD" ./sounds/2.wav&");
+		system(SOUND_CMD" ./sounds/2.wav 2>/dev/null&");
 	else
 		return (1);
 	return (0);
