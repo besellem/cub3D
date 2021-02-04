@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:33:49 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 23:41:05 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:12:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			ft_save(t_cub *cub)
 										&(cub->img.bits_per_pixel),
 										&(cub->img.size_line),
 										&(cub->img.endian));
-	update_view(cub);
+	update_frame(cub);
 	print_specs(cub);
 	if ((fd = open(BMP_FILEPATH, O_WRONLY | O_CREAT, 0644)) == -1)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 15:42:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 22:45:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <time.h>
 
 /*
 ** -- DEFINES --
@@ -105,7 +106,7 @@
 #  define BONUS 1 // Set to 0 before push && define this macro at compile time to enable bonuses
 
 #  ifndef GUN_PATH
-#   define GUN_PATH "./assets/pistol.xpm"
+#   define GUN_PATH "./assets/gun.xpm"
 #  endif
 
 # endif
@@ -166,6 +167,7 @@ typedef	struct	s_sprite
 	int		x;
 	int		y;
 	double	distance;
+	double	distortion;
 }				t_sprite;
 
 typedef struct	s_keys
@@ -197,7 +199,7 @@ typedef struct	s_img
 ** parsed_h:		resolution height from the .cub file
 ** sky_color:		sky color
 ** grnd_color:		ground color
-** sp_ocs:			sprites occurrences in the map
+** sprites_ocs:			sprites occurrences in the map
 ** life:			between 0 and 100 (thus needs only 8 bits)
 ** txtr_no:			path to the north texture file
 ** txtr_so:			path to the south texture file
@@ -213,7 +215,6 @@ typedef struct	s_img
 ** pos_x:			player position horizontally
 ** pos_y:			player position vertically
 ** increment:		player's speed
-** dist_plane:		distance to the projection plane
 ** cub_size:		size of a cube in pixels (for the minimap only)
 ** turn:			(key press): none (0), left angle (-1), right angle (1)
 ** dw:				(key press): none (0), left (-1), right (1)
@@ -234,7 +235,11 @@ typedef	struct	s_cub
 	int			parsed_h;
 	int			sky_color;
 	int			grnd_color;
-	int			sp_ocs;
+	int			sprites_ocs;
+	int			dw;
+	int			dh;
+	int			turn;
+	int			cub_size;
 	char		*txtr_no;
 	char		*txtr_so;
 	char		*txtr_ea;
@@ -249,12 +254,8 @@ typedef	struct	s_cub
 	double		pos_x;
 	double		pos_y;
 	double		increment;
-	double		dist_plane;
-	int			cub_size;
-	int			turn;
-	int			dw;
-	int			dh;
-	t_keys		*keys;
+	time_t		sound_time;
+	t_keys		keys;
 	t_img		img;
 	t_img		txtrs[TEXTURES_COUNT];
 	t_img		txtr_gun;
@@ -327,7 +328,7 @@ void			init_sprites_hit(t_cub *cub);
 void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);
 void			update_minimap(t_cub *cub);
-void			update_view(t_cub *cub);
+void			update_frame(t_cub *cub);
 int				ft_refresh(t_cub *cub);
 
 /*
@@ -341,5 +342,6 @@ int				ft_save(t_cub *cub);
 */
 void			display_gun(t_cub *cub);
 void			display_life(t_cub *cub);
+void			play_music(t_cub *cub);
 
 #endif

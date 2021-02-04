@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 15:56:50 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:53:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 			return ;
 		}
 		else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
-			sprite_intersect(cub, ray, x, y);
+			sprite_intersect(cub, ray, x + 0.5, y - !ray->is_down + 0.5);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -77,7 +77,7 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 			return ;
 		}
 		else if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
-			sprite_intersect(cub, ray, x, y);
+			sprite_intersect(cub, ray, x - !ray->is_right + 0.5, y + 0.5);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -88,23 +88,8 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 ** and get the hit direction
 */
 
-static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
+static void	set_hit_drxion(t_ray *ray)
 {
-	t_ray hor;
-	t_ray ver;
-
-	init_ray(&hor, angle);
-	init_ray(&ver, angle);
-	check_horizontal(cub, &hor);
-	check_vertical(cub, &ver);
-	if (hor.distance < 0 && ver.distance >= 0)
-		*ray = ver;
-	else if (ver.distance < 0 && hor.distance >= 0)
-		*ray = hor;
-	else if (hor.distance >= ver.distance)
-		*ray = ver;
-	else if (hor.distance < ver.distance)
-		*ray = hor;
 	if (!ray->hit_vertical && !ray->is_down)
 		ray->hit_drxion = HIT_NORTH;
 	else if (!ray->hit_vertical && ray->is_down)
@@ -115,164 +100,135 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		ray->hit_drxion = HIT_EAST;
 }
 
-int			hit_x_sprite_calc(t_img tx, t_ray ray, double x, double y)
+static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 {
-	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
-		return (tx.x * get_dec(x));
-	else
-		return (tx.x * get_dec(y));
+	t_ray		hor;
+	t_ray		ver;
+	t_uint32	tmp[cub->win_h];
+
+	init_ray(&hor, angle);
+	init_ray(&ver, angle);
+	(&hor)->sp_ray = ray->sp_ray;
+	(&ver)->sp_ray = tmp;
+	check_horizontal(cub, &hor);
+	check_vertical(cub, &ver);
+	if (hor.distance < 0 && ver.distance >= 0)
+		*ray = ver;
+	else if (ver.distance < 0 && hor.distance >= 0)
+		*ray = hor;
+	else if (hor.distance >= ver.distance)
+		*ray = ver;
+	else if (hor.distance < ver.distance)
+		*ray = hor;
 }
 
-void		fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
-{
-	const t_img	tx = cub->txtrs[4];
-	double		start;
-	double		end;
-	int			idx;
-	t_uint32	color;
+// int			hit_x_sprite_calc(t_img tx, t_ray ray, double x, double y)
+// {
+// 	if (ray.hit_drxion == HIT_NORTH || ray.hit_drxion == HIT_SOUTH)
+// 		return (tx.x * get_dec(x));
+// 	else
+// 		return (tx.x * get_dec(y));
+// }
 
-	start = 0.0;
-	end = tx.y;
-	idx = (cub->win_h - scale) / 2 - 0.1;
-	if (cub->win_h < scale)
-	{
-		idx = 0;
-		start = (tx.y * (1 - cub->win_h / scale)) / 2;
-		end -= start;
-	}
-	while (start < end && idx < cub->win_h)
-	{
-		color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
-		if (color != 0U)
-		{
-			ray->sp_ray[idx] = color;
-			ray->hit_sprite = 1;
-		}
-		start += tx.y / scale;
-		++idx;
-	}
-}
+// void		fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
+// {
+// 	const t_img	tx = cub->txtrs[4];
+// 	double		start;
+// 	double		end;
+// 	int			idx;
+// 	t_uint32	color;
 
-int			check_sp_map_coords(t_cub *cub, t_ray *ray, double x, double y)
-{
-	const int sprite_idx = get_sprite_idx(cub, x, y);
+// 	start = 0.0;
+// 	end = tx.y;
+// 	idx = (cub->win_h - scale) / 2 - 0.1;
+// 	if (cub->win_h < scale)
+// 	{
+// 		idx = 0;
+// 		start = (tx.y * (1 - cub->win_h / scale)) / 2;
+// 		end -= start;
+// 	}
+// 	while (start < end && idx < cub->win_h)
+// 	{
+// 		color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
+// 		if (color != 0U)
+// 		{
+// 			ray->sp_ray[idx] = color;
+// 			ray->hit_sprite = 1;
+// 		}
+// 		start += tx.y / scale;
+// 		++idx;
+// 	}
+// }
 
-	if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
-	{
-		if (ray->sp_scale == -1.0)
-		{
-			(&cub->sprites[sprite_idx])->hit = 1;
-			(&cub->sprites[sprite_idx])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
-			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
-		}
-	}
-	else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
-	{
-		if (ray->sp_scale == -1.0)
-		{
-			(&cub->sprites[sprite_idx])->hit = 1;
-			(&cub->sprites[sprite_idx])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
-			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
-		}
-	}
-	else
-		return (0);
-	return (1);
-}
+// int			check_sp_map_coords(t_cub *cub, t_ray *ray, double x, double y)
+// {
+// 	const int sprite_idx = get_sprite_idx(cub, x, y);
 
-void		fill_sprite_ray(t_cub *cub, t_ray *ray)
-{
-	double	x;
-	double	y;
+// 	if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2')
+// 	{
+// 		if (ray->sp_scale == -1.0)
+// 		{
+// 			(&cub->sprites[sprite_idx])->hit = 1;
+// 			(&cub->sprites[sprite_idx])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
+// 			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x - !ray->is_right + 0.5, (int)y + 0.5);
+// 		}
+// 	}
+// 	else if (cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
+// 	{
+// 		if (ray->sp_scale == -1.0)
+// 		{
+// 			(&cub->sprites[sprite_idx])->hit = 1;
+// 			(&cub->sprites[sprite_idx])->distance = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
+// 			ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y - !ray->is_down + 0.5);
+// 		}
+// 	}
+// 	else
+// 		return (0);
+// 	return (1);
+// }
 
-	x = ray->hit_wall_x;
-	y = ray->hit_wall_y;
-	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
-		(int)x != (int)cub->pos_x &&
-		(int)y != (int)cub->pos_y)
-	{
-		if (check_sp_map_coords(cub, ray, x, y))
-		{
-			if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
-				ray->sp_scale = 0.0001;
-			ray->sp_scale = cub->win_h / ray->sp_scale;
-			fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
-		}
+// void		fill_sprite_ray(t_cub *cub, t_ray *ray)
+// {
+// 	double	x;
+// 	double	y;
 
-		// if (cub->map[(int)y][safe_min(x, !ray->is_right)] == '2' ||
-		// 	cub->map[safe_min(y, !ray->is_down)][(int)x] == '2')
-		// {
-			// if (ray->sp_scale == -1.0)
-			// {
-			// 	printf(B_RED"x: [%.2f], y: [%.2f]\n"CLR_COLOR, (int)x + 0.5, (int)y + 0.5);
-			// 	ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, (int)x + 0.5, (int)y + 0.5);
-			// }
-			
-			// IDEA IN PROCESS
-			// if (ray->sp_scale == -1 && ray->hit_vertical)
-			// {
-			// 	if (get_dec(x) < 0.5)
-			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 + get_dec(x));
-			// 	else
-			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x, y - 0.5 - get_dec(x));
-			// }
-			// else if (ray->sp_scale == -1 && !ray->hit_vertical)
-			// {
-			// 	if (get_dec(y) < 0.5)
-			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 + get_dec(y), y);
-			// 	else
-			// 		ray->sp_scale = get_dist(cub->pos_x, cub->pos_y, x - 0.5 - get_dec(y), y);
-			// }
-			// END IDEA
+// 	x = ray->hit_wall_x;
+// 	y = ray->hit_wall_y;
+// 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
+// 		(int)x != (int)cub->pos_x &&
+// 		(int)y != (int)cub->pos_y)
+// 	{
+// 		if (check_sp_map_coords(cub, ray, x, y))
+// 		{
+// 			if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
+// 				ray->sp_scale = 0.0001;
+// 			ray->sp_scale = cub->win_h / ray->sp_scale;
+// 			fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
+// 		}
+// 		x -= ray->xstep;
+// 		y -= ray->ystep;
+// 	}
+// }
 
-			// if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
-			// 	ray->sp_scale = 0.0001;
-			// /*else
-			// 	ray->sp_scale *= ray->distortion;*/
-			// ray->sp_scale = cub->win_h / ray->sp_scale;
-			// fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
-		// }
-		x -= ray->xstep;
-		y -= ray->ystep;
-	}
-}
+// void		sort_sprites(t_cub *cub)
+// {
+// 	t_sprite	tmp;
+// 	int			i;
 
-void		sort_sprites(t_cub *cub)
-{
-	int			i;
-	t_sprite	tmp;
+// 	i = -1;
+// 	while (++i < cub->sprites_ocs - 1)
+// 	{
+// 		if (cub->sprites[i].distance < cub->sprites[i + 1].distance)
+// 		{
+// 			tmp = cub->sprites[i];
+// 			cub->sprites[i] = cub->sprites[i + 1];
+// 			cub->sprites[i + 1] = tmp;
+// 			i = -1;
+// 		}
+// 	}
+// }
 
-	i = -1;
-	while (++i < cub->sp_ocs - 1)
-	{
-		if (cub->sprites[i].distance < cub->sprites[i + 1].distance)
-		{
-			tmp = cub->sprites[i];
-			cub->sprites[i] = cub->sprites[i + 1];
-			cub->sprites[i + 1] = tmp;
-			i = -1;
-		}
-	}
-
-	// x = ray->hit_wall_x;
-	// y = ray->hit_wall_y;
-	// while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y &&
-	// 	(int)x != (int)cub->pos_x &&
-	// 	(int)y != (int)cub->pos_y)
-	// {
-	// 	if (check_sp_map_coords(cub, ray, x, y))
-	// 	{
-	// 		if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
-	// 			ray->sp_scale = 0.0001;
-	// 		ray->sp_scale = cub->win_h / ray->sp_scale;
-	// 		fill_sprite_ptr(cub, ray, ray->sp_scale, hit_x_sprite_calc(cub->txtrs[4], *ray, x, y));
-	// 	}
-	// 	x -= ray->xstep;
-	// 	y -= ray->ystep;
-	// }
-}
-
-void		init_sp_rays(t_cub *cub)
+static void	init_sp_rays(t_cub *cub)
 {
 	int i;
 	int j;
@@ -310,10 +266,11 @@ void		cast_all_rays(t_cub *cub)
 		sp_ray_ptr = (&cub->rays[i])->sp_ray;
 		tmp_angle = ft_norm_angle(ray_angle);
 		cast_ray(cub, &cub->rays[i], tmp_angle);
+		set_hit_drxion(&cub->rays[i]);
 		(&cub->rays[i])->sp_ray = sp_ray_ptr;
 		(&cub->rays[i])->distortion = cos(tmp_angle - cub->drxion);
-		fill_sprite_ray(cub, &cub->rays[i]);
+		// fill_sprite_ray(cub, &cub->rays[i]);
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
-	sort_sprites(cub);
+	// sort_sprites(cub);
 }

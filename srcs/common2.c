@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 23:40:42 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 22:47:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void		ft_free_cub(t_cub *cub)
 	free_textures(cub);
 	if (cub->map)
 		ft_free_strs(cub->map);
-	if (cub->keys)
-		free(cub->keys);
 	if (cub->img.ptr)
 		mlx_destroy_image(cub->mlx, cub->img.ptr);
 	if (cub->txtr_gun.ptr)

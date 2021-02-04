@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 13:56:24 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:53:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,17 @@ void	sprites_dump(t_cub *cub)
 {
 	int i;
 
-	if (cub->sp_ocs <= 0)
+	if (cub->sprites_ocs <= 0)
 		return ;
-	ft_putendl("-- Sprites Dump --");
+	ft_printf("-- Sprites Dump (%d) --\n", cub->sprites_ocs);
 	ft_putendl("{");
 	i = -1;
-	while (++i < cub->sp_ocs)
+	while (++i < cub->sprites_ocs)
 	{
-		ft_printf("    cub->sprites[%2d] => dist[%.3] x[%2d] y[%2d]\n",
-			i, cub->sprites[i].distance, cub->sprites[i].x, cub->sprites[i].y);
+		ft_printf("    cub->sprites[%2d] => ", i);
+		ft_printf("dist["B_GREEN"%.3f"CLR_COLOR"] ", cub->sprites[i].distance);
+		ft_printf("x["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].x);
+		ft_printf("y["B_GREEN"%2d"CLR_COLOR"]\n", cub->sprites[i].y);
 	}
 	ft_putendl("}\n");
 }

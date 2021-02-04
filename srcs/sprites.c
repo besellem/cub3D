@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 10:28:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 22:11:53 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:53:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_sprites_hit(t_cub *cub)
 	int i;
 
 	i = -1;
-	while (++i < cub->sp_ocs)
+	while (++i < cub->sprites_ocs)
 	{
 		tmp_x = cub->sprites[i].x;
 		tmp_y = cub->sprites[i].y;

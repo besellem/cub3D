@@ -6,11 +6,13 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:01:33 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 22:56:38 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:36:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#define GAME_SOUND_PATH "./sounds/top_gun.wav"
+#define GAME_SOUND_DURATION 8
 
 /*
 ** These functions are only called when BONUS macro is defined
@@ -41,6 +43,18 @@ static void	init_gun(t_cub *cub)
 	if ((fd = open(GUN_PATH, O_RDONLY)) == -1 || close(fd))
 		ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
 	fill_texture(cub, &cub->txtr_gun, GUN_PATH);
+}
+
+void		play_music(t_cub *cub)
+{
+	time_t now;
+
+	now = time(NULL);
+	if (cub->sound_time == 0 || now - cub->sound_time >= GAME_SOUND_DURATION)
+	{
+		// system(SOUND_CMD" "GAME_SOUND_PATH" 2>/dev/null&");
+		cub->sound_time = now;
+	}
 }
 
 void		init_bonus(t_cub *cub)

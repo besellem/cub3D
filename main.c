@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 14:21:37 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 22:04:05 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void	ft_mlx_start(t_cub *cub)
 	print_specs(cub);
 	sprites_dump(cub);
 	// end
-	update_view(cub);
+	update_frame(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);
-	// ft_error(B_BLUE"DEBUG"CLR_COLOR, cub, __FILE__, __LINE__);
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);
 	mlx_hook(cub->win, EVT_RED_CROSS, (1L << 2), ft_red_cross, cub);

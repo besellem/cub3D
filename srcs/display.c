@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 11:13:01 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:46:15 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	int y;
 
-	if (ray.hit_sprite == 0)
-		return ;
+	//	CHECK WITH AND WITHOUT
+	// if (ray.hit_sprite == 0)
+	// 	return ;
 	y = -1;
 	while (++y < cub->win_h)
 	{
@@ -58,12 +59,11 @@ static int	hit_x_calc(t_img tx, t_ray ray)
 
 void		print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 {
-	t_img	tx;
-	double	start;
-	double	end;
-	int		idx;
+	const t_img	tx = cub->txtrs[ray.hit_drxion];
+	double		start;
+	double		end;
+	int			idx;
 
-	tx = cub->txtrs[ray.hit_drxion];
 	start = 0.0;
 	end = tx.y;
 	idx = (cub->win_h - scale) / 2 - 0.1;

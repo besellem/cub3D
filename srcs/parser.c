@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 22:45:04 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 21:53:17 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	get_sprites_oc(t_cub *cub)
 			if (cub->map[i][j] == '2')
 				++ocs;
 	}
-	cub->sp_ocs = ocs;
+	cub->sprites_ocs = ocs;
 }
 
 static int	alloc_sprites(t_cub *cub)
@@ -69,7 +69,7 @@ static int	alloc_sprites(t_cub *cub)
 	int k;
 
 	get_sprites_oc(cub);
-	cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * cub->sp_ocs);
+	cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * cub->sprites_ocs);
 	if (!cub->sprites)
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
 	k = 0;
