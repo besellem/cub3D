@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 22:47:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 23:21:11 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,17 @@ void		ft_free_cub(t_cub *cub)
 	{
 		i = -1;
 		while (++i < cub->win_h)
-			free(cub->rays[i].sp_ray);
+			free((&cub->rays[i])->sp_ray);
 		free(cub->rays);
 	}
 	if (cub->sprites)
 		free(cub->sprites);
 	if (cub->mlx)
 		free(cub->mlx);
+	if (BONUS)
+	{
+		system("killall "SOUND_CMD" 2>/dev/null");
+	}
 }
 
 /*

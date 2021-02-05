@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 22:45:14 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/05 01:14:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,10 @@
 */
 
 /*
+** is_down:			is the angle pointing up (0) or down (1)
+** is_right:		is the angle pointing left (0) or right (1)
+** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
+** hit_drxion:		from where the ray hit a wall. Macros NORTH, SOUTH, ...
 ** angle:			angle of the ray in radians
 ** tan_angle:		tan(angle): instead of doing it ~4 times later
 ** distortion:		cos(ray->angle - cub->drxion): instead of doing it ~2 times
@@ -126,14 +130,16 @@
 ** distance:		distance from the player to a wall for that angle
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
-** sp_ray:			contains a ray of all the sprites combined
-** is_down:			is the angle pointing up (0) or down (1)
-** is_right:		is the angle pointing left (0) or right (1)
-** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
-** hit_drxion:		from where the ray hit a wall. Macros NORTH, SOUTH, ...
+** sp_scale:		tmp variable used to scale each sprite into the ray 
+** sp_ray:			contains a ray of all the sprites combined & sorted
 */
 typedef struct	s_ray
 {
+	int			is_down : 2;
+	int			is_right : 2;
+	int			hit_vertical : 2;
+	int			hit_sprite : 2;
+	int			hit_drxion : 4;
 	double		angle;
 	double		tan_angle;
 	double		distortion;
@@ -146,49 +152,41 @@ typedef struct	s_ray
 	double		hit_wall_y;
 	double		sp_scale;
 	t_uint32	*sp_ray;
-	int			is_down;
-	int			is_right;
-	int			hit_vertical;
-	int			hit_drxion;
-	int			hit_sprite;
 }				t_ray;
 
 /*
+** hit:			if it was hit or not
 ** x:			index x in cub->map
 ** y:			index y in cub->map
-** hit:			if it was hit or not
 ** distance:	distance from the player
-** hit_x:		x coordinate of the hit
-** hit_y:		y coordinate of the hit
 */
 typedef	struct	s_sprite
 {
-	int		hit : 1;
+	int		hit;
 	int		x;
 	int		y;
 	double	distance;
-	double	distortion;
 }				t_sprite;
 
 typedef struct	s_keys
 {
-	int key_w;
-	int key_s;
-	int key_a;
-	int key_d;
-	int key_left;
-	int key_right;
+	int key_w : 2;
+	int key_s : 2;
+	int key_a : 2;
+	int key_d : 2;
+	int key_left : 2;
+	int key_right : 2;
 }				t_keys;
 
 typedef struct	s_img
 {
-	void	*ptr;
-	char	*addr;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
 	int		x;
 	int		y;
+	int		size_line;
+	int		bits_per_pixel;
+	int		endian;
+	void	*ptr;
+	char	*addr;
 }				t_img;
 
 /*
@@ -227,7 +225,7 @@ typedef struct	s_img
 */
 typedef	struct	s_cub
 {
-	int			save_opt : 1;
+	int			save_opt : 2;
 	t_uint8		life : 7;
 	int			win_w;
 	int			win_h;
@@ -342,6 +340,6 @@ int				ft_save(t_cub *cub);
 */
 void			display_gun(t_cub *cub);
 void			display_life(t_cub *cub);
-void			play_music(t_cub *cub);
+void			play_global_music(t_cub *cub);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 21:53:14 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 23:54:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,29 @@ void	print_map(t_cub *cub)
 
 void	print_specs(t_cub *cub)
 {
-	ft_putendl("-- Specs --");
-	ft_putendl("{");
-	ft_printf("    cub->mlx:        %p\n", cub->mlx);
-	ft_printf("    cub->win:        %p\n", cub->win);
-	ft_printf("    cub->win_w:      %d -> %d\n", cub->parsed_w, cub->win_w);
-	ft_printf("    cub->win_h:      %d -> %d\n", cub->parsed_h, cub->win_h);
-	ft_printf("    cub->sky_color:  %#x\n", cub->sky_color);
-	ft_printf("    cub->grnd_color: %#x\n", cub->grnd_color);
-	ft_printf("    cub->txtr_no:    [%p] %s\n", cub->txtr_no, cub->txtr_no);
-	ft_printf("    cub->txtr_so:    [%p] %s\n", cub->txtr_so, cub->txtr_so);
-	ft_printf("    cub->txtr_ea:    [%p] %s\n", cub->txtr_ea, cub->txtr_ea);
-	ft_printf("    cub->txtr_we:    [%p] %s\n", cub->txtr_we, cub->txtr_we);
-	ft_printf("    cub->txtr_s:     [%p] %s\n", cub->txtr_s, cub->txtr_s);
-	ft_printf("    cub->map_size_x: %lld\n", cub->map_size_x);
-	ft_printf("    cub->map_size_y: %lld\n", cub->map_size_y);
-	ft_printf("    cub->drxion:     %f\n", cub->drxion);
-	ft_printf("    cub->pos_x:      %f\n", cub->pos_x);
-	ft_printf("    cub->pos_y:      %f\n", cub->pos_y);
-	ft_printf("    cub->increment:  %f\n", cub->increment);
-	ft_printf("    cub->cub_size:   %d\n", cub->cub_size);
-	ft_putendl("}\n");
+	printf("-- Specs --\n");
+	printf("{\n");
+	printf("    cub->mlx:        %p\n", cub->mlx);
+	printf("    cub->win:        %p\n", cub->win);
+	printf("    cub->win_w:      %d -> %d\n", cub->parsed_w, cub->win_w);
+	printf("    cub->win_h:      %d -> %d\n", cub->parsed_h, cub->win_h);
+	printf("    cub->sky_color:  %#x\n", cub->sky_color);
+	printf("    cub->grnd_color: %#x\n", cub->grnd_color);
+	printf("    cub->txtr_no:    [%p] %s\n", cub->txtr_no, cub->txtr_no);
+	printf("    cub->txtr_so:    [%p] %s\n", cub->txtr_so, cub->txtr_so);
+	printf("    cub->txtr_ea:    [%p] %s\n", cub->txtr_ea, cub->txtr_ea);
+	printf("    cub->txtr_we:    [%p] %s\n", cub->txtr_we, cub->txtr_we);
+	printf("    cub->txtr_s:     [%p] %s\n", cub->txtr_s, cub->txtr_s);
+	printf("    cub->map_size_x: %zu\n", cub->map_size_x);
+	printf("    cub->map_size_y: %zu\n", cub->map_size_y);
+	printf("    cub->drxion:     %f\n", cub->drxion);
+	printf("    cub->pos_x:      %f\n", cub->pos_x);
+	printf("    cub->pos_y:      %f\n", cub->pos_y);
+	printf("    cub->increment:  %f\n", cub->increment);
+	printf("    cub->cub_size:   %d\n", cub->cub_size);
+	printf("}\n\n");
 	print_map(cub);
-	ft_putendl("\n----\n");
+	printf("\n----\n\n");
 }
 
 void	sprites_dump(t_cub *cub)
@@ -67,15 +67,17 @@ void	sprites_dump(t_cub *cub)
 
 	if (cub->sprites_ocs <= 0)
 		return ;
-	ft_printf("-- Sprites Dump (%d) --\n", cub->sprites_ocs);
-	ft_putendl("{");
+	printf("-- Sprites Dump (%d) --\n", cub->sprites_ocs);
+	printf("Position: x["B_RED"%.2f"CLR_COLOR"] y["B_RED"%.2f"CLR_COLOR"]\n",
+		cub->pos_x, cub->pos_y);
+	printf("{\n");
 	i = -1;
 	while (++i < cub->sprites_ocs)
 	{
-		ft_printf("    cub->sprites[%2d] => ", i);
-		ft_printf("dist["B_GREEN"%.3f"CLR_COLOR"] ", cub->sprites[i].distance);
-		ft_printf("x["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].x);
-		ft_printf("y["B_GREEN"%2d"CLR_COLOR"]\n", cub->sprites[i].y);
+		printf("    cub->sprites[%2d] => ", i);
+		printf("dist["B_GREEN"%.3f"CLR_COLOR"] ", cub->sprites[i].distance);
+		printf("x["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].x);
+		printf("y["B_GREEN"%2d"CLR_COLOR"]\n", cub->sprites[i].y);
 	}
-	ft_putendl("}\n");
+	printf("}\n\n");
 }

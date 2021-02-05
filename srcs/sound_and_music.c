@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.c                                          :+:      :+:    :+:   */
+/*   sound_and_music.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/10 10:28:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 23:46:30 by besellem         ###   ########.fr       */
+/*   Created: 2021/02/05 01:17:56 by besellem          #+#    #+#             */
+/*   Updated: 2021/02/05 01:18:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#define GAME_SOUND_PATH "./sounds/top_gun.wav"
+#define GAME_SOUND_DURATION 8
 
 /*
-** REINITIALIZE EACH SPRITE'S STRUCT (EXCEPT ITS COORDINATES)
-** The use of memset is useful here in case of modifications on t_sprite struct
+** time() function used here to determine when the music has finished
 */
 
-void	init_sprites_hit(t_cub *cub)
+void		play_global_music(t_cub *cub)
 {
-	int tmp_x;
-	int tmp_y;
-	int i;
+	time_t now;
 
-	i = -1;
-	while (++i < cub->sprites_ocs)
+	now = time(NULL);
+	if (cub->sound_time == 0 || now - cub->sound_time >= GAME_SOUND_DURATION)
 	{
-		tmp_x = cub->sprites[i].x;
-		tmp_y = cub->sprites[i].y;
-		ft_memset(&cub->sprites[i], 0, sizeof(t_sprite));
-		(&cub->sprites[i])->x = tmp_x;
-		(&cub->sprites[i])->y = tmp_y;
+		system(SOUND_CMD" "GAME_SOUND_PATH" 2>/dev/null&");
+		cub->sound_time = now;
 	}
 }

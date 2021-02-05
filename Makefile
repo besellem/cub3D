@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/04 15:57:26 by besellem         ###   ########.fr        #
+#    Updated: 2021/02/05 01:18:40 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS		+=	$(SRCS_PATH)/parser.c
 SRCS		+=	$(SRCS_PATH)/raycasting.c
 SRCS		+=	$(SRCS_PATH)/raycasting_utils.c
 SRCS		+=	$(SRCS_PATH)/save.c
+SRCS		+=	$(SRCS_PATH)/sound_and_music.c
 SRCS		+=	$(SRCS_PATH)/sprites.c
 SRCS		+=	$(SRCS_PATH)/utils.c
 

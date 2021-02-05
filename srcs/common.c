@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/19 16:18:34 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/04 23:14:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_quit(t_cub *cub)
 int		ft_red_cross(t_cub *cub)
 {
 	ft_putendl(B_RED"[Quit]"CLR_COLOR);
+	if (cub->win)
+		mlx_destroy_window(cub->mlx, cub->win);
 	ft_free_cub(cub);
 	exit(EXIT_SUCCESS);
 	return (0);

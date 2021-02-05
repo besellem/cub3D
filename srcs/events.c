@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 22:57:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/05 01:14:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		update_frame(t_cub *cub)
 	update_cubs(cub);
 	if (BONUS)
 	{
-		play_music(cub);
+		play_global_music(cub);
 		update_minimap(cub);
 		display_gun(cub);
 	}

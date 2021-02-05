@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/03 15:24:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/05 00:47:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ static void	put_map(t_cub *cub)
 				put_cub(cub, j, i, UCOLOR_GREY);
 			else if (cub->map[i][j] == '1')
 				put_cub(cub, j, i, UCOLOR_BLACK);
+			if (cub->map[i][j] == '2' &&
+				cub->sprites[get_sprite_idx(cub, j, i)].hit != 0)
+			{
+				put_cub(cub, j, i, UCOLOR_RED);
+			}
 			++j;
 		}
 		++i;
