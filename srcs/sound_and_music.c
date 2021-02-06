@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 01:17:56 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/05 01:18:23 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:46:16 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #define GAME_SOUND_DURATION 8
 
 /*
-** time() function used here to determine when the music has finished
+** time() function used here to determine when the music has finished to
+** replay it
 */
 
 void		play_global_music(t_cub *cub)

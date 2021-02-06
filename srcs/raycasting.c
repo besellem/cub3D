@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/05 01:06:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:47:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,5 +163,4 @@ void		cast_all_rays(t_cub *cub)
 		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
 	}
 	sprites_dump(cub);
-	// sort_sprites(cub);
 }
