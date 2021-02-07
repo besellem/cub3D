@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/06 20:56:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/07 12:21:05 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int		get_sprite_idx(t_cub *cub, int x, int y)
 	return (i);
 }
 
+
+
+
 void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 {
 	const t_img	tx = cub->txtrs[4];
@@ -52,11 +55,14 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 	while (start < end && idx < cub->win_h)
 	{
-		color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
-		if (color != 0U && ray->sp_ray[idx] == 0U)
+		if (ray->sp_ray[idx] == 0U) // opti to avoid address calc below
 		{
-			ray->sp_ray[idx] = color;
-			ray->hit_sprite = 1;
+			color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
+			if (color != 0U)
+			{
+				ray->sp_ray[idx] = color;
+				ray->hit_sprite = 1;
+			}
 		}
 		start += tx.y / scale;
 		++idx;
@@ -81,6 +87,13 @@ void	sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	// if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
 	// 		ray->sp_scale = 0.0001;
 	// ray->sp_scale = cub->win_h / ray->sp_scale;
+	
+	double test_calc = cub->sprites[idx].distance * tan(fabs(cub->drxion - ray->angle));
+	
+	if (test_calc <= -0.5 || test_calc >= 0.5)
+		printf(B_GREEN"x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n"CLR_COLOR, x, y, cub->sprites[idx].distance, test_calc);
+	else
+		printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, test_calc);
 	fill_sprite_ptr(cub, ray, ray->sp_scale,
-		cub->sprites[idx].distance * tan(fabs(cub->drxion - ray->angle)) * cub->txtrs[4].x);
+		cub->sprites[idx].distance * tan(cub->drxion - ray->angle) * cub->txtrs[4].x);
 }

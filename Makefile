@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/05 01:18:40 by besellem         ###   ########.fr        #
+#    Updated: 2021/02/07 11:43:11 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
 			$(MUTE) # -D BONUS -> TO ENABLE BONUSES (to add)
-			$(MUTE) $(CC) $(CFLAGS) -Ofast -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
+			$(MUTE) $(CC) $(CFLAGS) -g3 -Ofast -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
 endif
 
 all:		$(NAME)
