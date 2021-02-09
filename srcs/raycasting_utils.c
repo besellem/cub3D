@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/08 14:56:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:55:52 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int		get_sprite_idx(t_cub *cub, int x, int y)
 	return (i);
 }
 
-
-
-
 void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 {
 	const t_img	tx = cub->txtrs[4];
@@ -53,12 +50,10 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 		start = (tx.y * (1 - cub->win_h / scale)) / 2;
 		end -= start;
 	}
-	// printf("col_num: [%d]\n", col_num);
 	while (start < end && idx < cub->win_h)
 	{
 		if (ray->sp_ray[idx] == 0U) // opti to avoid address calc below
 		{
-			(void)col_num;
 			color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
 			if (color != 0U)
 			{
@@ -71,7 +66,7 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 }
 
-void	sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
+void	sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
 {
 	const int idx = get_sprite_idx(cub, x, y);
 
@@ -81,8 +76,17 @@ void	sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 		cub->sprites[idx].hit = 1;
 		cub->sprites[idx].distance = get_dist(cub->pos_x,
 										cub->pos_y,
-										cub->sprites[idx].x,
-										cub->sprites[idx].y);
+										cub->sprites[idx].x + 0.5,
+										cub->sprites[idx].y + 0.5);
+	}
+	if (ray->hit_vertical == 1)
+	{
+		if (horz_dist > 0. && cub->sprites[idx].distance > horz_dist)
+		{
+			ray->hit_sprite = 0;
+			cub->sprites[idx].hit = 0;
+			cub->sprites[idx].distance = 0.;
+		}
 	}
 	ray->sp_scale = cub->win_h / cub->sprites[idx].distance;
 	// printf(B_RED"ray->sp_scale[%.2f] cub->sprites[idx].distance[%.2f]\n"CLR_COLOR, ray->sp_scale, cub->sprites[idx].distance);

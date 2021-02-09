@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/07 12:07:20 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:55:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 			return ;
 		}
 		else if (cub->map[(int)y][(int)x] == '2')
-			sprite_intersect(cub, ray, x, y);
+			sprite_intersect(cub, ray, 0., x, y);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
 }
 
-static void	check_vertical(t_cub *cub, t_ray *ray)
+static void	check_vertical(t_cub *cub, t_ray *ray, t_ray *ray_horizontal)
 {
 	double x;
 	double y;
@@ -77,7 +77,7 @@ static void	check_vertical(t_cub *cub, t_ray *ray)
 			return ;
 		}
 		else if (cub->map[(int)y][(int)x] == '2')
-			sprite_intersect(cub, ray, x, y);
+			sprite_intersect(cub, ray, ray_horizontal->distance, x, y);
 		x += ray->xstep;
 		y += ray->ystep;
 	}
@@ -111,7 +111,7 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 	(&hor)->sp_ray = ray->sp_ray;
 	(&ver)->sp_ray = ray->sp_ray;	// tmp;
 	check_horizontal(cub, &hor);
-	check_vertical(cub, &ver);
+	check_vertical(cub, &ver, &hor);
 	if (hor.distance < 0 && ver.distance >= 0)
 		*ray = ver;
 	else if (ver.distance < 0 && hor.distance >= 0)
@@ -152,7 +152,7 @@ void		cast_all_rays(t_cub *cub)
 
 	init_sprites_hit(cub);
 	init_sp_rays(cub);
-	ray_angle = cub->drxion - (ft_deg2rad(FOV) / 2);
+	ray_angle = cub->drxion - (FOV / 2);
 	i = -1;
 	while (++i < cub->win_w)
 	{
@@ -160,7 +160,7 @@ void		cast_all_rays(t_cub *cub)
 		cast_ray(cub, &cub->rays[i], tmp_angle);
 		set_hit_drxion(&cub->rays[i]);
 		(&cub->rays[i])->distortion = cos(tmp_angle - cub->drxion);
-		ray_angle += (ft_deg2rad(FOV) * cub->rays[i].distortion) / cub->win_w;
+		ray_angle += (FOV * cub->rays[i].distortion) / cub->win_w;
 	}
 	sprites_dump(cub);
 }

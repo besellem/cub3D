@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/09 12:14:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:55:45 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@
 # define HIT_WEST 3
 
 /*
-** FOV (field of view)
+** FOV (field of view) in radians
 */
-# define FOV 90
+# define FOV T_PI_2
 
 /*
 ** Colors (for minimap - not all are needed)
@@ -319,7 +319,7 @@ int				handle_key_release(int key, t_cub *cub);
 ** Raycasting
 */
 int				get_sprite_idx(t_cub *cub, int x, int y);
-void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
+void			sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y);
 void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 
 /*

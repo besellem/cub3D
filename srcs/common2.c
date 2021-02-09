@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/09 13:56:36 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 14:14:54 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	free_textures(t_cub *cub)
 {
-	int i;
-
 	if (cub->txtr_no)
 		free(cub->txtr_no);
 	if (cub->txtr_so)
@@ -26,9 +24,20 @@ static void	free_textures(t_cub *cub)
 		free(cub->txtr_we);
 	if (cub->txtr_s)
 		free(cub->txtr_s);
+}
+
+void	free_imgs(t_cub *cub)
+{
+	int i;
+
+	if (cub->img.ptr)
+		mlx_destroy_image(cub->mlx, cub->img.ptr);
 	i = -1;
 	while (++i < TEXTURES_COUNT && cub->txtrs[i].ptr)
 		mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
+	i = -1;
+	while (cub->txtr_gun[++i].ptr)
+		mlx_destroy_image(cub->mlx, cub->txtr_gun[i].ptr);
 }
 
 /*
@@ -40,13 +49,9 @@ void		ft_free_cub(t_cub *cub)
 	int i;
 
 	free_textures(cub);
+	free_imgs(cub);
 	if (cub->map)
 		ft_free_strs(cub->map);
-	if (cub->img.ptr)
-		mlx_destroy_image(cub->mlx, cub->img.ptr);
-	i = -1;
-	while (cub->txtr_gun[++i].ptr)
-		mlx_destroy_image(cub->mlx, cub->txtr_gun[i].ptr);
 	if (cub->rays)
 	{
 		i = -1;
