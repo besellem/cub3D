@@ -6,39 +6,56 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 20:12:19 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 13:53:46 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#define GUN_SHOT_SOUND_PATH "./sounds/gun_shot.wav"
 
 /*
 ** Display gun only when the window is large enough for it and when the gun's
 ** texture heigh is inferior to the window's heigh divided by 2 (center)
 */
 
-void	display_gun(t_cub *cub)
+static void	set_gun_txtr_idx(t_cub *cub)
 {
-	t_uint32	color;
-	int			i;
-	int			j;
-
-	if (cub->txtr_gun.x >= cub->win_w || cub->txtr_gun.y >= cub->win_h / 2)
-		return ;
-	i = -1;
-	while (++i < cub->txtr_gun.x)
+	if (cub->gun_status != 0)
 	{
-		j = -1;
-		while (++j < cub->txtr_gun.y)
+		if (cub->gun_status == -1)
 		{
-			color = *(t_uint32 *)(cub->txtr_gun.addr + \
-				(cub->txtr_gun.size_line * j) + \
-				(i * (cub->txtr_gun.bits_per_pixel / 8)));
-			if (color != 0U)
-			{
-				ft_pixel_put(cub, ((cub->win_w - cub->txtr_gun.x) / 2) + i,
-					cub->win_h - cub->txtr_gun.y + j, color);
-			}
+			cub->gun_status = 1;
+			system(SOUND_CMD" "GUN_SHOT_SOUND_PATH" 2>/dev/null&");
 		}
+		else
+			cub->gun_status++;
+	}
+	if (cub->gun_status > GUN_GIF_NB - 1)
+		cub->gun_status = 0;
+}
+
+void		display_gun(t_cub *cub)
+{
+	int xmax;
+	int ymax;
+	int i;
+
+	set_gun_txtr_idx(cub);
+	xmax = 0;
+	ymax = 0;
+	i = -1;
+	while (++i < GUN_GIF_NB)
+	{
+		if (xmax < cub->txtr_gun[i].x)
+			xmax = cub->txtr_gun[i].x;
+		if (ymax < cub->txtr_gun[i].y)
+			ymax = cub->txtr_gun[i].y;
+	}
+	if (cub->win_w >= xmax && cub->win_h / 2 >= ymax)
+	{
+		mlx_put_image_to_window(cub->mlx,cub->win,
+			cub->txtr_gun[cub->gun_status].ptr,
+			((cub->win_w - cub->txtr_gun[cub->gun_status].x) / 2),
+			cub->win_h - cub->txtr_gun[cub->gun_status].y);
 	}
 }

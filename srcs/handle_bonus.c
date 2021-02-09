@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 15:01:33 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/05 01:18:12 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 11:17:52 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,29 @@ static void	set_cub_size(t_cub *cub)
 		cub->cub_size = max_w;
 }
 
-static void	init_gun(t_cub *cub)
+static void	init_gun(t_cub *cub, int count)
 {
-	int fd;
+	const char	*gun_txtr[GUN_GIF_NB] = {
+		"./assets/gun/gun_status_1.xpm",
+		"./assets/gun/gun_status_2.xpm",
+		"./assets/gun/gun_status_3.xpm",
+		"./assets/gun/gun_status_4.xpm",
+		"./assets/gun/gun_status_5.xpm"
+	};
+	const int	fd = open(gun_txtr[count], O_RDONLY);
 
-	if ((fd = open(GUN_PATH, O_RDONLY)) == -1 || close(fd))
+	if (fd == -1 || close(fd))
 		ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
-	fill_texture(cub, &cub->txtr_gun, GUN_PATH);
+	fill_texture(cub, &cub->txtr_gun[count], (char *)gun_txtr[count]);
+	if (count != 0)
+		init_gun(cub, count - 1);
 }
 
 void		init_bonus(t_cub *cub)
 {
 	if (BONUS)
 	{
-		init_gun(cub);
+		init_gun(cub, GUN_GIF_NB - 1);
 		set_cub_size(cub);
 		cub->life = 100;
 	}

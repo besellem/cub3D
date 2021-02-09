@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/07 13:52:48 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 12:14:26 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,12 @@
 # ifndef BONUS
 #  define BONUS 1 // Set to 0 before push && define this macro at compile time to enable bonuses
 
-#  ifndef GUN_PATH
-#   define GUN_PATH "./assets/gun.xpm"
-#  endif
+#  define GUN_GIF_NB 5
+// #  define GUN_PATH_ "./assets/gun/gun_status_1.xpm"
+// #  define GUN_PATH "./assets/gun/gun_status_2.xpm"
+// #  define GUN_PATH "./assets/gun/gun_status_3.xpm"
+// #  define GUN_PATH "./assets/gun/gun_status_4.xpm"
+// #  define GUN_PATH "./assets/gun/gun_status_5.xpm"
 
 # endif
 
@@ -227,6 +230,7 @@ typedef	struct	s_cub
 {
 	int			save_opt : 2;
 	t_uint8		life : 7;
+	int			gun_status;
 	int			win_w;
 	int			win_h;
 	int			parsed_w;
@@ -256,7 +260,7 @@ typedef	struct	s_cub
 	t_keys		keys;
 	t_img		img;
 	t_img		txtrs[TEXTURES_COUNT];
-	t_img		txtr_gun;
+	t_img		txtr_gun[GUN_GIF_NB];
 	t_img		txtr_life;
 	t_ray		*rays;
 	t_sprite	*sprites;

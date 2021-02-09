@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/07 11:43:11 by besellem         ###   ########.fr        #
+#    Updated: 2021/02/09 13:57:38 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ SRCS		+=	$(SRCS_PATH)/utils.c
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror# -fsanitize=address
 RM			=	rm -f
 RMRF		=	rm -rf
 

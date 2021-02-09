@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 23:21:11 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 13:56:36 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ void		ft_free_cub(t_cub *cub)
 		ft_free_strs(cub->map);
 	if (cub->img.ptr)
 		mlx_destroy_image(cub->mlx, cub->img.ptr);
-	if (cub->txtr_gun.ptr)
-		mlx_destroy_image(cub->mlx, cub->txtr_gun.ptr);
+	i = -1;
+	while (cub->txtr_gun[++i].ptr)
+		mlx_destroy_image(cub->mlx, cub->txtr_gun[i].ptr);
 	if (cub->rays)
 	{
 		i = -1;
-		while (++i < cub->win_h)
+		while (++i < cub->win_w && cub->rays[i].sp_ray)
 			free((&cub->rays[i])->sp_ray);
 		free(cub->rays);
 	}
@@ -58,9 +59,7 @@ void		ft_free_cub(t_cub *cub)
 	if (cub->mlx)
 		free(cub->mlx);
 	if (BONUS)
-	{
 		system("killall "SOUND_CMD" 2>/dev/null");
-	}
 }
 
 /*

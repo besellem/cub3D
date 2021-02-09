@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/07 19:43:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/08 14:56:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 		start = (tx.y * (1 - cub->win_h / scale)) / 2;
 		end -= start;
 	}
-	// printf("col_num: [%d], start: [%.2f], scale: [%.2f]\n\n", col_num, start, scale);
+	// printf("col_num: [%d]\n", col_num);
 	while (start < end && idx < cub->win_h)
 	{
 		if (ray->sp_ray[idx] == 0U) // opti to avoid address calc below
 		{
+			(void)col_num;
 			color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
 			if (color != 0U)
 			{
@@ -72,7 +73,7 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 
 void	sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
-	const int idx = get_sprite_idx(cub, (int)x, (int)y);
+	const int idx = get_sprite_idx(cub, x, y);
 
 	if (cub->sprites[idx].hit == 0)
 	{
@@ -80,8 +81,8 @@ void	sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 		cub->sprites[idx].hit = 1;
 		cub->sprites[idx].distance = get_dist(cub->pos_x,
 										cub->pos_y,
-										cub->sprites[idx].x + 0.5,
-										cub->sprites[idx].y + 0.5);
+										cub->sprites[idx].x,
+										cub->sprites[idx].y);
 	}
 	ray->sp_scale = cub->win_h / cub->sprites[idx].distance;
 	// printf(B_RED"ray->sp_scale[%.2f] cub->sprites[idx].distance[%.2f]\n"CLR_COLOR, ray->sp_scale, cub->sprites[idx].distance);
@@ -91,8 +92,9 @@ void	sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	// 		ray->sp_scale = 0.0001;
 	// ray->sp_scale = cub->win_h / ray->sp_scale;
 	
-	double test_calc = fabs(cub->sprites[idx].distance * tan(cub->drxion - ray->angle) * cub->txtrs[4].x);
+	double test_calc = cub->sprites[idx].distance * tan(cub->drxion - ray->angle) * cub->txtrs[4].x;
 	
-	// printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, test_calc);
+	printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, test_calc);
+	printf("angle: [%.2f], ray->angle: [%.2f]\n\n", cub->drxion, ray->angle);
 	fill_sprite_ptr(cub, ray, ray->sp_scale, test_calc);
 }

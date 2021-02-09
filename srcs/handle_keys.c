@@ -6,12 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:18:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 22:46:28 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/09 10:59:15 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#define GUN_SHOT_SOUND_PATH "./sounds/gun_shot.wav"
 
 int	handle_key_press(int key, t_cub *cub)
 {
@@ -29,8 +28,8 @@ int	handle_key_press(int key, t_cub *cub)
 		cub->keys.key_left = 1;
 	else if (key == KEY_RIGHT && cub->keys.key_left == 0 && (cub->turn = 1))
 		cub->keys.key_right = 1;
-	else if (key == KEY_F)
-		system(SOUND_CMD" "GUN_SHOT_SOUND_PATH" 2>/dev/null&");
+	else if (BONUS && key == KEY_F && cub->gun_status == 0)
+		cub->gun_status = -1;
 	else
 		return (1);
 	return (0);
