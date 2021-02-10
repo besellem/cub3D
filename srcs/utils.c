@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/07 10:37:23 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/10 11:13:54 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void	sprites_dump(t_cub *cub)
 		printf("    cub->sprites[%2d] => ", i);
 		printf("x["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].x);
 		printf("y["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].y);
+		if (cub->sprites[i].hit == 1)
+			printf("hit["B_RED"%d"CLR_COLOR"] ", cub->sprites[i].hit);
+		else
+			printf("hit["B_GREEN"%d"CLR_COLOR"] ", cub->sprites[i].hit);
 		printf("dist["B_GREEN"%.3f"CLR_COLOR"]\n", cub->sprites[i].distance);
 	}
 	printf("}\n\n");
