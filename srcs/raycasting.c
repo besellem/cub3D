@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/10 15:26:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 16:05:16 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 {
 	t_ray		hor;
 	t_ray		ver;
-	// t_uint32	tmp[cub->win_h];
+	// uint32_t	tmp[cub->win_h];
 
 	init_ray(&hor, angle);
 	init_ray(&ver, angle);

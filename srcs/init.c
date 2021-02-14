@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 23:39:13 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 22:47:36 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:46:40 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** all variables that are not set here will be set in the parser
 */
 
-int	init_cub(t_cub *cub)
+void	init_cub(t_cub *cub)
 {
 	ft_memset(cub, 0, sizeof(t_cub));
 	ft_memset(&cub->img, 0, sizeof(t_img));
@@ -25,5 +25,4 @@ int	init_cub(t_cub *cub)
 	cub->sky_color = -1;
 	cub->grnd_color = -1;
 	cub->increment = 0.1;
-	return (0);
 }

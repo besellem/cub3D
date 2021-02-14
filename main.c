@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/11 16:00:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:48:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int			main(int ac, char **av)
 	if (ac >= 2 && ac <= 3)
 	{
 		ft_putendl(ENV_MSG);
-		if (init_cub(&cub))
-			ft_error("Malloc err while initializing", &cub, __FILE__, __LINE__);
+		init_cub(&cub);
 		cub_parser(ac, av, &cub);
 		if (cub.save_opt && ft_save(&cub))
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/09 13:53:46 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 16:06:02 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ void		display_gun(t_cub *cub)
 	}
 	if (cub->win_w >= xmax && cub->win_h / 2 >= ymax)
 	{
+		//	## TO CHANGE ## -> Does not work on Linux
+
+		// i = -1;
+		// while (++i < cub->txtr_gun[cub->gun_status].x)
+		// {
+		// 	int j = -1;
+		// 	while (++j < cub->txtr_gun[cub->gun_status].y)
+		// 		ft_pixel_put(cub, i, j, *(uint32_t *)())
+		// }
 		mlx_put_image_to_window(cub->mlx,cub->win,
 			cub->txtr_gun[cub->gun_status].ptr,
 			((cub->win_w - cub->txtr_gun[cub->gun_status].x) / 2),

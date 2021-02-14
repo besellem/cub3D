@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/11 14:09:27 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 16:12:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,12 @@
 ** Defined at compile time if wanted
 */
 # ifndef BONUS
-#  define BONUS 1 // Set to 0 before push && define this macro at compile time to enable bonuses
 
+/*
+** Set to 0 before push && define this macro at compile time to enable bonuses
+*/
+#  define BONUS 1
 #  define GUN_GIF_NB 5
-// #  define GUN_PATH_ "./assets/gun/gun_status_1.xpm"
-// #  define GUN_PATH "./assets/gun/gun_status_2.xpm"
-// #  define GUN_PATH "./assets/gun/gun_status_3.xpm"
-// #  define GUN_PATH "./assets/gun/gun_status_4.xpm"
-// #  define GUN_PATH "./assets/gun/gun_status_5.xpm"
-
 # endif
 
 /*
@@ -133,7 +130,7 @@
 ** distance:		distance from the player to a wall for that angle
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
-** sp_scale:		tmp variable used to scale each sprite into the ray 
+** sp_scale:		tmp variable used to scale each sprite into the ray
 ** sp_ray:			contains a ray of all the sprites combined & sorted
 */
 typedef struct	s_ray
@@ -154,7 +151,7 @@ typedef struct	s_ray
 	double		hit_wall_x;
 	double		hit_wall_y;
 	double		sp_scale;
-	t_uint32	*sp_ray;
+	uint32_t	*sp_ray;
 }				t_ray;
 
 /*
@@ -231,7 +228,7 @@ typedef struct	s_img
 typedef	struct	s_cub
 {
 	int			save_opt : 2;
-	t_uint8		life : 7;
+	uint8_t		life : 7;
 	int			gun_status;
 	int			win_w;
 	int			win_h;
@@ -321,13 +318,14 @@ int				handle_key_release(int key, t_cub *cub);
 ** Raycasting
 */
 int				get_sprite_idx(t_cub *cub, int x, int y);
-void			sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y);
+void			sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist,
+								double x, double y);
 void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 
 /*
 ** Display
 */
-void			ft_pixel_put(t_cub *cub, int x, int y, t_uint32 color);
+void			ft_pixel_put(t_cub *cub, int x, int y, uint32_t color);
 void			init_sprites_hit(t_cub *cub);
 void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);
@@ -338,7 +336,7 @@ int				ft_refresh(t_cub *cub);
 /*
 ** Main
 */
-int				init_cub(t_cub *cub);
+void			init_cub(t_cub *cub);
 int				ft_save(t_cub *cub);
 
 /*

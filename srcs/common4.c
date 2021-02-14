@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/01 10:35:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 16:07:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** GET THE DISTANCE BETWEEN 2 POINTS (PYTHAGORE)
 */
 
-double	get_dist(double x1, double y1, double x2, double y2)
+double		get_dist(double x1, double y1, double x2, double y2)
 {
 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
@@ -26,7 +26,7 @@ double	get_dist(double x1, double y1, double x2, double y2)
 ** ex: 12.44 -> 12.00
 */
 
-double	get_dec(double n)
+double		get_dec(double n)
 {
 	return (n - (int)n);
 }
@@ -36,7 +36,7 @@ double	get_dec(double n)
 ** (mainly used in the raycasting calculations - prevents segv)
 */
 
-int		safe_min(int nb1, int nb2)
+int			safe_min(int nb1, int nb2)
 {
 	if (nb1 - nb2 < 0)
 		return (0);
@@ -53,7 +53,7 @@ int		safe_min(int nb1, int nb2)
 ** "0"         -> 1
 */
 
-int		check_rgb(char *s)
+int			check_rgb(char *s)
 {
 	int i;
 
@@ -69,7 +69,7 @@ int		check_rgb(char *s)
 	return (1);
 }
 
-t_uint32	ft_rgba(t_uint8 r, t_uint8 g, t_uint8 b, t_uint8 a)
+uint32_t	ft_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	return (r | (g << 8) | (b << 16) | (a << 24));
 }

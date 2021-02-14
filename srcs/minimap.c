@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/07 12:12:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:56:06 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	print_player(t_cub *cub)
 	}
 }
 
-static void	put_cub(t_cub *cub, int x, int y, t_uint32 color)
+static void	put_cub(t_cub *cub, int x, int y, uint32_t color)
 {
 	int i;
 	int j;

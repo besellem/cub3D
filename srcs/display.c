@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 21:46:15 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:59:06 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
 ** PRINT A PIXEL AT THE COORDINATES INTO mlx->img
 */
 
-void		ft_pixel_put(t_cub *cub, int x, int y, t_uint32 color)
+void		ft_pixel_put(t_cub *cub, int x, int y, uint32_t color)
 {
 	char *px;
 
 	px = cub->img.addr;
 	px += (y * cub->img.size_line + x * (cub->img.bits_per_pixel / 8));
-	*(t_uint32 *)px = color;
+	*(uint32_t *)px = color;
 }
 
 /*
 ** PRINT A SPRITE RAY
 */
 
-static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
+void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	int y;
 
@@ -76,7 +76,7 @@ void		print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 	while (start < end && idx < cub->win_h)
 	{
 		ft_pixel_put(cub, x, idx++,
-			*(t_uint32 *)(tx.addr + (int)start * tx.size_line + \
+			*(uint32_t *)(tx.addr + (int)start * tx.size_line + \
 			hit_x_calc(tx, ray) * (tx.bits_per_pixel / 8)));
 		start += tx.y / scale;
 	}

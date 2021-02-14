@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/11 16:02:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:58:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	double		start;
 	double		end;
 	int			idx;
-	t_uint32	color;
+	uint32_t	color;
 
 	start = 0.0;
 	end = tx.y;
@@ -54,12 +54,9 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	{
 		if (ray->sp_ray[idx] == 0U) // opti to avoid address calc below
 		{
-			color = *(t_uint32 *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
-			if (color != 0U)
-			{
+			color = *(uint32_t *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
+			if (color != 0U && (ray->hit_sprite = 1))
 				ray->sp_ray[idx] = color;
-				ray->hit_sprite = 1;
-			}
 		}
 		start += tx.y / scale;
 		++idx;
@@ -101,8 +98,8 @@ void	sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double
 	double dir = cub->drxion - ray->angle;
 	double test_calc = cub->sprites[idx].distance * atan(dir) * cub->txtrs[4].x;
 	
-	printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, test_calc);
-	printf("angle: [%.2f], ray->angle: [%.2f]\n\n", cub->drxion, ray->angle);
+	// printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, test_calc);
+	// printf("angle: [%.2f], ray->angle: [%.2f]\n\n", cub->drxion, ray->angle);
 	fill_sprite_ptr(cub, ray, ray->sp_scale, test_calc);
 }
 

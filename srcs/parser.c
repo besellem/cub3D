@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 23:23:28 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 15:45:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	load_textures(t_cub *cub)
 	fill_texture(cub, &cub->txtrs[4], cub->txtr_s);
 }
 
-static void	get_sprites_oc(t_cub *cub)
+static void	set_sprites_oc(t_cub *cub)
 {
 	int i;
 	int j;
@@ -68,7 +68,7 @@ static int	alloc_sprites(t_cub *cub)
 	int j;
 	int k;
 
-	get_sprites_oc(cub);
+	set_sprites_oc(cub);
 	cub->sprites = (t_sprite *)malloc(sizeof(t_sprite) * cub->sprites_ocs);
 	if (!cub->sprites)
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
@@ -112,9 +112,6 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 		cub->save_opt = 1;
 	else if (ac == 3)
 		ft_error("Argument error", cub, __FILE__, __LINE__);
-	cub->mlx = mlx_init();
-	if (!cub->mlx)
-		ft_error("Unable to start mlx", cub, __FILE__, __LINE__);
 	if ((fd = open(av[1], O_RDONLY)) == -1 ||
 		ft_strcmp(av[1] + (ft_strlen(av[1]) - 4), ".cub") != 0)
 	{
@@ -122,6 +119,9 @@ void		cub_parser(int ac, char **av, t_cub *cub)
 		perror(av[1]);
 		exit(EXIT_FAILURE);
 	}
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		ft_error("Unable to start mlx", cub, __FILE__, __LINE__);
 	cub_fill_specs(fd, cub);
 	load_textures(cub);
 	map_parser(fd, cub);
