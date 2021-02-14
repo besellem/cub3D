@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common.c                                           :+:      :+:    :+:   */
+/*   quit_events.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/09 23:45:35 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/04 23:14:09 by besellem         ###   ########.fr       */
+/*   Created: 2021/02/14 21:17:22 by besellem          #+#    #+#             */
+/*   Updated: 2021/02/14 22:21:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,4 @@ int		ft_red_cross(t_cub *cub)
 	ft_free_cub(cub);
 	exit(EXIT_SUCCESS);
 	return (0);
-}
-
-int		ft_strs_size(char **strs)
-{
-	int i;
-
-	if (!strs)
-		return (0);
-	i = 0;
-	while (strs[i])
-		++i;
-	return (i);
-}
-
-/*
-** ! DO NOT CHANGE THE RETURN VALUE -> IT'S A NORM TRICK !
-*/
-
-int		ft_free_strs(char **strs)
-{
-	int i;
-
-	if (!strs)
-		return (1);
-	i = -1;
-	while (strs[++i])
-		free(strs[i]);
-	free(strs);
-	return (1);
 }

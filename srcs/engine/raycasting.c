@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 16:05:16 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 19:57:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	check_horizontal(t_cub *cub, t_ray *ray)
 			wall_intersect(cub, ray, x, y);
 			return ;
 		}
-		else if (cub->map[(int)y][(int)x] == '2')
+		else if (is_sprite(cub->map[(int)y][(int)x]))
 			sprite_intersect(cub, ray, 0., x, y);
 		x += ray->xstep;
 		y += ray->ystep;
@@ -76,7 +76,7 @@ static void	check_vertical(t_cub *cub, t_ray *ray, t_ray *ray_horizontal)
 			wall_intersect(cub, ray, x, y);
 			return ;
 		}
-		else if (cub->map[(int)y][(int)x] == '2')
+		else if (is_sprite(cub->map[(int)y][(int)x]))
 			sprite_intersect(cub, ray, ray_horizontal->distance, x, y);
 		x += ray->xstep;
 		y += ray->ystep;
@@ -162,5 +162,5 @@ void		cast_all_rays(t_cub *cub)
 		(&cub->rays[i])->distortion = cos(tmp_angle - cub->drxion);
 		ray_angle += (FOV * cub->rays[i].distortion) / cub->win_w;
 	}
-	sprites_dump(cub);
+	// sprites_dump(cub);
 }

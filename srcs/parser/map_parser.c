@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 22:41:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:55:01 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 19:03:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ static int	check_line(char *line, int *map_started, int check)
 		return (0);
 	len = ft_strlen(line);
 	if (*map_started == 0 && len == 0 && check == 1)
+	{
+		free(line);
 		return (0);
+	}
 	if (check == 1 && (len == 0 || charset_in_line(line, MAP_CHARSET) == 0))
 		return (-1);
 	else

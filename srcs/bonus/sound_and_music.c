@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common5.c                                          :+:      :+:    :+:   */
+/*   sound_and_music.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 21:23:11 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/02 21:25:26 by besellem         ###   ########.fr       */
+/*   Created: 2021/02/05 01:17:56 by besellem          #+#    #+#             */
+/*   Updated: 2021/02/14 21:45:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#define GAME_SOUND_PATH "./sounds/top_gun.wav"
+#define GAME_SOUND_DURATION 8
 
 /*
-** Replace ternary operation (because of norm v3)
+** time() function used here to determine when the music has finished to
+** replay it
 */
 
-void	*ft_ternary(int condition, void *if_true, void *if_false)
+void	play_global_music(t_cub *cub)
 {
-	if (condition != 0)
-		return (if_true);
-	else
-		return (if_false);
+	time_t now;
+
+	now = time(NULL);
+	if (cub->sound_time == 0 || now - cub->sound_time >= GAME_SOUND_DURATION)
+	{
+		system(SOUND_CMD" "GAME_SOUND_PATH" 2>/dev/null&");
+		cub->sound_time = now;
+	}
 }

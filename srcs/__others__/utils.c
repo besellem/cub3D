@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:48:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 19:12:57 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ void	print_specs(t_cub *cub)
 	printf("    cub->win:        %p\n", cub->win);
 	printf("    cub->win_w:      %d -> %d\n", cub->parsed_w, cub->win_w);
 	printf("    cub->win_h:      %d -> %d\n", cub->parsed_h, cub->win_h);
-	printf("    cub->sky_color:  %#x\n", cub->sky_color);
-	printf("    cub->grnd_color: %#x\n", cub->grnd_color);
-	printf("    cub->txtr_no:    [%p] %s\n", cub->txtr_no, cub->txtr_no);
-	printf("    cub->txtr_so:    [%p] %s\n", cub->txtr_so, cub->txtr_so);
-	printf("    cub->txtr_ea:    [%p] %s\n", cub->txtr_ea, cub->txtr_ea);
-	printf("    cub->txtr_we:    [%p] %s\n", cub->txtr_we, cub->txtr_we);
-	printf("    cub->txtr_s:     [%p] %s\n", cub->txtr_s, cub->txtr_s);
+	printf("    cub->sky_color:  %X\n", cub->sky_color);
+	printf("    cub->grnd_color: %X\n", cub->grnd_color);
+	printf("    cub->txtr_no:    %s\n", cub->txtr_no);
+	printf("    cub->txtr_so:    %s\n", cub->txtr_so);
+	printf("    cub->txtr_ea:    %s\n", cub->txtr_ea);
+	printf("    cub->txtr_we:    %s\n", cub->txtr_we);
+	printf("    cub->txtr_s:     %s\n", cub->txtr_s);
 	printf("    cub->map_size_x: %zu\n", cub->map_size_x);
 	printf("    cub->map_size_y: %zu\n", cub->map_size_y);
 	printf("    cub->drxion:     %f\n", cub->drxion);
 	printf("    cub->pos_x:      %f\n", cub->pos_x);
 	printf("    cub->pos_y:      %f\n", cub->pos_y);
-	printf("    cub->increment:  %f\n", cub->increment);
-	printf("    cub->cub_size:   %d\n", cub->cub_size);
+	printf("    cub->increment:  %.2f\n", cub->increment);
+	printf("    cub->cub_size:   %dpx\n", cub->cub_size);
 	printf("}\n\n");
 	print_map(cub);
 	printf("\n----\n\n");

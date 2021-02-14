@@ -6,20 +6,20 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:58:25 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 22:11:16 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
+void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	ray->hit_wall_x = x;
 	ray->hit_wall_y = y;
 	ray->distance = get_dist(cub->pos_x, cub->pos_y, x, y);
 }
 
-int		get_sprite_idx(t_cub *cub, int x, int y)
+int			get_sprite_idx(t_cub *cub, int x, int y)
 {
 	int i;
 
@@ -33,7 +33,7 @@ int		get_sprite_idx(t_cub *cub, int x, int y)
 	return (i);
 }
 
-void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
+static void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 {
 	const t_img	tx = cub->txtrs[4];
 	double		start;
@@ -54,7 +54,7 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	{
 		if (ray->sp_ray[idx] == 0U) // opti to avoid address calc below
 		{
-			color = *(uint32_t *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bits_per_pixel / 8));
+			color = *(uint32_t *)(tx.addr + (int)start * tx.size_line + col_num * (tx.bpp / 8));
 			if (color != 0U && (ray->hit_sprite = 1))
 				ray->sp_ray[idx] = color;
 		}
@@ -63,7 +63,7 @@ void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 }
 
-void	sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
+void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
 {
 	const int idx = get_sprite_idx(cub, x, y);
 
@@ -103,10 +103,7 @@ void	sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double
 	fill_sprite_ptr(cub, ray, ray->sp_scale, test_calc);
 }
 
-//	ADD MINIMAP RAYS BACK
-
-
-// void	sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
+// void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
 // {
 // 	const int idx = get_sprite_idx(cub, x, y);
 

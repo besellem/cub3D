@@ -6,48 +6,61 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/14 16:06:47 by besellem         ###   ########.fr        #
+#    Updated: 2021/02/14 22:01:12 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ## Constants
 MUTE		=	@
 NAME		=	cub3D
-SRCS_PATH	=	./srcs
 BMP_FILE	=	./saved.bmp
 
 ## Sources
 INCS		=	incs libft/libft.a
 MLIBX		=	libmlx.dylib
 
-SRCS		+=	main.c
-SRCS		+=	$(SRCS_PATH)/common.c
-SRCS		+=	$(SRCS_PATH)/common2.c
-SRCS		+=	$(SRCS_PATH)/common3.c
-SRCS		+=	$(SRCS_PATH)/common4.c
-SRCS		+=	$(SRCS_PATH)/common5.c
-SRCS		+=	$(SRCS_PATH)/config_checker.c
-SRCS		+=	$(SRCS_PATH)/display.c
-SRCS		+=	$(SRCS_PATH)/events.c
-SRCS		+=	$(SRCS_PATH)/gun.c
-SRCS		+=	$(SRCS_PATH)/handle_bonus.c
-SRCS		+=	$(SRCS_PATH)/handle_keys.c
-SRCS		+=	$(SRCS_PATH)/init.c
-SRCS		+=	$(SRCS_PATH)/map_checker.c
-SRCS		+=	$(SRCS_PATH)/map_parser.c
-SRCS		+=	$(SRCS_PATH)/map_validator.c
-SRCS		+=	$(SRCS_PATH)/minimap.c
-SRCS		+=	$(SRCS_PATH)/parser.c
-SRCS		+=	$(SRCS_PATH)/raycasting.c
-SRCS		+=	$(SRCS_PATH)/raycasting_utils.c
-SRCS		+=	$(SRCS_PATH)/save.c
-SRCS		+=	$(SRCS_PATH)/sound_and_music.c
-SRCS		+=	$(SRCS_PATH)/sprites.c
-SRCS		+=	$(SRCS_PATH)/utils.c
+# Paths
+PATH_SRCS	:=	./srcs
+
+PATH_OTHERS	:=	__others__
+PATH_BONUS	:=	bonus
+PATH_COMMON	:=	common
+PATH_ENGINE	:=	engine
+PATH_EVENTS	:=	events
+PATH_PARSER	:=	parser
+
+SRCS		=	$(PATH_SRCS)/main.c \
+				$(PATH_SRCS)/$(PATH_OTHERS)/save.c \
+				$(PATH_SRCS)/$(PATH_OTHERS)/utils.c \
+				$(PATH_SRCS)/$(PATH_BONUS)/gun.c \
+				$(PATH_SRCS)/$(PATH_BONUS)/init_bonus.c \
+				$(PATH_SRCS)/$(PATH_BONUS)/minimap.c \
+				$(PATH_SRCS)/$(PATH_BONUS)/sound_and_music.c \
+				$(PATH_SRCS)/$(PATH_COMMON)/angles.c \
+				$(PATH_SRCS)/$(PATH_COMMON)/checkers.c \
+				$(PATH_SRCS)/$(PATH_COMMON)/common.c \
+				$(PATH_SRCS)/$(PATH_COMMON)/free_cub.c \
+				$(PATH_SRCS)/$(PATH_COMMON)/math_utils.c \
+				$(PATH_SRCS)/$(PATH_COMMON)/rgb.c \
+				$(PATH_SRCS)/$(PATH_ENGINE)/display.c \
+				$(PATH_SRCS)/$(PATH_ENGINE)/engine_loop.c \
+				$(PATH_SRCS)/$(PATH_ENGINE)/raycasting_utils.c \
+				$(PATH_SRCS)/$(PATH_ENGINE)/raycasting.c \
+				$(PATH_SRCS)/$(PATH_ENGINE)/sprites.c \
+				$(PATH_SRCS)/$(PATH_EVENTS)/handle_keys.c \
+				$(PATH_SRCS)/$(PATH_EVENTS)/quit_events.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/config_checker.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/init_cub.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/map_checker.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/map_parser.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/map_validator.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/parser.c
+
+OBJS		=	$(SRCS:.c=.o)
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g3 -Ofast -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g3 -Ofast
 RM			=	rm -f
 RMRF		=	rm -rf
 
@@ -67,6 +80,7 @@ $(NAME):
 			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
 endif
 
+
 ifeq ($(UNAME), Linux)
 $(NAME):
 			$(MUTE) echo "\033[31;1mCompiling for Linux...\033[0m"
@@ -76,11 +90,12 @@ $(NAME):
 			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
 endif
 
+
 all:		$(NAME)
+
 
 bonus:		all
 
-test:		$(NAME)
 
 ifeq ($(UNAME), Darwin)
 clean:
@@ -91,6 +106,7 @@ clean:
 			$(MUTE) $(RM) $(BMP_FILE)
 endif
 
+
 ifeq ($(UNAME), Linux)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
@@ -100,11 +116,14 @@ clean:
 			$(MUTE) $(RM) $(BMP_FILE)
 endif
 
+
 fclean:		clean
 			$(MUTE) $(MAKE) -C libft fclean
 			$(MUTE) $(RM) $(MLIBX)
 			$(MUTE) $(RM) $(NAME)
 
+
 re:			fclean all
 
-.PHONY:		$(NAME) all bonus test clean fclean re
+
+.PHONY:		$(NAME) all bonus clean fclean re

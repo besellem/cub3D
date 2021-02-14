@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
+/*   engine_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 16:06:33 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 21:43:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,17 @@ void		update_frame(t_cub *cub)
 	if (BONUS)
 	{
 		update_minimap(cub);
+		display_gun(cub);
 	}
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);
+	if (!cub->save_opt)
+		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);
 	if (BONUS)
 	{
-		display_gun(cub);
+		// display_gun(cub);
 	}
 }
 
-int			ft_refresh(t_cub *cub)
+int			engine_loop(t_cub *cub)
 {
 	if (BONUS)
 	{

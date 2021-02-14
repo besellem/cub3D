@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:45:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 22:15:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void		fill_texture(t_cub *cub, t_img *tx, char *path)
 	}
 	else
 		ft_error("Not a valid texture file", cub, __FILE__, __LINE__);
-	tx->addr = mlx_get_data_addr(tx->ptr,
-								&tx->bits_per_pixel,
-								&tx->size_line,
+	tx->addr = mlx_get_data_addr(tx->ptr, &tx->bpp, &tx->size_line,
 								&tx->endian);
 	if (!tx->addr)
 		ft_error("Malloc error", cub, __FILE__, __LINE__);
@@ -56,8 +54,10 @@ static void	set_sprites_oc(t_cub *cub)
 	{
 		j = -1;
 		while (cub->map[i][++j])
-			if (cub->map[i][j] == '2')
+		{
+			if (is_sprite(cub->map[i][j]))
 				++ocs;
+		}
 	}
 	cub->sprites_ocs = ocs;
 }
@@ -79,7 +79,7 @@ static int	alloc_sprites(t_cub *cub)
 		j = -1;
 		while (cub->map[i][++j])
 		{
-			if (cub->map[i][j] == '2')
+			if (is_sprite(cub->map[i][j]))
 			{
 				ft_memset(&cub->sprites[k], 0, sizeof(t_sprite));
 				(&cub->sprites[k])->x = j;
@@ -106,14 +106,13 @@ int			are_specs_complete(t_cub *cub)
 
 void		cub_parser(int ac, char **av, t_cub *cub)
 {
-	int fd;
+	const int fd = open(av[1], O_RDONLY);
 
 	if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
 		cub->save_opt = 1;
 	else if (ac == 3)
 		ft_error("Argument error", cub, __FILE__, __LINE__);
-	if ((fd = open(av[1], O_RDONLY)) == -1 ||
-		ft_strcmp(av[1] + (ft_strlen(av[1]) - 4), ".cub") != 0)
+	if (file_got_ext(av[1], ".cub") == 0 || fd == -1)
 	{
 		ft_putendl_fd(CUB_ERR, 2);
 		perror(av[1]);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:37:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 21:41:41 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	window_size_spec(char **split, t_cub *cub)
 
 static int	color_specs(char *line, char **split, t_cub *cub)
 {
-	long	color;
+	int32_t	color;
 	int		r;
 	int		g;
 	int		b;

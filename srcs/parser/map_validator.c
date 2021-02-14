@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:22:27 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:28:14 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 19:55:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static int	check_line(t_cub *cub, char *line, size_t y)
 		return (i);
 	while (line[i])
 	{
-		if ((line[i] == '2' || line[i] == '0') && !chk_rnd(cub, cub->map, i, y))
+		if ((is_sprite(line[i]) || line[i] == '0') &&
+			!chk_rnd(cub, cub->map, i, y))
 			return (i);
 		else if (line[i] == ' ' && !chk_sp(cub, cub->map, i, y))
 			return (i);

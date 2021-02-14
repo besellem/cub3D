@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_bonus.c                                     :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/24 15:01:33 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/09 11:17:52 by besellem         ###   ########.fr       */
+/*   Created: 2021/02/14 21:10:09 by besellem          #+#    #+#             */
+/*   Updated: 2021/02/14 22:30:46 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define GAME_SOUND_DURATION 8
 
 /*
-** THESE FUNCTIONS ARE ONLY CALLED WHEN `BONUS' MACRO IS DEFINED
+** THESE FUNCTIONS ARE ONLY CALLED WHEN `BONUS` MACRO IS DEFINED
 */
 
 /*
@@ -23,7 +23,7 @@
 ** screen size
 */
 
-static void	set_cub_size(t_cub *cub)
+static void	set_minimap_cub_size(t_cub *cub)
 {
 	int max_w;
 	int max_h;
@@ -36,7 +36,7 @@ static void	set_cub_size(t_cub *cub)
 		cub->cub_size = max_w;
 }
 
-static void	init_gun(t_cub *cub, int count)
+static void	set_gun_txtres(t_cub *cub, int count)
 {
 	const char	*gun_txtr[GUN_GIF_NB] = {
 		"./assets/gun/gun_status_1.xpm",
@@ -51,15 +51,15 @@ static void	init_gun(t_cub *cub, int count)
 		ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
 	fill_texture(cub, &cub->txtr_gun[count], (char *)gun_txtr[count]);
 	if (count != 0)
-		init_gun(cub, count - 1);
+		set_gun_txtres(cub, count - 1);
 }
 
 void		init_bonus(t_cub *cub)
 {
 	if (BONUS)
 	{
-		init_gun(cub, GUN_GIF_NB - 1);
-		set_cub_size(cub);
+		set_gun_txtres(cub, GUN_GIF_NB - 1);
+		set_minimap_cub_size(cub);
 		cub->life = 100;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 16:12:42 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 22:39:41 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 **             |
 **             S (PI + (PI / 2) OR (3 * PI) / 2)
 **
-** But y-> is inversed, so NORTH & SOUTH position must be inversed too
+** But y-> is inverted, so NORTH & SOUTH positions must be inverted too
 */
 
 # define DRXION_E 0.0
@@ -67,7 +67,6 @@
 */
 # define UCOLOR_GREY 0xE0E0E0
 # define UCOLOR_BLACK 0x0
-# define UCOLOR_BLUE 0x8080FF
 # define UCOLOR_RED 0xFF0000
 
 /*
@@ -95,7 +94,7 @@
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
-#  define KEY_F 3 // TO REDEFINE
+#  define KEY_F 3 // NOT THE ACTUAL VALUE - TO REDEFINE
 #  define EVT_RED_CROSS 33
 # endif
 
@@ -104,18 +103,14 @@
 */
 # ifndef BONUS
 
-/*
-** Set to 0 before push && define this macro at compile time to enable bonuses
-*/
-#  define BONUS 1
+// Set to 0 before push && define this macro at compile time to enable bonuses
+#  define BONUS 0
 #  define GUN_GIF_NB 5
 # endif
 
 /*
 ** -- TYPEDEFS & STRUCTURES --
-*/
-
-/*
+**
 ** is_down:			is the angle pointing up (0) or down (1)
 ** is_right:		is the angle pointing left (0) or right (1)
 ** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
@@ -180,12 +175,18 @@ typedef struct	s_keys
 	int key_right : 2;
 }				t_keys;
 
+/*
+** x:			width of the texture (in pixels)
+** y:			height of the texture (in pixels)
+** size_line:	number of bytes used to store one line of the image in memory
+** bpp:			number of bits needed to represent a pixel color
+*/
 typedef struct	s_img
 {
 	int		x;
 	int		y;
 	int		size_line;
-	int		bits_per_pixel;
+	int		bpp;
 	int		endian;
 	void	*ptr;
 	char	*addr;
@@ -234,8 +235,8 @@ typedef	struct	s_cub
 	int			win_h;
 	int			parsed_w;
 	int			parsed_h;
-	int			sky_color;
-	int			grnd_color;
+	int32_t		sky_color;
+	int32_t		grnd_color;
 	int			sprites_ocs;
 	int			dw;
 	int			dh;
@@ -269,81 +270,78 @@ typedef	struct	s_cub
 ** -- PROTOTYPES --
 ** Common
 */
-void			ft_error(char *err, t_cub *cub, char *file, int line);
-void			ft_quit(t_cub *cub);
-int				ft_red_cross(t_cub *cub);
-void			ft_free_cub(t_cub *cub);
-int				ft_free_strs(char **strs);
-int				ft_strs_size(char **strs);
-int				file_got_ext(char *file, char *extension);
-int				in_charset(char *charset, int c);
-int				charset_in_line(char *line, char *charset);
-int				is_rgb(int color);
-long			ft_rgb(unsigned char r, unsigned char g, unsigned char b);
+void			print_specs(t_cub *cub);
+void			print_map(t_cub *cub);
+void			sprites_dump(t_cub *cub);
+int				ft_save(t_cub *cub);
+
+/*
+** Others
+*/
 double			ft_deg2rad(int deg);
 double			ft_rad2deg(double rad);
 double			ft_norm_angle(double angle);
+int				file_got_ext(char *file, char *extension);
+int				in_charset(char *charset, int c);
+int				charset_in_line(char *line, char *charset);
+int				is_sprite(int c);
+int				ft_strs_size(char **strs);
+void			*ft_ternary(int condition, void *if_true, void *if_false);
+void			ft_free_cub(t_cub *cub);
+int				ft_free_strs(char **strs);
 double			get_dist(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
 int				safe_min(int nb1, int nb2);
 int				check_rgb(char *s);
-void			*ft_ternary(int condition, void *if_true, void *if_false);
-
-/*
-** Utils
-*/
-void			print_specs(t_cub *cub);
-void			print_map(t_cub *cub);
-void			sprites_dump(t_cub *cub);
+int32_t			ft_rgb(uint8_t r, uint8_t g, uint8_t b);
+int				is_rgb(int color);
 
 /*
 ** Parser & Checkers
 */
+void			init_cub(t_cub *cub);
+void			cub_parser(int ac, char **av, t_cub *cub);
+void			cub_fill_specs(int fd, t_cub *cub);
 int				are_specs_complete(t_cub *cub);
+void			map_parser(int fd, t_cub *cub);
 int				map_checker(t_cub *cub);
 int				map_validator(t_cub *cub);
-void			map_parser(int fd, t_cub *cub);
 void			fill_texture(t_cub *cub, t_img *tx, char *path);
-void			cub_fill_specs(int fd, t_cub *cub);
-void			init_bonus(t_cub *cub);
-void			cub_parser(int ac, char **av, t_cub *cub);
 
 /*
-** Events handlers
+** Events
 */
 int				handle_key_press(int key, t_cub *cub);
 int				handle_key_release(int key, t_cub *cub);
+void			ft_error(char *err, t_cub *cub, char *file, int line);
+void			ft_quit(t_cub *cub);
+int				ft_red_cross(t_cub *cub);
 
 /*
 ** Raycasting
 */
+void			init_sprites_hit(t_cub *cub);
 int				get_sprite_idx(t_cub *cub, int x, int y);
+void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 void			sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist,
 								double x, double y);
-void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
+void			cast_all_rays(t_cub *cub);
 
 /*
-** Display
+** Engine
 */
 void			ft_pixel_put(t_cub *cub, int x, int y, uint32_t color);
-void			init_sprites_hit(t_cub *cub);
-void			cast_all_rays(t_cub *cub);
 void			update_cubs(t_cub *cub);
-void			update_minimap(t_cub *cub);
 void			update_frame(t_cub *cub);
-int				ft_refresh(t_cub *cub);
+int				engine_loop(t_cub *cub);
 
 /*
-** Main
+** Bonus
 */
-void			init_cub(t_cub *cub);
-int				ft_save(t_cub *cub);
-
-/*
-** Bonuses
-*/
-void			display_gun(t_cub *cub);
-void			display_life(t_cub *cub);
+void			init_bonus(t_cub *cub);
 void			play_global_music(t_cub *cub);
+void			update_minimap(t_cub *cub);
+void			display_gun(t_cub *cub);
+// void			display_life(t_cub *cub);
 
 #endif

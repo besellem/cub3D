@@ -1,77 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common2.c                                          :+:      :+:    :+:   */
+/*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/09 14:14:54 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 21:34:29 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	free_textures(t_cub *cub)
-{
-	if (cub->txtr_no)
-		free(cub->txtr_no);
-	if (cub->txtr_so)
-		free(cub->txtr_so);
-	if (cub->txtr_ea)
-		free(cub->txtr_ea);
-	if (cub->txtr_we)
-		free(cub->txtr_we);
-	if (cub->txtr_s)
-		free(cub->txtr_s);
-}
-
-void	free_imgs(t_cub *cub)
-{
-	int i;
-
-	if (cub->img.ptr)
-		mlx_destroy_image(cub->mlx, cub->img.ptr);
-	i = -1;
-	while (++i < TEXTURES_COUNT && cub->txtrs[i].ptr)
-		mlx_destroy_image(cub->mlx, cub->txtrs[i].ptr);
-	i = -1;
-	while (cub->txtr_gun[++i].ptr)
-		mlx_destroy_image(cub->mlx, cub->txtr_gun[i].ptr);
-}
-
-/*
-** cub->win pointer is not freed here because it's done by mlx_destroy_window()
-*/
-
-void		ft_free_cub(t_cub *cub)
-{
-	int i;
-
-	free_textures(cub);
-	free_imgs(cub);
-	if (cub->map)
-		ft_free_strs(cub->map);
-	if (cub->rays)
-	{
-		i = -1;
-		while (++i < cub->win_w && cub->rays[i].sp_ray)
-			free((&cub->rays[i])->sp_ray);
-		free(cub->rays);
-	}
-	if (cub->sprites)
-		free(cub->sprites);
-	if (cub->mlx)
-		free(cub->mlx);
-	if (BONUS)
-		system("killall "SOUND_CMD" 2>/dev/null");
-}
-
 /*
 ** Check the extension name of a file
 */
 
-int			file_got_ext(char *file, char *extension)
+int	file_got_ext(char *file, char *extension)
 {
 	size_t file_len;
 	size_t ext_len;
@@ -85,7 +30,7 @@ int			file_got_ext(char *file, char *extension)
 	return (ft_strncmp(file + file_len - ext_len, extension, ext_len) == 0);
 }
 
-int			in_charset(char *charset, int c)
+int	in_charset(char *charset, int c)
 {
 	int i;
 
@@ -101,7 +46,7 @@ int			in_charset(char *charset, int c)
 	return (-1);
 }
 
-int			charset_in_line(char *line, char *charset)
+int	charset_in_line(char *line, char *charset)
 {
 	int i;
 
@@ -112,4 +57,14 @@ int			charset_in_line(char *line, char *charset)
 		if (in_charset(charset, line[i++]) == -1)
 			return (0);
 	return (1);
+}
+
+/*
+** Useful for bonuses, instead of checking if `map[i][j] == '2'`
+** Thus, I can add as much sprites as I want
+*/
+
+int	is_sprite(int c)
+{
+	return (c != ' ' && c != '0' && c != '1');
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 15:59:06 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 22:09:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void		ft_pixel_put(t_cub *cub, int x, int y, uint32_t color)
 {
 	char *px;
 
-	px = cub->img.addr;
-	px += (y * cub->img.size_line + x * (cub->img.bits_per_pixel / 8));
+	px = cub->img.addr + y * cub->img.size_line + x * (cub->img.bpp / 8);
 	*(uint32_t *)px = color;
 }
 
@@ -29,7 +28,7 @@ void		ft_pixel_put(t_cub *cub, int x, int y, uint32_t color)
 ** PRINT A SPRITE RAY
 */
 
-void		print_sprite_ray(t_cub *cub, t_ray ray, int x)
+static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	int y;
 
@@ -57,7 +56,7 @@ static int	hit_x_calc(t_img tx, t_ray ray)
 		return (tx.x * get_dec(ray.hit_wall_y));
 }
 
-void		print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
+static void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 {
 	const t_img	tx = cub->txtrs[ray.hit_drxion];
 	double		start;
@@ -77,10 +76,14 @@ void		print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 	{
 		ft_pixel_put(cub, x, idx++,
 			*(uint32_t *)(tx.addr + (int)start * tx.size_line + \
-			hit_x_calc(tx, ray) * (tx.bits_per_pixel / 8)));
+			hit_x_calc(tx, ray) * (tx.bpp / 8)));
 		start += tx.y / scale;
 	}
 }
+
+/*
+** MAIN FUNCTION FOR DISPLAYING
+*/
 
 void		update_cubs(t_cub *cub)
 {

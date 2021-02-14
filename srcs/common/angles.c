@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common3.c                                          :+:      :+:    :+:   */
+/*   angles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/22 01:46:24 by besellem          #+#    #+#             */
-/*   Updated: 2021/01/20 13:30:19 by besellem         ###   ########.fr       */
+/*   Created: 2021/02/14 21:21:18 by besellem          #+#    #+#             */
+/*   Updated: 2021/02/14 21:21:41 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int		is_rgb(int color)
-{
-	return (color >= 0 && color <= 255);
-}
-
-long	ft_rgb(unsigned char r, unsigned char g, unsigned char b)
-{
-	return ((long)(((r << 8) + g) << 8) + b);
-}
 
 double	ft_deg2rad(int deg)
 {
@@ -34,14 +24,11 @@ double	ft_rad2deg(double rad)
 
 double	ft_norm_angle(double angle)
 {
-	double fract;
-	double integral;
+	const double new_angle = fmod(angle, 360);
 
-	fract = modf(angle, &integral);
-	fract += ((int)integral % 360);
-	if (fract < 0)
-		fract += T_2PI;
-	else if (fract >= T_2PI)
-		fract -= T_2PI;
-	return (fract);
+	if (new_angle < 0)
+		return (new_angle + T_2PI);
+	else if (new_angle >= T_2PI)
+		return (new_angle - T_2PI);
+	return (new_angle);
 }
