@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 19:48:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 23:27:32 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,34 @@ static void	print_gun(t_cub *cub, t_img tx)
 	}
 }
 
+static void	print_target(t_cub *cub)
+{
+	t_img		tx;
+	uint32_t	clr;
+	int			i;
+	int			j;
+
+	tx = cub->txtr_target;
+	i = -1;
+	while (++i < tx.x)
+	{
+		j = 0;
+		while (++j < tx.y)
+		{
+			clr = *(uint32_t *)(tx.addr + j * tx.size_line + i * (tx.bpp / 8));
+			if (clr != 0xFFFFFF)
+				ft_pixel_put(cub, (cub->win_w - tx.x) / 2 + i,
+							(cub->win_h - tx.y) / 2 + j, clr);
+		}
+	}
+}
+
 void		display_gun(t_cub *cub)
 {
 	int xmax;
 	int ymax;
 	int i;
 
-	set_gun_txtr_idx(cub);
 	xmax = 0;
 	ymax = 0;
 	i = -1;
@@ -73,10 +94,8 @@ void		display_gun(t_cub *cub)
 	}
 	if (cub->win_w >= xmax && cub->win_h / 2 >= ymax)
 	{
+		set_gun_txtr_idx(cub);
 		print_gun(cub, cub->txtr_gun[cub->gun_status]);
-		// mlx_put_image_to_window(cub->mlx,cub->win,
-		// 	cub->txtr_gun[cub->gun_status].ptr,
-		// 	((cub->win_w - cub->txtr_gun[cub->gun_status].x) / 2),
-		// 	cub->win_h - cub->txtr_gun[cub->gun_status].y);
+		print_target(cub);
 	}
 }

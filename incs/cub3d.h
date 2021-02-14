@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 22:39:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 23:26:16 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@
 # ifndef BONUS
 
 // Set to 0 before push && define this macro at compile time to enable bonuses
-#  define BONUS 0
+#  define BONUS 1
 #  define GUN_GIF_NB 5
 # endif
 
@@ -261,6 +261,7 @@ typedef	struct	s_cub
 	t_img		img;
 	t_img		txtrs[TEXTURES_COUNT];
 	t_img		txtr_gun[GUN_GIF_NB];
+	t_img		txtr_target;
 	t_img		txtr_life;
 	t_ray		*rays;
 	t_sprite	*sprites;

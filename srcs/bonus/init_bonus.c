@@ -6,19 +6,15 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 21:10:09 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 22:30:46 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 23:13:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#define GAME_SOUND_PATH "./sounds/top_gun.wav"
-#define GAME_SOUND_DURATION 8
 
 /*
-** THESE FUNCTIONS ARE ONLY CALLED WHEN `BONUS` MACRO IS DEFINED
-*/
-
-/*
+** -- THESE FUNCTIONS ARE ONLY CALLED WHEN `BONUS` MACRO IS DEFINED --
+**
 ** Set each minimap's cub size in pixels. It will always be maximum 1/3 of the
 ** screen size
 */
@@ -45,10 +41,7 @@ static void	set_gun_txtres(t_cub *cub, int count)
 		"./assets/gun/gun_status_4.xpm",
 		"./assets/gun/gun_status_5.xpm"
 	};
-	const int	fd = open(gun_txtr[count], O_RDONLY);
 
-	if (fd == -1 || close(fd))
-		ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
 	fill_texture(cub, &cub->txtr_gun[count], (char *)gun_txtr[count]);
 	if (count != 0)
 		set_gun_txtres(cub, count - 1);
@@ -59,6 +52,7 @@ void		init_bonus(t_cub *cub)
 	if (BONUS)
 	{
 		set_gun_txtres(cub, GUN_GIF_NB - 1);
+		fill_texture(cub, &cub->txtr_target, "./assets/gun/target.xpm");
 		set_minimap_cub_size(cub);
 		cub->life = 100;
 	}

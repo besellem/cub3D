@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 21:43:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 23:26:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,6 @@ void		update_frame(t_cub *cub)
 	}
 	if (!cub->save_opt)
 		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);
-	if (BONUS)
-	{
-		// display_gun(cub);
-	}
 }
 
 int			engine_loop(t_cub *cub)

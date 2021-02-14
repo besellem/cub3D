@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 21:18:04 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 22:28:17 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 23:09:25 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	free_imgs(t_cub *cub)
 	i = -1;
 	while (++i < GUN_GIF_NB && cub->txtr_gun[i].ptr)
 		mlx_destroy_image(cub->mlx, cub->txtr_gun[i].ptr);
+	if (cub->txtr_target.ptr)
+		mlx_destroy_image(cub->mlx, cub->txtr_target.ptr);
 }
 
 /*

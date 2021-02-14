@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 22:15:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/14 23:16:08 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void		fill_texture(t_cub *cub, t_img *tx, char *path)
 {
+	const int fd = open(path, O_RDONLY);
+
+	if (fd == -1 || close(fd))
+		ft_error("Unable to open a texture", cub, __FILE__, __LINE__);
 	if (file_got_ext(path, ".xpm"))
 	{
 		tx->ptr = mlx_xpm_file_to_image(cub->mlx, path, &tx->x, &tx->y);
