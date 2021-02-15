@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 23:27:32 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:20:16 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 #define GUN_SHOT_SOUND_PATH "./sounds/gun_shot.wav"
 
 /*
-** Display gun only when the window is large enough for it and when the gun's
-** texture heigh is inferior to the window's heigh divided by 2 (center)
+** https://stackoverflow.com/questions/53708076/what-is-the-proper-way-to-use-clock-gettime
+**
+**
+** clockid_t		clock_id;
+** struct timespec	tp;
+**
+** clock_gettime(clock_id, &tp);
 */
 
 static void	set_gun_txtr_idx(t_cub *cub)
@@ -54,14 +59,12 @@ static void	print_gun(t_cub *cub, t_img tx)
 	}
 }
 
-static void	print_target(t_cub *cub)
+static void	print_target(t_cub *cub, t_img tx)
 {
-	t_img		tx;
 	uint32_t	clr;
 	int			i;
 	int			j;
 
-	tx = cub->txtr_target;
 	i = -1;
 	while (++i < tx.x)
 	{
@@ -75,6 +78,11 @@ static void	print_target(t_cub *cub)
 		}
 	}
 }
+
+/*
+** Display gun only when the window is large enough for it and when the gun's
+** texture heigh is inferior to the window's heigh divided by 2 (center)
+*/
 
 void		display_gun(t_cub *cub)
 {
@@ -96,6 +104,6 @@ void		display_gun(t_cub *cub)
 	{
 		set_gun_txtr_idx(cub);
 		print_gun(cub, cub->txtr_gun[cub->gun_status]);
-		print_target(cub);
+		print_target(cub, cub->txtr_target);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 22:11:16 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/15 14:36:49 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 			ray->hit_sprite = 0;
 			cub->sprites[idx].hit = 0;
 			cub->sprites[idx].distance = 0.;
+			return ;
 		}
 	}
 	ray->sp_scale = cub->win_h / cub->sprites[idx].distance;
@@ -94,13 +95,27 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 	// 		ray->sp_scale = 0.0001;
 	// ray->sp_scale = cub->win_h / ray->sp_scale;
 	
-	// FOV * cub->rays[i].distortion) / cub->win_w
-	double dir = cub->drxion - ray->angle;
-	double test_calc = cub->sprites[idx].distance * atan(dir) * cub->txtrs[4].x;
+
+	double opp = fabs(cub->pos_x - (cub->sprites[idx].x + 0.5));
+	double adj = fabs(cub->pos_y - (cub->sprites[idx].y + 0.5));
+	double hyp = cub->sprites[idx].distance;
+	double t_angle = adj / hyp;
+	// double dir = t_angle;
+
+	// double x_calc = cub->sprites[idx].distance * atan(cub->drxion - ray->angle) * cub->txtrs[4].x - cub->txtrs[4].x / 2;
 	
-	// printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, test_calc);
+	double x_calc = cub->sprites[idx].distance * tan(cub->drxion - t_angle) * cub->txtrs[4].x - cub->txtrs[4].x / 2;
+
+	
+	(void)opp;
+	(void)adj;
+	(void)hyp;
+	(void)t_angle;
+
+	printf("x_calc[%.3f] t_angle[%.2f]\n", x_calc, t_angle);
+	// printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, cub->sprites[idx].distance, x_calc);
 	// printf("angle: [%.2f], ray->angle: [%.2f]\n\n", cub->drxion, ray->angle);
-	fill_sprite_ptr(cub, ray, ray->sp_scale, test_calc);
+	fill_sprite_ptr(cub, ray, ray->sp_scale, x_calc);
 }
 
 // void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
