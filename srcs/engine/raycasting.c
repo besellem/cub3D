@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 10:15:01 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 15:36:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	init_ray(t_ray *ray, double angle)
 	ray->is_down = angle >= 0 && angle <= T_PI;
 	ray->is_right = !(angle >= T_PI_2 && angle <= T_3PI_2);
 	ray->distance = -1.0;
-	ray->sp_scale = -1.0;
 }
 
 static void	check_horizontal(t_cub *cub, t_ray *ray)

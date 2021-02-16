@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 22:09:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 16:00:05 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,13 @@ static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 {
 	int y;
 
-	//	CHECK WITH AND WITHOUT
-	// if (ray.hit_sprite == 0)
-	// 	return ;
-	y = -1;
-	while (++y < cub->win_h)
+	y = 0;
+	while (y < cub->win_h)
 	{
 		if (*ray.sp_ray != 0U)
 			ft_pixel_put(cub, x, y, *ray.sp_ray);
 		++ray.sp_ray;
+		++y;
 	}
 }
 

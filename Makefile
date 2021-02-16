@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/16 14:57:12 by besellem         ###   ########.fr        #
+#    Updated: 2021/02/16 15:33:26 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ OBJS		=	$(SRCS:.c=.o)
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g3 -Ofast# -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g3 -Ofast -fsanitize=address
 RM			=	rm -f
 RMRF		=	rm -rf
 

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 10:38:39 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 15:56:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@
 ** distance:		distance from the player to a wall for that angle
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
-** sp_scale:		tmp variable used to scale each sprite into the ray
 ** sp_ray:			contains a ray of all the sprites combined & sorted
 */
 typedef struct	s_ray
@@ -133,7 +132,6 @@ typedef struct	s_ray
 	int			is_down : 2;
 	int			is_right : 2;
 	int			hit_vertical : 2;
-	int			hit_sprite : 2;
 	int			hit_drxion : 4;
 	double		angle;
 	double		tan_angle;
@@ -145,7 +143,6 @@ typedef struct	s_ray
 	double		distance;
 	double		hit_wall_x;
 	double		hit_wall_y;
-	double		sp_scale;
 	uint32_t	*sp_ray;
 }				t_ray;
 
@@ -162,8 +159,6 @@ typedef	struct	s_sprite
 	int		y;
 	double	distance;
 	double	centre_angle;
-	double	xincrement;
-	double	xcurrent;
 }				t_sprite;
 
 typedef struct	s_keys
