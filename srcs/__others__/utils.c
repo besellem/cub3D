@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 19:12:57 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 18:09:56 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	print_specs(t_cub *cub)
 	printf("    cub->map_size_x: %zu\n", cub->map_size_x);
 	printf("    cub->map_size_y: %zu\n", cub->map_size_y);
 	printf("    cub->drxion:     %f\n", cub->drxion);
-	printf("    cub->pos_x:      %f\n", cub->pos_x);
-	printf("    cub->pos_y:      %f\n", cub->pos_y);
+	printf("    cub->pos_x:      %.2f\n", cub->pos_x);
+	printf("    cub->pos_y:      %.2f\n", cub->pos_y);
 	printf("    cub->increment:  %.2f\n", cub->increment);
 	printf("    cub->cub_size:   %dpx\n", cub->cub_size);
 	printf("}\n\n");

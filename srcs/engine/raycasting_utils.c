@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 16:07:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:55:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,24 @@ void		set_sprite_struct(t_cub *cub, t_sprite *sprite)
 
 void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
 {
-	t_sprite	sp;
+	t_sprite	sprite;
 	double		x_col;
 	const int	idx = get_sprite_idx(cub, x, y);
 
-	sp = cub->sprites[idx];
-	if (sp.hit == 0)
+	sprite = cub->sprites[idx];
+	if (sprite.hit == 0)
 	{
-		set_sprite_struct(cub, &sp);
+		set_sprite_struct(cub, &sprite);
 	}
 	if (ray->hit_vertical == 1)
 	{
-		if (horz_dist > 0. && sp.distance > horz_dist)
+		if (horz_dist > 0. && sprite.distance > horz_dist)
 		{
-			sp.hit = 0;
-			sp.distance = 0.;
+			sprite.hit = 0;
+			sprite.distance = 0.;
 		}
 	}
-	x_col = fmod(sp.distance * tan(ray->angle - sp.centre_angle) \
+	x_col = fmod(sprite.distance * tan(ray->angle - sprite.centre_angle) \
 					* cub->txtrs[4].x + cub->txtrs[4].x / 2, cub->txtrs[4].x);
-	fill_sprite_ptr(cub, ray, cub->win_h / sp.distance, x_col);
+	fill_sprite_ptr(cub, ray, cub->win_h / sprite.distance, x_col);
 }

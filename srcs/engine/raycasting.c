@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 15:36:38 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:54:27 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,13 @@ static void	set_hit_drxion(t_ray *ray)
 
 static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 {
-	t_ray		hor;
-	t_ray		ver;
-	// uint32_t	tmp[cub->win_h];
+	t_ray hor;
+	t_ray ver;
 
 	init_ray(&hor, angle);
 	init_ray(&ver, angle);
 	(&hor)->sp_ray = ray->sp_ray;
-	(&ver)->sp_ray = ray->sp_ray;	// tmp;
+	(&ver)->sp_ray = ray->sp_ray;
 	check_horizontal(cub, &hor);
 	check_vertical(cub, &ver, &hor);
 	if (hor.distance < 0 && ver.distance >= 0)
