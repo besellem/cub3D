@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 11:24:49 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 14:59:11 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,13 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 										sp.x + 0.5,
 										sp.y + 0.5);
 		
-		double opp = fabs(cub->pos_y - (sp.y + 0.5));
-		double adj = fabs(cub->pos_x - (sp.x + 0.5));
-		double hyp = sp.distance;
+		double opp = (cub->pos_y - (sp.y + 0.5));
+		double adj = (cub->pos_x - (sp.x + 0.5));
 
-		(void)opp;
-		(void)adj;
-		(void)hyp;
-
-		sp.centre_angle = tan(opp / adj);
-		printf(B_YELLOW"opp[%.2f] adj[%.2f] hyp[%.2f]"CLR_COLOR"\n", opp, adj, hyp);
-		printf("drxion[%f] sp.centre_angle[%f]\n", ft_rad2deg(cub->drxion), ft_rad2deg(sp.centre_angle));
+		sp.centre_angle = atan(opp / adj);
+		// printf(B_YELLOW"opp[%.2f] adj[%.2f]"CLR_COLOR"\n", opp, adj);
+		// printf("drxion[%f] sp.centre_angle[%f]\n", ft_rad2deg(cub->drxion), ft_rad2deg(sp.centre_angle));
+		// printf("sp.distance[%f]\n", sp.distance);
 	}
 	if (ray->hit_vertical == 1)
 	{
@@ -97,7 +93,6 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 			ray->hit_sprite = 0;
 			sp.hit = 0;
 			sp.distance = 0.;
-			// return ; // (?)
 		}
 	}
 	ray->sp_scale = cub->win_h / sp.distance;
@@ -108,56 +103,10 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 	// 		ray->sp_scale = 0.0001;
 	// ray->sp_scale = cub->win_h / ray->sp_scale;
 	
+	double x_calc = fmod(sp.distance * tan(ray->angle - sp.centre_angle) \
+					* cub->txtrs[4].x + cub->txtrs[4].x / 2, cub->txtrs[4].x);
 
-	// double x_calc = sp.distance * atan(cub->drxion - ray->angle) * cub->txtrs[4].x - cub->txtrs[4].x / 2;
-	double x_calc = sp.distance * cub->txtrs[4].x;
-
-	x_calc *= tan(fabs(sp.centre_angle - ray->angle));
-
-	printf("x_calc[%d] ", (int)x_calc);
-
-	x_calc = x_calc + cub->txtrs[4].x / 2;
-
-	printf("x_calc_no_dist[%d]\n", (int)x_calc);
-
-	// printf("x[%.2f] y[%.2f] dist[%.3f] x_calc[%.3f]\n", x, y, sp.distance, x_calc);
-	// printf("angle: [%.2f], ray->angle: [%.2f]\n\n", cub->drxion, ray->angle);
+	// printf("x_calc_no_dist[%d]\n", (int)x_calc);
+	
 	fill_sprite_ptr(cub, ray, ray->sp_scale, x_calc);
 }
-
-// void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
-// {
-// 	const int idx = get_sprite_idx(cub, x, y);
-
-// 	if (cub->sprites[idx].hit == 0)
-// 	{
-// 		ray->hit_sprite = 1;
-// 		cub->sprites[idx].hit = 1;
-// 		cub->sprites[idx].distance = get_dist(cub->pos_x,
-// 										cub->pos_y,
-// 										cub->sprites[idx].x + 0.5,
-// 										cub->sprites[idx].y + 0.5);
-// 		cub->sprites[idx].xincrement = (cub->sprites[idx].distance / cub->txtrs[4].x) / 10;
-// 	}
-// 	if (ray->hit_vertical == 1)
-// 	{
-// 		if (horz_dist > 0. && cub->sprites[idx].distance > horz_dist)
-// 		{
-// 			ray->hit_sprite = 0;
-// 			cub->sprites[idx].hit = 0;
-// 			cub->sprites[idx].distance = 0.;
-// 			return ;
-// 		}
-// 	}
-// 	ray->sp_scale = cub->win_h / cub->sprites[idx].distance;
-// 	// ray->sp_scale = cub->sprites[idx].distance;
-// 	// if (ray->sp_scale >= 0 && ray->sp_scale < 0.0001)
-// 	// 		ray->sp_scale = 0.0001;
-// 	// ray->sp_scale = cub->win_h / ray->sp_scale;
-	
-// 	// double test_calc = cub->sprites[idx].distance * tan(cub->drxion - ray->angle) * cub->txtrs[4].x;
-
-// 	printf("current[%.2f] mult[%.2f]\n", cub->sprites[idx].xcurrent, cub->sprites[idx].xcurrent * cub->txtrs[4].x);
-// 	fill_sprite_ptr(cub, ray, ray->sp_scale, cub->sprites[idx].xcurrent * cub->txtrs[4].x);
-// 	cub->sprites[idx].xcurrent += cub->sprites[idx].xincrement;
-// }
