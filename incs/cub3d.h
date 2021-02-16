@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/15 11:22:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 10:38:39 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef	struct	s_sprite
 	int		x;
 	int		y;
 	double	distance;
+	double	centre_angle;
 	double	xincrement;
 	double	xcurrent;
 }				t_sprite;

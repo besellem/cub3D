@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 21:21:18 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 21:21:41 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/16 10:17:00 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ double	ft_rad2deg(double rad)
 
 double	ft_norm_angle(double angle)
 {
-	const double new_angle = fmod(angle, 360);
+	const double new_angle = fmod(angle, T_2PI);
 
 	if (new_angle < 0)
 		return (new_angle + T_2PI);
