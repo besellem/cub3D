@@ -11,7 +11,7 @@ clang, GNU make
 - [x] Textures
 - [ ] Sprites
 - [x] --save option
-- [ ] Fix memory leaks
+- [x] Fix memory leaks
 
 ## Compilation
 Just run `make` to compile on macOS or Linux (it checks the system automatically).

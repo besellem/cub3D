@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/17 15:31:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/17 15:59:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>
+# include <stdint.h>
 # include <fcntl.h>
 # include <time.h>
 
@@ -94,7 +95,7 @@
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
-#  define KEY_F 3 // NOT THE ACTUAL VALUE - TO REDEFINE
+#  define KEY_F 102
 #  define EVT_RED_CROSS 33
 # endif
 
