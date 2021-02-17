@@ -6,17 +6,17 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 21:37:23 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:54:46 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** GET THE DISTANCE BETWEEN 2 POINTS (PYTHAGORE)
+** GET THE DISTANCE BETWEEN 2 POINTS
 */
 
-double	get_dist(double x1, double y1, double x2, double y2)
+double	ft_pythagore(double x1, double y1, double x2, double y2)
 {
 	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }

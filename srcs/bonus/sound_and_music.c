@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 01:17:56 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/15 11:15:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/17 15:46:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 
 void	play_global_music(t_cub *cub)
 {
-	time_t now;
+	const time_t now = time(NULL);
 
-	now = time(NULL);
 	if (cub->sound_time == 0 || now - cub->sound_time >= GAME_SOUND_DURATION)
 	{
 		system(SOUND_CMD" "GAME_SOUND_PATH" 2>/dev/null&");

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 15:56:23 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/17 15:31:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ typedef struct	s_ray
 */
 typedef	struct	s_sprite
 {
-	int		hit;
+	int		hit : 2;
 	int		x;
 	int		y;
 	double	distance;
@@ -252,7 +252,7 @@ typedef	struct	s_cub
 	double		pos_x;
 	double		pos_y;
 	double		increment;
-	time_t		sound_time;
+	clock_t		sound_time;
 	t_keys		keys;
 	t_img		img;
 	t_img		txtrs[TEXTURES_COUNT];
@@ -286,7 +286,7 @@ int				ft_strs_size(char **strs);
 void			*ft_ternary(int condition, void *if_true, void *if_false);
 void			ft_free_cub(t_cub *cub);
 int				ft_free_strs(char **strs);
-double			get_dist(double x1, double y1, double x2, double y2);
+double			ft_pythagore(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
 int				safe_min(int nb1, int nb2);
 int				check_rgb(char *s);
