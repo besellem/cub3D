@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 23:16:08 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/18 13:27:26 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			are_specs_complete(t_cub *cub)
 
 void		cub_parser(int ac, char **av, t_cub *cub)
 {
-	const int fd = open(av[1], O_RDONLY);
+	const int fd = open(av[1], O_RDWR | O_NOFOLLOW);
 
 	if (ac == 3 && ft_strcmp(av[2], "--save") == 0)
 		cub->save_opt = 1;
