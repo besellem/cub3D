@@ -6,22 +6,12 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/15 14:20:16 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/23 11:20:58 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #define GUN_SHOT_SOUND_PATH "./sounds/gun_shot.wav"
-
-/*
-** https://stackoverflow.com/questions/53708076/what-is-the-proper-way-to-use-clock-gettime
-**
-**
-** clockid_t		clock_id;
-** struct timespec	tp;
-**
-** clock_gettime(clock_id, &tp);
-*/
 
 static void	set_gun_txtr_idx(t_cub *cub)
 {
@@ -106,4 +96,6 @@ void		display_gun(t_cub *cub)
 		print_gun(cub, cub->txtr_gun[cub->gun_status]);
 		print_target(cub, cub->txtr_target);
 	}
+	else
+		cub->gun_status = 0;
 }

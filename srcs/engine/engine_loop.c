@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/18 14:28:29 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/23 15:05:53 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			engine_loop(t_cub *cub)
 	{
 		// play_global_music(cub);
 	}
-	if (cub->dh || cub->dw || cub->turn || cub->gun_status)
+	if (cub->dh || cub->dw || cub->turn || (BONUS && cub->gun_status))
 	{
 		update_frame(cub);
 		return (0);

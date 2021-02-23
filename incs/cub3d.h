@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/17 15:59:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/23 15:27:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@
 ** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
 ** hit_drxion:		from where the ray hit a wall. Macros NORTH, SOUTH, ...
 ** angle:			angle of the ray in radians
-** tan_angle:		tan(angle): instead of doing it ~4 times later
+** tan_ngl:			tan(angle): instead of doing it ~4 times later
 ** distortion:		cos(ray->angle - cub->drxion): instead of doing it ~2 times
 ** xintcpt:			next cube from cub->pos_x
 ** yintcpt:			next cube from cub->pos_y
@@ -135,7 +135,7 @@ typedef struct	s_ray
 	int			hit_vertical : 2;
 	int			hit_drxion : 4;
 	double		angle;
-	double		tan_angle;
+	double		tan_ngl;
 	double		distortion;
 	double		xintcpt;
 	double		yintcpt;
