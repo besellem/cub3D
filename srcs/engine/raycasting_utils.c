@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 16:10:06 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/24 22:20:24 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		set_sprite_struct(t_cub *cub, t_sprite *sprite)
 								sprite->x + 0.5, sprite->y + 0.5);
 }
 
-void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, double y)
+void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	t_sprite	*sprite;
 	double		x_col;
@@ -83,21 +83,9 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 	sprite = &cub->sprites[idx];
 	if (sprite->hit == 0)
 		set_sprite_struct(cub, sprite);
-
-	// if (ray->hit_vertical == 1)
-	// {
-	// 	if (horz_dist > 0. && sprite->distance >= horz_dist)
-	// 	{
-	// 		sprite->hit = 0;
-	// 		sprite->distance = 0.;
-	// 		return ;
-	// 	}
-	// }
-	
-	(void)horz_dist;
-	x_col = fmod(sprite->distance * tan(ray->angle - sprite->centre_angle) \
-				* cub->txtrs[4].x + cub->txtrs[4].x / 2, cub->txtrs[4].x);
-	// x_col = sprite->distance * tan(ray->angle - sprite->centre_angle) \
-	// 			* cub->txtrs[4].x + cub->txtrs[4].x / 2;
+	// x_col = fmod(sprite->distance * tan(ray->angle - sprite->centre_angle) \
+	// 			* cub->txtrs[4].x + cub->txtrs[4].x / 2, cub->txtrs[4].x);
+	x_col = sprite->distance * tan(ray->angle - sprite->centre_angle) \
+				* cub->txtrs[4].x + cub->txtrs[4].x / 2;
 	fill_sprite_ptr(cub, ray, cub->win_h / sprite->distance, x_col);
 }

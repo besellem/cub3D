@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 16:02:50 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/24 19:01:42 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,17 @@ typedef	struct	s_sprite
 	double	centre_angle;
 }				t_sprite;
 
+/*
+** horz_ocs:	occurences in the horizontal raycasting loop
+** x:			current vertical x
+** y:			current vertical y
+** horz:		horizontal ray (already casted when this struct is used)
+** vert:		vertical ray (in casting when this struct is used)
+*/
+
 typedef	struct	s_sprite_raycasting
 {
+	int		horz_ocs;
 	double	x;
 	double	y;
 	t_ray	*horz;
@@ -329,8 +338,7 @@ int				ft_red_cross(t_cub *cub);
 void			init_sprites_hit(t_cub *cub);
 int				get_sprite_idx(t_cub *cub, int x, int y);
 void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
-void			sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist,
-								double x, double y);
+void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
 void			cast_all_rays(t_cub *cub);
 
 /*
