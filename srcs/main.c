@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/14 21:43:56 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/24 15:53:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static void	ft_mlx_start(t_cub *cub)
 										&(cub->img.bpp),
 										&(cub->img.size_line),
 										&(cub->img.endian));
-	// To remove
 	print_specs(cub);
-	// sprites_dump(cub);
-	// end
 	update_frame(cub);
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);

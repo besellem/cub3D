@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/23 15:27:07 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/24 16:02:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@
 /*
 ** Colors (for minimap - not all are needed)
 */
-# define UCOLOR_GREY 0xE0E0E0
-# define UCOLOR_BLACK 0x0
-# define UCOLOR_RED 0xFF0000
+# define UCOLOR_GREY 0xE0E0E0U
+# define UCOLOR_BLACK 0x0U
+# define UCOLOR_RED 0xFF0000U
 
 /*
 ** Key mapping for macOS & Linux envs
@@ -161,6 +161,14 @@ typedef	struct	s_sprite
 	double	distance;
 	double	centre_angle;
 }				t_sprite;
+
+typedef	struct	s_sprite_raycasting
+{
+	double	x;
+	double	y;
+	t_ray	*horz;
+	t_ray	*vert;
+}				t_sprite_raycasting;
 
 typedef struct	s_keys
 {
@@ -326,7 +334,7 @@ void			sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist,
 void			cast_all_rays(t_cub *cub);
 
 /*
-** Engine
+** Engine & Display
 */
 void			ft_pixel_put(t_cub *cub, int x, int y, uint32_t color);
 void			update_cubs(t_cub *cub);

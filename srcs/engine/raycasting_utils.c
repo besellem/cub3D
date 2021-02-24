@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/23 15:33:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/24 16:10:06 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 
 	start = 0.0;
 	end = tx.y;
-	idx = (cub->win_h - scale) / 2;
+	idx = (cub->win_h - scale) / 2 - 1;
 	if (cub->win_h < scale)
 	{
 		idx = -1;
@@ -84,15 +84,15 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double horz_dist, double x, doubl
 	if (sprite->hit == 0)
 		set_sprite_struct(cub, sprite);
 
-	if (ray->hit_vertical == 1)
-	{
-		if (horz_dist > 0. && sprite->distance >= horz_dist)
-		{
-			sprite->hit = 0;
-			sprite->distance = 0.;
-			return ;
-		}
-	}
+	// if (ray->hit_vertical == 1)
+	// {
+	// 	if (horz_dist > 0. && sprite->distance >= horz_dist)
+	// 	{
+	// 		sprite->hit = 0;
+	// 		sprite->distance = 0.;
+	// 		return ;
+	// 	}
+	// }
 	
 	(void)horz_dist;
 	x_col = fmod(sprite->distance * tan(ray->angle - sprite->centre_angle) \
