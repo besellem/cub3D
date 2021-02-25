@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/25 15:05:13 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/25 15:09:03 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,9 @@ static void	check_horizontal(t_cub *cub, t_sprite_raycasting *sp_casting)
 	y = sp_casting->horz->yintcpt;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
 	{
-		// printf("horz: x[%f] y[%f]\n", x, y);
 		// if (is_sprite(cub->map[(int)y][(int)x]))
 		// {
-			// printf(B_BLUE"HORZ"B_RED" FOUND"CLR_COLOR"\n");
-			// sprite_intersect(cub, ray, 0., x, y);
-			// check_sp_vert(cub, sp_casting, idx);
+		// 	sprite_intersect(cub, sp_casting->horz, x, y);
 		// }
 		if (cub->map[safe_min(y, !sp_casting->horz->is_down)][(int)x] == '1')
 		{
@@ -133,13 +130,11 @@ static void	check_vertical(t_cub *cub, t_sprite_raycasting *sp_casting)
 	idx = 0;
 	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
 	{
-		// printf("vert: x[%f] y[%f]\n", x, y);
 		// if (is_sprite(cub->map[(int)y][(int)x]))
 		// {
-			// printf(B_GREEN"VERT"B_RED" FOUND"CLR_COLOR"\n");
-			// sprite_intersect(cub, ray, ray_horizontal->distance, x, y);
-			check_sp_horz(cub, sp_casting, idx);
+		// 	sprite_intersect(cub, sp_casting->vert, x, y);
 		// }
+		check_sp_horz(cub, sp_casting, idx);
 		if (cub->map[(int)y][safe_min(x, !sp_casting->vert->is_right)] == '1')
 		{
 			wall_intersect(cub, sp_casting->vert, x, y);
