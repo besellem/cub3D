@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 23:05:12 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/25 15:05:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void		check_sp_horz(t_cub *cub, t_sprite_raycasting *sp_casting, int idx)
 	horz_x = sp_casting->horz->xintcpt;
 	horz_y = sp_casting->horz->yintcpt;
 	i = 0;
-	while (i < idx &&
-			horz_x >= 0 && horz_x < cub->map_size_x &&
+	while (i <= idx && horz_x >= 0 && horz_x < cub->map_size_x &&
 			horz_y >= 0 && horz_y < cub->map_size_y)
 	{
 		horz_x += sp_casting->horz->xstep;
@@ -85,25 +84,15 @@ void		check_sp_horz(t_cub *cub, t_sprite_raycasting *sp_casting, int idx)
 		++i;
 	}
 
-	// if (is_sprite(cub->map[(int)sp_casting->y][(int)sp_casting->x]))
-	// {
-	// 	sprite_intersect(cub, sp_casting->horz, sp_casting->x, sp_casting->y);
-	// }
-	// else if (idx < sp_casting->horz_ocs && is_sprite(cub->map[(int)horz_y][(int)horz_x]))
-	// {
-	// 	sprite_intersect(cub, sp_casting->vert, horz_x, horz_y);
-	// }
-
-	if (is_sprite(cub->map[(int)sp_casting->y][(int)sp_casting->x]) &&
-		ft_pythagore(cub->pos_x, cub->pos_y, sp_casting->x + .5, sp_casting->y + .5) < sp_casting->horz->distance)
+	if (is_sprite(cub->map[(int)sp_casting->y][(int)sp_casting->x]))
 	{
 		sprite_intersect(cub, sp_casting->horz, sp_casting->x, sp_casting->y);
 	}
-	else if (idx < sp_casting->horz_ocs && is_sprite(cub->map[(int)horz_y][(int)horz_x]) &&
-		ft_pythagore(cub->pos_x, cub->pos_y, horz_x + .5, horz_y + .5) < sp_casting->horz->distance)
+	else if (idx == sp_casting->horz_ocs)
 	{
 		sprite_intersect(cub, sp_casting->vert, horz_x, horz_y);
 	}
+
 }
 
 static void	check_horizontal(t_cub *cub, t_sprite_raycasting *sp_casting)
@@ -193,9 +182,8 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 	(&hor)->sp_ray = ray->sp_ray;
 	(&ver)->sp_ray = ray->sp_ray;
 	sp_casting.horz = &hor;
-	check_horizontal(cub, &sp_casting);
-	sp_casting.horz = &hor;
 	sp_casting.vert = &ver;
+	check_horizontal(cub, &sp_casting);
 	check_vertical(cub, &sp_casting);
 	if (hor.distance < 0 && ver.distance >= 0)
 		*ray = ver;

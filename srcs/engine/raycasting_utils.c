@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 22:20:24 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/25 14:58:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int			get_sprite_idx(t_cub *cub, int x, int y)
 	int i;
 
 	i = 0;
-	while (i < cub->sprites_ocs - 1)
+	while (i < cub->sprites_ocs)
 	{
 		if (cub->sprites[i].x == x && cub->sprites[i].y == y)
-			break ;
+			return (i);
 		++i;
 	}
-	return (i);
+	return (-1);
 }
 
 static void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
@@ -80,6 +80,8 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	double		x_col;
 	const int	idx = get_sprite_idx(cub, x, y);
 
+	if (idx == -1)
+		return ;
 	sprite = &cub->sprites[idx];
 	if (sprite->hit == 0)
 		set_sprite_struct(cub, sprite);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 10:24:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/25 14:57:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,16 @@ void		update_minimap(t_cub *cub)
 	while ((size_t)i < cub->map_size_y)
 	{
 		j = 0;
-		while ((size_t)j < cub->map_size_x)
+		while ((size_t)j++ < cub->map_size_x)
 		{
+			const int idx = get_sprite_idx(cub, j, i);
+			if (idx == -1)
+				continue ;
 			if (is_sprite(cub->map[i][j]) &&
-				cub->sprites[get_sprite_idx(cub, j, i)].hit == 1)
+				cub->sprites[idx].hit == 1)
 			{
 				put_cub(cub, j, i, UCOLOR_RED);
 			}
-			++j;
 		}
 		++i;
 	}
