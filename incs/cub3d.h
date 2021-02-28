@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 19:01:42 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/01 00:08:09 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@
 # define DRXION_N T_3PI_2
 # define DRXION_W T_PI
 # define DRXION_S T_PI_2
+
+// enum	e_drxions
+// {
+// 	HIT_NORTH,
+// 	HIT_SOUTH,
+// 	HIT_EAST,
+// 	HIT_WEST
+// };
 
 # define HIT_NORTH 0
 # define HIT_SOUTH 1
