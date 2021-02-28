@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/18 13:27:26 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/28 11:01:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ static void	set_sprites_oc(t_cub *cub)
 {
 	int i;
 	int j;
-	int ocs;
 
-	ocs = 0;
 	i = -1;
 	while (cub->map[++i])
 	{
@@ -60,10 +58,9 @@ static void	set_sprites_oc(t_cub *cub)
 		while (cub->map[i][++j])
 		{
 			if (is_sprite(cub->map[i][j]))
-				++ocs;
+				cub->sprites_ocs++;
 		}
 	}
-	cub->sprites_ocs = ocs;
 }
 
 static int	alloc_sprites(t_cub *cub)

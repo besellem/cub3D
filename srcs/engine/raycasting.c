@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/25 15:09:03 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/28 15:34:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,28 @@ void		check_sp_horz(t_cub *cub, t_sprite_raycasting *sp_casting, int idx)
 		++i;
 	}
 
+	// horz_x = horz_x + !sp_casting->horz->is_down;
+	horz_y = horz_y - sp_casting->horz->is_down;
+	// printf("angle => %f\n", sp_casting->horz->angle);
+	if (sp_casting->horz->angle >= T_PI_2 - .1 && sp_casting->horz->angle <= T_PI_2 + .1)
+	{
+		printf("([  vx  ] [  hx  ] ; [  vy  ] [  hy  ])\n");
+		printf("(["B_GREEN"%6.20f"CLR_COLOR"] ["B_GREEN"%6.20f"CLR_COLOR"] ; ", sp_casting->x, horz_x);
+		printf("["B_GREEN"%6.20f"CLR_COLOR"] ["B_GREEN"%6.20f"CLR_COLOR"])\n\n", sp_casting->y, horz_y);
+		if ((int)sp_casting->x == 10 && (int)sp_casting->y == 10)
+			printf(B_RED"VERT FOUND !"CLR_COLOR"\n");
+		else if ((int)horz_x == 10 && (int)horz_y == 10)
+			printf(B_RED"HORZ FOUND !"CLR_COLOR"\n");
+		printf("i[%d] ocs[%d] == [%d]\n", i, sp_casting->horz_ocs, i == sp_casting->horz_ocs);
+	}
 	if (is_sprite(cub->map[(int)sp_casting->y][(int)sp_casting->x]))
 	{
 		sprite_intersect(cub, sp_casting->horz, sp_casting->x, sp_casting->y);
 	}
-	else if (idx == sp_casting->horz_ocs)
+	else if (is_sprite(cub->map[(int)horz_y][(int)horz_x]))
 	{
 		sprite_intersect(cub, sp_casting->vert, horz_x, horz_y);
 	}
-
 }
 
 static void	check_horizontal(t_cub *cub, t_sprite_raycasting *sp_casting)
@@ -178,8 +191,11 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 	(&ver)->sp_ray = ray->sp_ray;
 	sp_casting.horz = &hor;
 	sp_casting.vert = &ver;
+	if (sp_casting.horz->angle >= T_PI_2 - .1 && sp_casting.horz->angle <= T_PI_2 + .1)
+		printf("################\n");
 	check_horizontal(cub, &sp_casting);
 	check_vertical(cub, &sp_casting);
+	// printf("\n");
 	if (hor.distance < 0 && ver.distance >= 0)
 		*ray = ver;
 	else if (ver.distance < 0 && hor.distance >= 0)

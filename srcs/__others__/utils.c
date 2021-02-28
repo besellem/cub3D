@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/16 18:09:56 by besellem         ###   ########.fr       */
+/*   Updated: 2021/02/28 13:33:27 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	sprites_dump(t_cub *cub)
 	if (cub->sprites_ocs <= 0)
 		return ;
 	printf("-- Sprites Dump (%d) --\n", cub->sprites_ocs);
-	printf("Position: x["B_RED"%.2f"CLR_COLOR"] y["B_RED"%.2f"CLR_COLOR"]\n",
+	printf("Position: x["B_RED"%.30f"CLR_COLOR"] y["B_RED"%.30f"CLR_COLOR"]\n",
 		cub->pos_x, cub->pos_y);
 	printf("{\n");
 	i = -1;
