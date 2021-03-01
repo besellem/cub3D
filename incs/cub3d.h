@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/01 00:08:09 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/01 10:10:30 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,17 @@ typedef	struct	s_sprite_raycasting
 	t_ray	*horz;
 	t_ray	*vert;
 }				t_sprite_raycasting;
+
+
+typedef struct	s_sp_cast
+{
+	double	vert_x;
+	double	vert_y;
+	double	horz_x;
+	double	horz_y;
+	t_ray	*horz;
+	t_ray	*vert;
+}				t_sp_cast;
 
 typedef struct	s_keys
 {
