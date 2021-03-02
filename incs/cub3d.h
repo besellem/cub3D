@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/01 10:10:30 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/02 15:53:07 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,24 +171,13 @@ typedef	struct	s_sprite
 }				t_sprite;
 
 /*
-** horz_ocs:	occurences in the horizontal raycasting loop
-** x:			current vertical x
-** y:			current vertical y
-** horz:		horizontal ray (already casted when this struct is used)
-** vert:		vertical ray (in casting when this struct is used)
+** *_x:		tmp - used for calculations
+** *_y:		tmp - used for calculations
+** horz:	horizontal ray (already casted when this struct is used)
+** vert:	vertical ray (in casting when this struct is used)
 */
 
-typedef	struct	s_sprite_raycasting
-{
-	int		horz_ocs;
-	double	x;
-	double	y;
-	t_ray	*horz;
-	t_ray	*vert;
-}				t_sprite_raycasting;
-
-
-typedef struct	s_sp_cast
+typedef	struct	s_raycasting
 {
 	double	vert_x;
 	double	vert_y;
@@ -196,7 +185,7 @@ typedef struct	s_sp_cast
 	double	horz_y;
 	t_ray	*horz;
 	t_ray	*vert;
-}				t_sp_cast;
+}				t_raycasting;
 
 typedef struct	s_keys
 {
@@ -318,6 +307,7 @@ double			ft_norm_angle(double angle);
 int				file_got_ext(char *file, char *extension);
 int				in_charset(char *charset, int c);
 int				charset_in_line(char *line, char *charset);
+int				is_in_map_limits(t_cub *cub, double x, double y);
 int				is_sprite(int c);
 int				ft_strs_size(char **strs);
 void			*ft_ternary(int condition, void *if_true, void *if_false);
@@ -325,7 +315,7 @@ void			ft_free_cub(t_cub *cub);
 int				ft_free_strs(char **strs);
 double			ft_pythagore(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
-int				safe_min(int nb1, int nb2);
+int				safe_min(double nb1, double nb2);
 int				check_rgb(char *s);
 int32_t			ft_rgb(uint8_t r, uint8_t g, uint8_t b);
 int				is_rgb(int color);

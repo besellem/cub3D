@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/01 13:10:29 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/02 16:07:49 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,156 +46,98 @@ static void	init_ray(t_cub *cub, t_ray *ray, double angle, int is_vertical)
 	}
 }
 
-// void		check_sp_vert(t_cub *cub, t_sprite_raycasting *sp_casting, int idx)
+// void		sp_second_idea(t_cub *cub, t_raycasting *cast, int idx)
 // {
-// 	double	x;
-// 	double	y;
+// 	double	horz_x;
+// 	double	horz_y;
 // 	int		i;
 
-// 	x = sp_casting->vert->xintcpt;
-// 	y = sp_casting->vert->yintcpt;
+// 	horz_x = cast->horz->xintcpt;
+// 	horz_y = cast->horz->yintcpt;
 // 	i = 0;
-// 	while (i < idx)
+// 	while (i < idx && horz_x >= 0 && horz_x < cub->map_size_x &&
+// 			horz_y >= 0 && horz_y < cub->map_size_y)
 // 	{
-// 		x += sp_casting->vert->xstep;
-// 		y += sp_casting->vert->ystep;
+// 		horz_x += cast->horz->xstep;
+// 		horz_y += cast->horz->ystep;
 // 		++i;
 // 	}
-// 	if (cub->map[safe_min(y, !sp_casting->vert->is_down)][(int)x] != '1')
+// 	if (is_sprite(cub->map[(int)cast->y][(int)cast->x]))
 // 	{
-// 		sprite_intersect(cub, sp_casting->vert, 0., x, y);
+// 		sprite_intersect(cub, cast->vert, cast->x, cast->y);
+// 	}
+// 	else if (i == idx)// && is_sprite(cub->map[(int)horz_y][(int)horz_x]))
+// 	{
+// 		if (cast->horz->is_down)
+// 			sprite_intersect(cub, cast->horz, horz_x, horz_y + cast->horz->is_down);
+// 		else
+// 			sprite_intersect(cub, cast->horz, horz_x, horz_y);
 // 	}
 // }
 
-void		check_sp_horz(t_cub *cub, t_sprite_raycasting *sp_casting, int idx)
-{
-	double	horz_x;
-	double	horz_y;
-	int		i;
-
-	horz_x = sp_casting->horz->xintcpt;
-	horz_y = sp_casting->horz->yintcpt;
-	i = 0;
-	while (i < idx && horz_x >= 0 && horz_x < cub->map_size_x &&
-			horz_y >= 0 && horz_y < cub->map_size_y)
-	{
-		horz_x += sp_casting->horz->xstep;
-		horz_y += sp_casting->horz->ystep;
-		++i;
-	}
-
-	// horz_x = horz_x + !sp_casting->horz->is_down;
-	// horz_y = horz_y - sp_casting->horz->is_down;
-	// printf("angle => %f\n", sp_casting->horz->angle);
-	// if (sp_casting->horz->angle >= T_PI_2 - .1 && sp_casting->horz->angle <= T_PI_2 + .1)
-	// {
-	// 	printf("([  vx  ] [  hx  ] ; [  vy  ] [  hy  ])\n");
-	// 	printf("(["B_GREEN"%6.20f"CLR_COLOR"] ["B_GREEN"%6.20f"CLR_COLOR"] ; ", sp_casting->x, horz_x);
-	// 	printf("["B_GREEN"%6.20f"CLR_COLOR"] ["B_GREEN"%6.20f"CLR_COLOR"])\n\n", sp_casting->y, horz_y);
-	// 	if ((int)sp_casting->x == 10 && (int)sp_casting->y == 10)
-	// 		printf(B_RED"VERT FOUND !"CLR_COLOR"\n");
-	// 	else if ((int)horz_x == 10 && (int)horz_y == 10)
-	// 		printf(B_RED"HORZ FOUND !"CLR_COLOR"\n");
-	// 	printf("i[%d] ocs[%d] == [%d]\n", i, sp_casting->horz_ocs, i == sp_casting->horz_ocs);
-	// }
-	if (is_sprite(cub->map[(int)sp_casting->y][(int)sp_casting->x]))
-	{
-		sprite_intersect(cub, sp_casting->vert, sp_casting->x, sp_casting->y);
-	}
-	else if (i == idx)// && is_sprite(cub->map[(int)horz_y][(int)horz_x]))
-	{
-		// sprite_intersect(cub, sp_casting->horz, horz_x - sp_casting->horz->is_right, horz_y - !sp_casting->horz->is_down);
-		if (sp_casting->horz->is_down)
-			sprite_intersect(cub, sp_casting->horz, horz_x, horz_y + sp_casting->horz->is_down);
-		else
-			sprite_intersect(cub, sp_casting->horz, horz_x, horz_y);
-	}
-}
-
-static void	check_horizontal(t_cub *cub, t_sprite_raycasting *sp_casting)
+static void	check_horizontal(t_cub *cub, t_raycasting *cast)
 {
 	double x;
 	double y;
 
-	x = sp_casting->horz->xintcpt;
-	y = sp_casting->horz->yintcpt;
-	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
+	x = cast->horz->xintcpt;
+	y = cast->horz->yintcpt;
+	while (is_in_map_limits(cub, x, y))
 	{
-		// if (is_sprite(cub->map[(int)y][(int)x]))
-		// {
-		// 	sprite_intersect(cub, sp_casting->horz, x, y);
-		// }
-		if (cub->map[safe_min(y, !sp_casting->horz->is_down)][(int)x] == '1')
+		if (cub->map[safe_min(y, !cast->horz->is_down)][(int)x] == '1')
 		{
-			wall_intersect(cub, sp_casting->horz, x, y);
+			wall_intersect(cub, cast->horz, x, y);
 			return ;
 		}
-		x += sp_casting->horz->xstep;
-		y += sp_casting->horz->ystep;
-		sp_casting->horz_ocs++;
+		x += cast->horz->xstep;
+		y += cast->horz->ystep;
 	}
 }
 
-static void	check_vertical(t_cub *cub, t_sprite_raycasting *sp_casting)
+static void	check_vertical(t_cub *cub, t_raycasting *cast)
 {
-	double	x;
-	double	y;
-	int		idx;
+	double x;
+	double y;
 
-	x = sp_casting->vert->xintcpt;
-	y = sp_casting->vert->yintcpt;
-	idx = 0;
-	while (x >= 0 && x < cub->map_size_x && y >= 0 && y < cub->map_size_y)
+	x = cast->vert->xintcpt;
+	y = cast->vert->yintcpt;
+	while (is_in_map_limits(cub, x, y))
 	{
-		// if (is_sprite(cub->map[(int)y][(int)x]))
-		// {
-		// 	sprite_intersect(cub, sp_casting->vert, x, y);
-		// }
-		// check_sp_horz(cub, sp_casting, idx);
-		if (cub->map[(int)y][safe_min(x, !sp_casting->vert->is_right)] == '1')
+		if (cub->map[(int)y][safe_min(x, !cast->vert->is_right)] == '1')
 		{
-			wall_intersect(cub, sp_casting->vert, x, y);
+			wall_intersect(cub, cast->vert, x, y);
 			return ;
 		}
-		x += sp_casting->vert->xstep;
-		y += sp_casting->vert->ystep;
-		sp_casting->x = x;
-		sp_casting->y = y;
-		++idx;
+		x += cast->vert->xstep;
+		y += cast->vert->ystep;
 	}
 }
 
-
-void	ft_sp_casting(t_cub *cub, t_sp_cast *sp_cast)
+void	ft_sp_casting(t_cub *cub, t_raycasting *cast)
 {
-	while ((sp_cast->horz_x >= 0 && sp_cast->horz_x < cub->map_size_x &&
-		sp_cast->horz_y >= 0 && sp_cast->horz_y < cub->map_size_y) ||
-		(sp_cast->vert_x >= 0 && sp_cast->vert_x < cub->map_size_x &&
-		sp_cast->vert_y >= 0 && sp_cast->vert_y < cub->map_size_y))
+	while (is_in_map_limits(cub, cast->horz_x, cast->horz_y) ||
+			is_in_map_limits(cub, cast->vert_x, cast->vert_y))
 	{
-		if (sp_cast->horz_x >= 0 && sp_cast->horz_x < cub->map_size_x &&
-			sp_cast->horz_y >= 0 && sp_cast->horz_y < cub->map_size_y &&
-			sp_cast->horz_x < sp_cast->horz->hit_wall_x &&
-			sp_cast->horz_y < sp_cast->horz->hit_wall_y &&
-			is_sprite(cub->map[(int)sp_cast->horz_y][(int)sp_cast->horz_x]))
+		if (is_in_map_limits(cub, cast->horz_x, cast->horz_y - !cast->horz->is_down) &&
+			// cast->horz_x < cast->horz->hit_wall_x &&
+			// cast->horz_y < cast->horz->hit_wall_y &&
+			is_sprite(cub->map[(int)cast->horz_y - !cast->horz->is_down][(int)cast->horz_x]))
 		{
-			sprite_intersect(cub, sp_cast->horz, sp_cast->horz_x + !sp_cast->horz->is_down, sp_cast->horz_y);
+			sprite_intersect(cub, cast->horz, cast->horz_x, cast->horz_y - !cast->horz->is_down);
 		}
-		if (sp_cast->vert_x >= 0 && sp_cast->vert_x < cub->map_size_x &&
-			sp_cast->vert_y >= 0 && sp_cast->vert_y < cub->map_size_y &&
-			sp_cast->vert_x < sp_cast->vert->hit_wall_x &&
-			sp_cast->vert_y < sp_cast->vert->hit_wall_y &&
-			is_sprite(cub->map[(int)sp_cast->vert_y][(int)sp_cast->vert_x]))
+		if (is_in_map_limits(cub, cast->vert_x - !cast->vert->is_right, cast->vert_y) &&
+			// cast->vert_x < cast->vert->hit_wall_x &&
+			// cast->vert_y < cast->vert->hit_wall_y &&
+			is_sprite(cub->map[(int)cast->vert_y][(int)cast->vert_x - !cast->vert->is_right]))
 		{
-			sprite_intersect(cub, sp_cast->horz, sp_cast->vert_x, sp_cast->vert_y);
+			sprite_intersect(cub, cast->vert, cast->vert_x - !cast->vert->is_right, cast->vert_y);
 		}
-		sp_cast->horz_x += sp_cast->horz->xstep;
-		sp_cast->horz_y += sp_cast->horz->ystep;
-		sp_cast->vert_x += sp_cast->vert->xstep;
-		sp_cast->vert_y += sp_cast->vert->ystep;
+		cast->horz_x += cast->horz->xstep;
+		cast->horz_y += cast->horz->ystep;
+		cast->vert_x += cast->vert->xstep;
+		cast->vert_y += cast->vert->ystep;
 	}
 }
-
 
 /*
 ** Cast a ray, get the least distant hit (horizontal / vertical)
@@ -214,36 +156,32 @@ static void	set_hit_drxion(t_ray *ray)
 		ray->hit_drxion = HIT_EAST;
 }
 
+void		init_sprite(t_raycasting *cast, t_ray *hor, t_ray *ver)
+{
+	cast->vert_x = ver->xintcpt;
+	cast->vert_y = ver->yintcpt;
+	cast->horz_x = hor->xintcpt;
+	cast->horz_y = hor->yintcpt;
+}
+
 static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 {
-	t_sp_cast			sp_cast;
-	t_sprite_raycasting	sp_casting;
-	t_ray				hor;
-	t_ray				ver;
+	t_raycasting	cast;
+	t_ray			hor;
+	t_ray			ver;
 
-	ft_memset(&sp_casting, 0, sizeof(t_sprite_raycasting));
+	ft_memset(&cast, 0, sizeof(t_raycasting));
 	init_ray(cub, &hor, angle, 0);
 	init_ray(cub, &ver, angle, 1);
 	(&hor)->sp_ray = ray->sp_ray;
 	(&ver)->sp_ray = ray->sp_ray;
-	sp_casting.horz = &hor;
-	sp_casting.vert = &ver;
+	cast.horz = &hor;
+	cast.vert = &ver;
+	check_horizontal(cub, &cast);
+	check_vertical(cub, &cast);
 
-
-
-	check_horizontal(cub, &sp_casting);
-	check_vertical(cub, &sp_casting);
-
-
-	ft_memset(&sp_cast, 0, sizeof(t_sp_cast));
-	sp_cast.vert_x = ver.xintcpt;
-	sp_cast.vert_y = ver.yintcpt;
-	sp_cast.horz_x = hor.xintcpt;
-	sp_cast.horz_y = hor.yintcpt;
-	sp_cast.horz = &hor;
-	sp_cast.vert = &ver;
-
-	ft_sp_casting(cub, &sp_cast);
+	init_sprite(&cast, &hor, &ver);
+	ft_sp_casting(cub, &cast);
 
 	if (hor.distance < 0 && ver.distance >= 0)
 		*ray = ver;
@@ -255,7 +193,7 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		*ray = hor;
 }
 
-static void	init_sp_rays(t_cub *cub)
+static void	init_sprites_rays(t_cub *cub)
 {
 	int i;
 	int j;
@@ -284,7 +222,7 @@ void		cast_all_rays(t_cub *cub)
 	int		i;
 
 	init_sprites_hit(cub);
-	init_sp_rays(cub);
+	init_sprites_rays(cub);
 	ray_angle = cub->drxion - (FOV / 2);
 	i = -1;
 	while (++i < cub->win_w)

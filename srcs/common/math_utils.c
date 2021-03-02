@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 10:24:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/02 14:34:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ double	get_dec(double n)
 ** (mainly used in the raycasting calculations - prevents segv from the map)
 */
 
-int		safe_min(int nb1, int nb2)
+int		safe_min(double nb1, double nb2)
 {
 	if (nb1 - nb2 < 0)
 		return (0);

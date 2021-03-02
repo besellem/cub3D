@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 01:05:19 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/15 11:22:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/02 15:38:24 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ int	charset_in_line(char *line, char *charset)
 		if (in_charset(charset, line[i++]) == -1)
 			return (0);
 	return (1);
+}
+
+/*
+** Check if coordinates (x, y) are in the map's range (avoid segv errors)
+*/
+
+int	is_in_map_limits(t_cub *cub, double x, double y)
+{
+	return (x >= 0 && x < cub->map_size_x &&
+			y >= 0 && y < cub->map_size_y);
 }
 
 /*
