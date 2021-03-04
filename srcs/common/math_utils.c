@@ -6,14 +6,14 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:06 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/02 14:34:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/04 10:28:56 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** GET THE DISTANCE BETWEEN 2 POINTS
+** Get the distance between 2 points (Pythagore)
 */
 
 double	ft_pythagore(double x1, double y1, double x2, double y2)
@@ -22,7 +22,17 @@ double	ft_pythagore(double x1, double y1, double x2, double y2)
 }
 
 /*
-** GET THE FRACTIONAL PART OF A DECIMAL NUMBER (keeping the sign)
+** Pythagore (without sqrt - not needed)
+** Used to compare "distances"
+*/
+
+double	ft_pyt_like(double x1, double y1, double x2, double y2)
+{
+	return ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+/*
+** Get the fractional part of a decimal number (keeping the sign)
 ** ex: -12.44 -> -0.44
 */
 
@@ -32,8 +42,8 @@ double	get_dec(double n)
 }
 
 /*
-** DO `NB1 - NB2` WITHOUT BEING < 0. IF THIS IS THE CASE, RETURN 0
-** (mainly used in the raycasting calculations - prevents segv from the map)
+** Do 'nb1 - nb2' without being < 0. If this is the case, return 0
+** (used in the raycasting calculations - prevents segv from the map)
 */
 
 int		safe_min(double nb1, double nb2)

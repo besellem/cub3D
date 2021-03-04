@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/02 16:06:44 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/04 11:04:47 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	ray->hit_wall_x = x;
 	ray->hit_wall_y = y;
-	ray->distance = ft_pythagore(cub->pos_x, cub->pos_y, x, y);
+	ray->cmp_distance = ft_pyt_like(cub->pos_x, cub->pos_y, x, y);
+	ray->distance = sqrt(ray->cmp_distance);
 }
 
 int			get_sprite_idx(t_cub *cub, int x, int y)
@@ -63,7 +64,7 @@ static void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 }
 
-void		set_sprite_struct(t_cub *cub, t_sprite *sprite)
+static void	set_sprite_struct(t_cub *cub, t_sprite *sprite)
 {
 	const double opp = cub->pos_y - (sprite->y + 0.5);
 	const double adj = cub->pos_x - (sprite->x + 0.5);
@@ -78,7 +79,7 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	t_sprite	*sprite;
 	double		x_col;
-	const int	idx = get_sprite_idx(cub, x, y);
+	const int	idx = get_sprite_idx(cub, (int)x, (int)y);
 
 	if (idx == -1)
 		return ;

@@ -1,12 +1,12 @@
-R 480 320
+R 720 480
 NO ./textures/xpm/colorstone.xpm
 SO ./textures/xpm/eagle.xpm
 WE ./textures/xpm/greystone.xpm
 EA ./textures/xpm/tnt.xpm
 
-S ./textures/xpm/barrel.xpm
+S ./textures/xpm/pillar.xpm
 F 220,100,1
-C 210,190,255
+C 132,204,242
 
 
 111111111111111

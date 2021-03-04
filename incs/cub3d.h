@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/02 15:53:07 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/04 13:48:35 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@
 ** xstep:			increment with xstep to check if we hit something
 ** ystep:			increment with ystep to check if we hit something
 ** distance:		distance from the player to a wall for that angle
+** cmp_distance:	distance to compare with the sprite's (does not use sqrt)
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
 ** sp_ray:			contains a ray of all the sprites combined & sorted
@@ -150,6 +151,7 @@ typedef struct	s_ray
 	double		xstep;
 	double		ystep;
 	double		distance;
+	double		cmp_distance;
 	double		hit_wall_x;
 	double		hit_wall_y;
 	uint32_t	*sp_ray;
@@ -169,6 +171,16 @@ typedef	struct	s_sprite
 	double	distance;
 	double	centre_angle;
 }				t_sprite;
+
+typedef	struct	s_spcasting_vars
+{
+	int		horz_sp;
+	int		vert_sp;
+	int		horz_printable;
+	int		vert_printable;
+	double	dist_horz;
+	double	dist_vert;
+}				t_spcasting_vars;
 
 /*
 ** *_x:		tmp - used for calculations
@@ -314,6 +326,7 @@ void			*ft_ternary(int condition, void *if_true, void *if_false);
 void			ft_free_cub(t_cub *cub);
 int				ft_free_strs(char **strs);
 double			ft_pythagore(double x1, double y1, double x2, double y2);
+double			ft_pyt_like(double x1, double y1, double x2, double y2);
 double			get_dec(double n);
 int				safe_min(double nb1, double nb2);
 int				check_rgb(char *s);
