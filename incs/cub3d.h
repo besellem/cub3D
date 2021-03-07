@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/04 13:48:35 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/07 19:17:50 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@
 # define DRXION_N T_3PI_2
 # define DRXION_W T_PI
 # define DRXION_S T_PI_2
-
-// enum	e_drxions
-// {
-// 	HIT_NORTH,
-// 	HIT_SOUTH,
-// 	HIT_EAST,
-// 	HIT_WEST
-// };
 
 # define HIT_NORTH 0
 # define HIT_SOUTH 1
@@ -319,7 +311,7 @@ double			ft_norm_angle(double angle);
 int				file_got_ext(char *file, char *extension);
 int				in_charset(char *charset, int c);
 int				charset_in_line(char *line, char *charset);
-int				is_in_map_limits(t_cub *cub, double x, double y);
+int				in_map_limits(t_cub *cub, double x, double y);
 int				is_sprite(int c);
 int				ft_strs_size(char **strs);
 void			*ft_ternary(int condition, void *if_true, void *if_false);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/04 11:04:47 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/07 19:09:14 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 
 	start = 0.0;
 	end = tx.y;
-	idx = (cub->win_h - scale) / 2 - 1;
+	idx = (int)((cub->win_h - scale) / 2) - 1;
 	if (cub->win_h < scale)
 	{
 		idx = -1;
@@ -64,15 +64,16 @@ static void	fill_sprite_ptr(t_cub *cub, t_ray *ray, double scale, int col_num)
 	}
 }
 
-static void	set_sprite_struct(t_cub *cub, t_sprite *sprite)
+static void	set_sprite_struct(t_cub *cub, t_sprite *sprite, __attribute__((unused)) double ray_angle)
 {
-	const double opp = cub->pos_y - (sprite->y + 0.5);
-	const double adj = cub->pos_x - (sprite->x + 0.5);
+	const double opp = cub->pos_y - sprite->y - 0.5;
+	const double adj = cub->pos_x - sprite->x - 0.5;
 
 	sprite->hit = 1;
 	sprite->centre_angle = atan(opp / adj);
 	sprite->distance = ft_pythagore(cub->pos_x, cub->pos_y,
-								sprite->x + 0.5, sprite->y + 0.5);
+						sprite->x + 0.5, sprite->y + 0.5);// * \
+						// cos(cub->drxion - (ray_angle + sprite->centre_angle));
 }
 
 void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
@@ -85,10 +86,11 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 		return ;
 	sprite = &cub->sprites[idx];
 	if (sprite->hit == 0)
-		set_sprite_struct(cub, sprite);
-	x_col = fmod(sprite->distance * tan(ray->angle - sprite->centre_angle) \
-			* cub->txtrs[4].x + cub->txtrs[4].x / 2, cub->txtrs[4].x);
-	// x_col = sprite->distance * tan(ray->angle - sprite->centre_angle) \
-	// 		* cub->txtrs[4].x + cub->txtrs[4].x / 2;
+		set_sprite_struct(cub, sprite, ray->angle);
+	x_col = sprite->distance * \
+			tan(ray->angle - sprite->centre_angle) * cub->txtrs[4].x - \
+			(cub->txtrs[4].x) / 2;
+	// printf("dist: %.35f\n", ray->distortion);
+	x_col = fmod(x_col, cub->txtrs[4].x);
 	fill_sprite_ptr(cub, ray, cub->win_h / sprite->distance, x_col);
 }
