@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/07 19:17:50 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 08:59:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 ** -- INCLUDES --
 */
-# include "../libft/libft.h"
+# include <libft.h>
 # include <mlx.h>
 # include <math.h>
 # include <stdio.h>

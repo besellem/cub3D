@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/02/17 14:58:55 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/08 09:00:49 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME		=	cub3D
 BMP_FILE	=	./saved.bmp
 
 ## Sources
-INCS		=	incs libft/libft.a
+INCS		=	-I incs -Llibft -lft -Ilibft/incs
 MLIBX		=	libmlx.dylib
 
 # Paths
@@ -77,7 +77,7 @@ $(NAME):
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
 			$(MUTE) # -D BONUS -> TO ENABLE BONUSES (to add)
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit -I $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
 endif
 
 
@@ -87,7 +87,7 @@ $(NAME):
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
 			$(MUTE) # -D BONUS -> TO ENABLE BONUSES (to add)
-			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -I $(INCS) -o $(NAME)
+			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm $(INCS) -o $(NAME)
 endif
 
 
