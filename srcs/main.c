@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 20:25:57 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 15:53:20 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 14:43:01 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	ft_mlx_start(t_cub *cub)
 										&(cub->img.bpp),
 										&(cub->img.size_line),
 										&(cub->img.endian));
-	print_specs(cub);
 	update_frame(cub);
 	mlx_hook(cub->win, 2, (1L << 0), handle_key_press, cub);
 	mlx_hook(cub->win, 3, (1L << 1), handle_key_release, cub);
@@ -36,13 +35,13 @@ int			main(int ac, char **av)
 
 	if (ac >= 2 && ac <= 3)
 	{
-		ft_putendl(ENV_MSG);
 		init_cub(&cub);
 		cub_parser(ac, av, &cub);
 		if (cub.save_opt && ft_save(&cub))
 			return (0);
 		else if (cub.save_opt)
 			ft_error("Enable to create the .bmp file", &cub, NULL, 0);
+		ft_putendl(ENV_MSG);
 		ft_mlx_start(&cub);
 	}
 	else

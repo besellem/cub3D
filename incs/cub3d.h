@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 11:24:51 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 14:26:03 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ typedef	struct	s_gun
 ** parsed_h:		resolution height from the .cub file
 ** sky_color:		sky color
 ** grnd_color:		ground color
-** sprites_ocs:			sprites occurrences in the map
+** sprites_ocs:		sprites occurrences in the map
 ** life:			between 0 and 100 (thus needs only 8 bits)
 ** txtr_no:			path to the north texture file
 ** txtr_so:			path to the south texture file
