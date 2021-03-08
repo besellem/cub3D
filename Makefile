@@ -6,12 +6,12 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/03/08 09:00:49 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/08 09:31:07 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ## Constants
-MUTE		=	@
+MUTE		=	
 NAME		=	cub3D
 BMP_FILE	=	./saved.bmp
 
@@ -29,8 +29,7 @@ PATH_ENGINE	:=	engine
 PATH_EVENTS	:=	events
 PATH_PARSER	:=	parser
 
-SRCS		=	$(PATH_SRCS)/main.c \
-				$(PATH_SRCS)/$(PATH_OTHERS)/save.c \
+SRCS		=	$(PATH_SRCS)/$(PATH_OTHERS)/save.c \
 				$(PATH_SRCS)/$(PATH_OTHERS)/utils.c \
 				$(PATH_SRCS)/$(PATH_BONUS)/gun.c \
 				$(PATH_SRCS)/$(PATH_BONUS)/init_bonus.c \
@@ -69,32 +68,49 @@ UNAME		:=	$(shell uname)
 
 
 ## Targets
+.c.o:
+			$(MUTE) $(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I incs -Ilibft/incs
+
 # Check the system -- macOS or Linux -- for compilation
 ifeq ($(UNAME), Darwin)
-$(NAME):
+$(NAME):	$(OBJS)
 			$(MUTE) echo "\033[31;1mCompiling for macOS...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
-			$(MUTE) # -D BONUS -> TO ENABLE BONUSES (to add)
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
 endif
 
 
 ifeq ($(UNAME), Linux)
-$(NAME):
+$(NAME):	$(OBJS)
 			$(MUTE) echo "\033[31;1mCompiling for Linux...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			$(MUTE) $(MAKE) -C mlx_linux all
-			$(MUTE) # -D BONUS -> TO ENABLE BONUSES (to add)
-			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm $(INCS) -o $(NAME)
+			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(PATH_SRCS)/main.c $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm $(INCS) -o $(NAME)
 endif
 
 
 all:		$(NAME)
 
 
-bonus:		all
+ifeq ($(UNAME), Darwin)
+bonus:		$(OBJS)
+			$(MUTE) echo "\033[31;1mCompiling bonuses for macOS...\033[0m"
+			$(MUTE) $(MAKE) -C libft all
+			$(MUTE) $(MAKE) -C mlx all
+			$(MUTE) cp ./mlx/$(MLIBX) .
+			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx -DBONUS $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
+endif
+
+
+ifeq ($(UNAME), Linux)
+bonus:		$(OBJS)
+			$(MUTE) echo "\033[31;1mCompiling bonuses for Linux...\033[0m"
+			$(MUTE) $(MAKE) -C libft all
+			$(MUTE) $(MAKE) -C mlx_linux all
+			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux -DBONUS $(PATH_SRCS)/main.c $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm $(INCS) -o $(NAME)
+endif
 
 
 ifeq ($(UNAME), Darwin)
@@ -103,7 +119,9 @@ clean:
 			$(MUTE) $(MAKE) -C mlx clean
 			# To remove along with the -g flag at compilation
 			$(MUTE) $(RMRF) Cub3D.dSYM
+			# End to remove
 			$(MUTE) $(RM) $(BMP_FILE)
+			$(MUTE) $(RM) $(OBJS)
 endif
 
 
@@ -113,7 +131,9 @@ clean:
 			$(MUTE) $(MAKE) -C mlx_linux clean
 			# To remove along with the -g flag at compilation
 			$(MUTE) $(RMRF) Cub3D.dSYM
+			# End to remove
 			$(MUTE) $(RM) $(BMP_FILE)
+			$(MUTE) $(RM) $(OBJS)
 endif
 
 
