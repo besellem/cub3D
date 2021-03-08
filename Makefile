@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/03/08 09:31:07 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/08 09:43:17 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,19 +74,25 @@ UNAME		:=	$(shell uname)
 # Check the system -- macOS or Linux -- for compilation
 ifeq ($(UNAME), Darwin)
 $(NAME):	$(OBJS)
-			$(MUTE) echo "\033[31;1mCompiling for macOS...\033[0m"
+			@echo "\033[32;1mCompiling for macOS...\033[0m"
+			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
+			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
+			@echo "\033[34;1m# 3/3 - Compiling project...\033[0m"
 			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
 endif
 
 
 ifeq ($(UNAME), Linux)
 $(NAME):	$(OBJS)
-			$(MUTE) echo "\033[31;1mCompiling for Linux...\033[0m"
+			@echo "\033[32;1mCompiling for Linux...\033[0m"
+			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
+			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
 			$(MUTE) $(MAKE) -C mlx_linux all
+			@echo "\033[34;1m# 3/3 - Compiling project...\033[0m"
 			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux $(PATH_SRCS)/main.c $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm $(INCS) -o $(NAME)
 endif
 
@@ -96,19 +102,25 @@ all:		$(NAME)
 
 ifeq ($(UNAME), Darwin)
 bonus:		$(OBJS)
-			$(MUTE) echo "\033[31;1mCompiling bonuses for macOS...\033[0m"
+			@echo "\033[32;1mCompiling bonuses for macOS...\033[0m"
+			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
+			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
+			@echo "\033[34;1m# 3/3 - Compiling project...\033[0m"
 			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx -DBONUS $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
 endif
 
 
 ifeq ($(UNAME), Linux)
 bonus:		$(OBJS)
-			$(MUTE) echo "\033[31;1mCompiling bonuses for Linux...\033[0m"
+			@echo "\033[32;1mCompiling bonuses for Linux...\033[0m"
+			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
+			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
 			$(MUTE) $(MAKE) -C mlx_linux all
+			@echo "\033[34;1m# 3/3 - Compiling project...\033[0m"
 			$(MUTE) $(CC) $(CFLAGS) -I/usr/include -Imlx_linux -DBONUS $(PATH_SRCS)/main.c $(SRCS) -Imlx_linux -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm $(INCS) -o $(NAME)
 endif
 

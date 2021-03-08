@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 09:28:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 09:33:33 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@
 */
 # define GUN_GIF_NB 5
 # ifndef BONUS
-// Set to 0 before push && define this macro at compile time to enable bonuses
 #  define BONUS 0
 # endif
 
