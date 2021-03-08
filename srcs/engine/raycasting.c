@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/07 19:26:02 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 12:03:31 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ static void	sprite_raycasting_z(t_cub *cub, t_raycasting *cast,
 		tmp->vert_sp = 1;
 	}
 
-	if (tmp->horz_sp)
+	if (tmp->horz_sp && tmp->dist_horz < tmp->dist_vert))
 	{
 		tmp->horz_printable = 1;
 	}
-	if (tmp->vert_sp)
+	if (tmp->vert_sp && tmp->dist_horz > tmp->dist_vert))
 	{
 		tmp->vert_printable = 1;
 	}
@@ -273,5 +273,5 @@ void		cast_all_rays(t_cub *cub)
 		set_hit_drxion(&cub->rays[i]);
 		ray_angle += (FOV * cub->rays[i].distortion) / cub->win_w;
 	}
-	sprites_dump(cub);
+	// sprites_dump(cub);
 }

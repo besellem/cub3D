@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 09:33:33 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:24:51 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,12 @@ typedef struct	s_img
 	char	*addr;
 }				t_img;
 
+typedef	struct	s_gun
+{
+	int		gun_status;
+	time_t	last_time;
+}				t_gun;
+
 /*
 ** save_opt:		check if the option '--save' is defined
 ** win_w:			resolution width (if > screen, is truncated)
@@ -255,7 +261,6 @@ typedef	struct	s_cub
 {
 	int			save_opt : 2;
 	uint8_t		life : 7;
-	int			gun_status;
 	int			win_w;
 	int			win_h;
 	int			parsed_w;
@@ -290,6 +295,7 @@ typedef	struct	s_cub
 	t_img		txtr_life;
 	t_ray		*rays;
 	t_sprite	*sprites;
+	t_gun		gun;
 }				t_cub;
 
 /*

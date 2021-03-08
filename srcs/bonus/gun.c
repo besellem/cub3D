@@ -6,27 +6,37 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/23 11:20:58 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:22:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #define GUN_SHOT_SOUND_PATH "./sounds/gun_shot.wav"
+#define SHOOTING_FRAMES_DELAY 0.05
 
 static void	set_gun_txtr_idx(t_cub *cub)
 {
-	if (cub->gun_status != 0)
+	clock_t	now;
+	double	time_diff;
+
+	if (cub->gun.gun_status != 0)
 	{
-		if (cub->gun_status == -1)
+		now = clock();
+		time_diff = (double)(now - cub->gun.last_time) / CLOCKS_PER_SEC;
+		if (cub->gun.last_time == 0)
+			time_diff = 0.0;
+		if (cub->gun.last_time == 0 || time_diff >= SHOOTING_FRAMES_DELAY)
+			cub->gun.last_time = now;
+		if (cub->gun.gun_status == -1)
 		{
-			cub->gun_status = 1;
+			cub->gun.gun_status = 1;
 			system(SOUND_CMD" "GUN_SHOT_SOUND_PATH" 2>/dev/null&");
 		}
-		else
-			cub->gun_status++;
+		else if (time_diff >= SHOOTING_FRAMES_DELAY)
+			cub->gun.gun_status++;
 	}
-	if (cub->gun_status > GUN_GIF_NB)
-		cub->gun_status = 0;
+	if (cub->gun.gun_status > GUN_GIF_NB - 1)
+		cub->gun.gun_status = 0;
 }
 
 static void	print_gun(t_cub *cub, t_img tx)
@@ -93,9 +103,9 @@ void		display_gun(t_cub *cub)
 	if (cub->win_w >= xmax && cub->win_h / 2 >= ymax)
 	{
 		set_gun_txtr_idx(cub);
-		print_gun(cub, cub->txtr_gun[cub->gun_status]);
+		print_gun(cub, cub->txtr_gun[cub->gun.gun_status]);
 		print_target(cub, cub->txtr_target);
 	}
 	else
-		cub->gun_status = 0;
+		cub->gun.gun_status = 0;
 }

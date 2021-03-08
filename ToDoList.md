@@ -1,4 +1,5 @@
 # TO DO BEFORE PUSHING
+- [ ] remove check in engine_loop - do an infinite loop
 - [ ] add bonus ?
 - [ ] update Makefile (add `bonus` rule)
 - [ ] update doc in .h file

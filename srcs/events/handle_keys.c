@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 14:18:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/17 15:54:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:24:04 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	handle_key_press(int key, t_cub *cub)
 		cub->keys.key_left = 1;
 	else if (key == KEY_RIGHT && cub->keys.key_left == 0 && (cub->turn = 1))
 		cub->keys.key_right = 1;
-	else if (BONUS && key == KEY_F && cub->gun_status == 0)
-		cub->gun_status = -1;
+	else if (BONUS && key == KEY_F && cub->gun.gun_status == 0)
+		cub->gun.gun_status = -1;
 	else
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/07 19:09:14 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 11:50:23 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	set_sprite_struct(t_cub *cub, t_sprite *sprite, __attribute__((unuse
 void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 {
 	t_sprite	*sprite;
-	double		x_col;
+	int			x_col;
 	const int	idx = get_sprite_idx(cub, (int)x, (int)y);
 
 	if (idx == -1)
@@ -87,10 +87,12 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	sprite = &cub->sprites[idx];
 	if (sprite->hit == 0)
 		set_sprite_struct(cub, sprite, ray->angle);
-	x_col = sprite->distance * \
-			tan(ray->angle - sprite->centre_angle) * cub->txtrs[4].x - \
-			(cub->txtrs[4].x) / 2;
-	// printf("dist: %.35f\n", ray->distortion);
-	x_col = fmod(x_col, cub->txtrs[4].x);
-	fill_sprite_ptr(cub, ray, cub->win_h / sprite->distance, x_col);
+	x_col = sprite->distance * tan(ray->angle - sprite->centre_angle) * \
+			cub->txtrs[4].x + cub->txtrs[4].x / 2;
+	if (x_col >= cub->txtrs[4].x)
+		x_col = cub->txtrs[4].x - 1;
+	else if (x_col < 0)
+		x_col = 0;
+	if (x_col >= 0 && x_col <= cub->txtrs[4].x)
+		fill_sprite_ptr(cub, ray, cub->win_h / sprite->distance, x_col);
 }
