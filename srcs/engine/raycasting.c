@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 12:03:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/08 12:40:55 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ static void	sprite_raycasting_z(t_cub *cub, t_raycasting *cast,
 		tmp->vert_sp = 1;
 	}
 
-	if (tmp->horz_sp && tmp->dist_horz < tmp->dist_vert))
+	if (tmp->horz_sp)
 	{
 		tmp->horz_printable = 1;
 	}
-	if (tmp->vert_sp && tmp->dist_horz > tmp->dist_vert))
+	if (tmp->vert_sp)
 	{
 		tmp->vert_printable = 1;
 	}
