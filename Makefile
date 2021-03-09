@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/03/08 09:47:29 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/09 11:23:37 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,10 +68,20 @@ UNAME		:=	$(shell uname)
 
 
 ## Targets
-.c.o:
-			$(MUTE) $(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I incs -Ilibft/incs
-
 # Check the system -- macOS or Linux -- for compilation
+
+ifeq ($(UNAME), Darwin)
+.c.o:
+			$(MUTE) $(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I incs -Ilibft/incs -Imlx
+endif
+
+
+ifeq ($(UNAME), Darwin)
+.c.o:
+			$(MUTE) $(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I incs -Ilibft/incs -Imlx_linux
+endif
+
+
 ifeq ($(UNAME), Darwin)
 $(NAME):	$(OBJS)
 			@echo "\033[32;1mCompiling for macOS...\033[0m"

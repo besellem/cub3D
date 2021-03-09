@@ -4,7 +4,7 @@ SO ./textures/xpm/eagle.xpm
 WE ./textures/xpm/greystone.xpm
 EA ./textures/xpm/tnt.xpm
 
-S ./textures/xpm/pillar.xpm
+S ./textures/xpm/barrel.xpm
 F 220,100,1
 C 132,204,242
 
