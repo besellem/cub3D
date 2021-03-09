@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 14:46:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/09 15:11:12 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ static void	sprite_raycasting_z(t_cub *cub, t_raycasting *cast,
 							t_ray *valid_ray, t_spcasting_vars *tmp)
 {
 	tmp->dist_horz = ft_pyt_like(cub->pos_x, cub->pos_y,
-								(int)cast->horz_x,
-								(int)cast->horz_y - !cast->horz->is_down);
+								cast->horz_x,
+								cast->horz_y);
 	tmp->dist_vert = ft_pyt_like(cub->pos_x, cub->pos_y,
-								(int)cast->vert_x - !cast->vert->is_right,
-								(int)cast->vert_y);
+								cast->vert_x,
+								cast->vert_y);
 	if (in_map_limits(cub, cast->horz_x, cast->horz_y - !cast->horz->is_down)
 		&& tmp->dist_horz < valid_ray->cmp_distance &&
 		is_sprite(cub->map[(int)cast->horz_y - !cast->horz->is_down][(int)cast->horz_x]))
@@ -118,13 +118,23 @@ static void	sprite_raycasting_z(t_cub *cub, t_raycasting *cast,
 		tmp->vert_sp = 1;
 	}
 
+	// int idx_vert;
+	// int idx_horz;
+
+	// idx_vert = get_sprite_idx(cub, cast->vert_x, cast->vert_y);
+	// idx_horz = get_sprite_idx(cub, cast->horz_x, cast->horz_y);
+	
 	if (tmp->horz_sp)
 	{
 		tmp->horz_printable = 1;
+		// if (idx_vert != -1 && idx_vert == idx_horz)
+		// 	tmp->horz_printable = 0;
 	}
 	if (tmp->vert_sp)
 	{
 		tmp->vert_printable = 1;
+		// if (idx_vert != -1 && idx_vert == idx_horz)
+		// 	tmp->vert_printable = 0;
 	}
 
 
