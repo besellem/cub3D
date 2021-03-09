@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/03/09 11:23:37 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/09 11:30:08 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ ifeq ($(UNAME), Darwin)
 endif
 
 
-ifeq ($(UNAME), Darwin)
+ifeq ($(UNAME), Linux)
 .c.o:
 			$(MUTE) $(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I incs -Ilibft/incs -Imlx_linux
 endif
