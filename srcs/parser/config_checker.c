@@ -6,26 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 00:50:40 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/17 14:58:57 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 19:22:57 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	alloc_sprite_rays(t_cub *cub)
-{
-	int i;
-
-	i = 0;
-	while (i < cub->win_w)
-	{
-		cub->rays[i].sp_ray = (uint32_t *)malloc(sizeof(uint32_t) * cub->win_h);
-		if (!cub->rays[i].sp_ray)
-			return (1);
-		++i;
-	}
-	return (0);
-}
 
 static int	window_size_spec(char **split, t_cub *cub)
 {

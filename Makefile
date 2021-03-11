@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/03/11 17:06:34 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/11 20:36:53 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS		=	$(PATH_SRCS)/$(PATH_OTHERS)/save.c \
 				$(PATH_SRCS)/$(PATH_COMMON)/rgb.c \
 				$(PATH_SRCS)/$(PATH_ENGINE)/display.c \
 				$(PATH_SRCS)/$(PATH_ENGINE)/engine_loop.c \
+				$(PATH_SRCS)/$(PATH_ENGINE)/init_ray.c \
 				$(PATH_SRCS)/$(PATH_ENGINE)/raycasting_utils.c \
 				$(PATH_SRCS)/$(PATH_ENGINE)/raycasting.c \
 				$(PATH_SRCS)/$(PATH_ENGINE)/sprites.c \
@@ -53,6 +54,7 @@ SRCS		=	$(PATH_SRCS)/$(PATH_OTHERS)/save.c \
 				$(PATH_SRCS)/$(PATH_PARSER)/map_checker.c \
 				$(PATH_SRCS)/$(PATH_PARSER)/map_parser.c \
 				$(PATH_SRCS)/$(PATH_PARSER)/map_validator.c \
+				$(PATH_SRCS)/$(PATH_PARSER)/parser_utils.c \
 				$(PATH_SRCS)/$(PATH_PARSER)/parser.c
 
 OBJS		=	$(SRCS:.c=.o)
@@ -84,7 +86,7 @@ endif
 
 ifeq ($(UNAME), Darwin)
 $(NAME):	$(OBJS)
-			@echo "\033[32;1mCompiling for macOS...\033[0m"
+			@echo "\033[32;1mCOMPILING FOR macOS...\033[0m\n"
 			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
@@ -97,7 +99,7 @@ endif
 
 ifeq ($(UNAME), Linux)
 $(NAME):	$(OBJS)
-			@echo "\033[32;1mCompiling for Linux...\033[0m"
+			@echo "\033[32;1mCOMPILING FOR Linux...\033[0m\n"
 			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
@@ -112,7 +114,7 @@ all:		$(NAME)
 
 ifeq ($(UNAME), Darwin)
 bonus:		$(OBJS)
-			@echo "\033[32;1mCompiling bonuses for macOS...\033[0m"
+			@echo "\033[32;COMPILING BONUSES FOR macOS...\033[0m\n"
 			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
@@ -125,7 +127,7 @@ endif
 
 ifeq ($(UNAME), Linux)
 bonus:		$(OBJS)
-			@echo "\033[32;1mCompiling bonuses for Linux...\033[0m"
+			@echo "\033[32;1mCOMPILING BONUSES FOR Linux...\033[0m\n"
 			@echo "\033[34;1m# 1/3 - Compiling libft...\033[0m"
 			$(MUTE) $(MAKE) -C libft all
 			@echo "\033[34;1m# 2/3 - Compiling mlx...\033[0m"
@@ -139,7 +141,6 @@ ifeq ($(UNAME), Darwin)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx clean
-			$(MUTE) $(RM) $(BMP_FILE)
 			$(MUTE) $(RM) $(OBJS)
 endif
 
@@ -148,7 +149,6 @@ ifeq ($(UNAME), Linux)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx_linux clean
-			$(MUTE) $(RM) $(BMP_FILE)
 			$(MUTE) $(RM) $(OBJS)
 endif
 
@@ -156,6 +156,7 @@ endif
 fclean:		clean
 			$(MUTE) $(MAKE) -C libft fclean
 			$(MUTE) $(RM) $(MLIBX)
+			$(MUTE) $(RM) $(BMP_FILE)
 			$(MUTE) $(RM) $(NAME)
 
 

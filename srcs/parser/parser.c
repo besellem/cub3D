@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 21:31:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/28 11:01:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 19:24:16 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ static void	load_textures(t_cub *cub)
 {
 	int i;
 
-	i = -1;
-	while (++i < TEXTURES_COUNT)
+	i = 0;
+	while (i < TEXTURES_COUNT)
+	{
 		ft_memset(&cub->txtrs[i], 0, sizeof(t_img));
+		++i;
+	}
 	fill_texture(cub, &cub->txtrs[0], cub->txtr_no);
 	fill_texture(cub, &cub->txtrs[1], cub->txtr_so);
 	fill_texture(cub, &cub->txtrs[2], cub->txtr_ea);
@@ -48,22 +51,24 @@ static void	load_textures(t_cub *cub)
 
 static void	set_sprites_oc(t_cub *cub)
 {
-	int i;
-	int j;
+	size_t i;
+	size_t j;
 
-	i = -1;
-	while (cub->map[++i])
+	i = 0;
+	while (cub->map[i])
 	{
-		j = -1;
-		while (cub->map[i][++j])
+		j = 0;
+		while (cub->map[i][j])
 		{
 			if (is_sprite(cub->map[i][j]))
 				cub->sprites_ocs++;
+			++j;
 		}
+		++i;
 	}
 }
 
-static int	alloc_sprites(t_cub *cub)
+static void	alloc_sprites(t_cub *cub)
 {
 	int i;
 	int j;
@@ -89,20 +94,6 @@ static int	alloc_sprites(t_cub *cub)
 			}
 		}
 	}
-	return (1);
-}
-
-int			are_specs_complete(t_cub *cub)
-{
-	return (cub->grnd_color != -1 &&
-		cub->sky_color != -1 &&
-		cub->win_h != -1 &&
-		cub->win_w != -1 &&
-		cub->txtr_no &&
-		cub->txtr_so &&
-		cub->txtr_ea &&
-		cub->txtr_we &&
-		cub->txtr_s);
 }
 
 void		cub_parser(int ac, char **av, t_cub *cub)

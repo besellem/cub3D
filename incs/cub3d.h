@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 17:25:10 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 20:26:13 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 /*
 ** -- DEFINES --
 */
-# define NAME "cub3D"
 # define BMP_FILEPATH "./saved.bmp"
 # define CUB_ERR "\033[1;31mError\033[0m"
 # define MAP_CHARSET " 012NEWS"
@@ -64,11 +63,10 @@
 # define FOV T_PI_2
 
 /*
-** Colors (for minimap - not all are needed)
+** Some colors (for minimap)
 */
 # define UCOLOR_GREY 0xE0E0E0U
 # define UCOLOR_BLACK 0x0U
-# define UCOLOR_RED 0xFF0000U
 
 /*
 ** Key mapping for macOS & Linux envs
@@ -111,19 +109,19 @@
 /*
 ** -- TYPEDEFS & STRUCTURES --
 **
-** is_down:			is the angle pointing up (0) or down (1)
-** is_right:		is the angle pointing left (0) or right (1)
-** hit_vertical:	check if the ray if vertical (1) or horizontal (0)
+** is_down:			is the angle pointing up or down (0 or 1)
+** is_right:		is the angle pointing left or right (0 or 1)
+** hit_vertical:	check if the ray is vertical or horizontal (1 or 0)
 ** hit_drxion:		from where the ray hit a wall. Macros NORTH, SOUTH, ...
 ** angle:			angle of the ray in radians
-** tan_ngl:			tan(angle): instead of doing it ~4 times later
+** tan_ngl:			tan(angle): instead of doing it ~4 times a bit later
 ** distortion:		cos(ray->angle - cub->drxion): instead of doing it ~2 times
 ** xintcpt:			next cube from cub->pos_x
 ** yintcpt:			next cube from cub->pos_y
 ** xstep:			increment with xstep to check if we hit something
 ** ystep:			increment with ystep to check if we hit something
 ** distance:		distance from the player to a wall for that angle
-** cmp_distance:	distance to compare with the sprite's (does not use sqrt)
+** cmp_distance:	distance used for comparisons (does not use sqrt())
 ** hit_wall_x:		coordinate x of the wall hit
 ** hit_wall_y:		coordinate y of the wall hit
 ** sp_ray:			contains a ray of all the sprites combined & sorted
@@ -149,10 +147,11 @@ typedef struct	s_ray
 }				t_ray;
 
 /*
-** hit:			if it was hit or not
-** x:			index x in cub->map
-** y:			index y in cub->map
-** distance:	distance from the player
+** hit:				if it was hit or not
+** x:				index x in cub->map
+** y:				index y in cub->map
+** distance:		distance from the player
+** centre_angle:	angle of the center of the sprite (calculated with atan())
 */
 typedef	struct	s_sprite
 {
@@ -164,7 +163,7 @@ typedef	struct	s_sprite
 }				t_sprite;
 
 /*
-** order:	vertical stripe before or after horizontal one (0 or 1)
+** order:	vertical stripe before or after an horizontal one (0 or 1)
 */
 typedef	struct	s_spcasting_vars
 {
@@ -178,10 +177,10 @@ typedef	struct	s_spcasting_vars
 }				t_spcasting_vars;
 
 /*
-** *_x:		tmp - used for calculations
-** *_y:		tmp - used for calculations
-** horz:	horizontal ray (already casted when this struct is used)
-** vert:	vertical ray (in casting when this struct is used)
+** *_x:		tmp - used in raycasting calculations
+** *_y:		tmp - used in raycasting calculations
+** horz:	horizontal ray (already casted when this variable is used)
+** vert:	vertical ray (already casted when this variable is used)
 */
 
 typedef	struct	s_raycasting
@@ -229,6 +228,7 @@ typedef	struct	s_gun
 
 /*
 ** save_opt:		check if the option '--save' is defined
+** life:			between 0 and 100 (thus needs only 7 bits)
 ** win_w:			resolution width (if > screen, is truncated)
 ** win_h:			resolution height (if > screen, is truncated)
 ** parsed_w:		resolution width from the .cub file
@@ -236,7 +236,10 @@ typedef	struct	s_gun
 ** sky_color:		sky color
 ** grnd_color:		ground color
 ** sprites_ocs:		sprites occurrences in the map
-** life:			between 0 and 100 (thus needs only 8 bits)
+** dw:				(key press): none (0), left (-1), right (1)
+** dh:				(key press): none (0), down (-1), up (1)
+** turn:			(key press): none (0), left angle (-1), right angle (1)
+** cub_size:		size of a cube in pixels (for the minimap only)
 ** txtr_no:			path to the north texture file
 ** txtr_so:			path to the south texture file
 ** txtr_ea:			path to the east texture file
@@ -251,15 +254,15 @@ typedef	struct	s_gun
 ** pos_x:			player position horizontally
 ** pos_y:			player position vertically
 ** increment:		player's speed
-** cub_size:		size of a cube in pixels (for the minimap only)
-** turn:			(key press): none (0), left angle (-1), right angle (1)
-** dw:				(key press): none (0), left (-1), right (1)
-** dh:				(key press): none (0), down (-1), up (1)
+** sound_time:		global music timing. to repeat the track when finished
 ** keys:			keys struct
 ** img:				image to print out
 ** txtrs:			all the textures and their specs
-** rays:			re-calculated each time we update the view
+** txtr_gun:		gun textures ("frames")
+** txtr_life:		life texture
+** rays:			re-calculated each frame
 ** sprites:			sprites infos
+** gun:				gun status (to get the corresponding texture)
 */
 typedef	struct	s_cub
 {
@@ -308,7 +311,6 @@ typedef	struct	s_cub
 */
 void			print_specs(t_cub *cub);
 void			print_map(t_cub *cub);
-void			sprites_dump(t_cub *cub);
 int				ft_save(t_cub *cub);
 
 /*
@@ -339,6 +341,7 @@ int				is_rgb(int color);
 */
 void			init_cub(t_cub *cub);
 void			cub_parser(int ac, char **av, t_cub *cub);
+int				alloc_sprite_rays(t_cub *cub);
 void			cub_fill_specs(int fd, t_cub *cub);
 int				are_specs_complete(t_cub *cub);
 void			map_parser(int fd, t_cub *cub);
@@ -358,10 +361,14 @@ int				ft_red_cross(t_cub *cub);
 /*
 ** Raycasting
 */
-void			init_sprites_hit(t_cub *cub);
 int				get_sprite_idx(t_cub *cub, int x, int y);
+void			init_sprites_hit(t_cub *cub);
+void			init_sprites_rays(t_cub *cub);
+void			init_ray(t_cub *cub, t_ray *ray, double angle, int is_vertical);
 void			wall_intersect(t_cub *cub, t_ray *ray, double x, double y);
 void			sprite_intersect(t_cub *cub, t_ray *ray, double x, double y);
+void			sprites_raycasting(t_cub *cub, t_raycasting *cast,
+									t_ray *valid_ray);
 void			cast_all_rays(t_cub *cub);
 
 /*

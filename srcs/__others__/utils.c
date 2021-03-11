@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/17 02:08:15 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/28 13:33:27 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 19:51:57 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,50 +38,22 @@ void	print_specs(t_cub *cub)
 {
 	printf("-- Specs --\n");
 	printf("{\n");
-	printf("    cub->mlx:        %p\n", cub->mlx);
-	printf("    cub->win:        %p\n", cub->win);
-	printf("    cub->win_w:      %d -> %d\n", cub->parsed_w, cub->win_w);
-	printf("    cub->win_h:      %d -> %d\n", cub->parsed_h, cub->win_h);
-	printf("    cub->sky_color:  %X\n", cub->sky_color);
-	printf("    cub->grnd_color: %X\n", cub->grnd_color);
-	printf("    cub->txtr_no:    %s\n", cub->txtr_no);
-	printf("    cub->txtr_so:    %s\n", cub->txtr_so);
-	printf("    cub->txtr_ea:    %s\n", cub->txtr_ea);
-	printf("    cub->txtr_we:    %s\n", cub->txtr_we);
-	printf("    cub->txtr_s:     %s\n", cub->txtr_s);
-	printf("    cub->map_size_x: %zu\n", cub->map_size_x);
-	printf("    cub->map_size_y: %zu\n", cub->map_size_y);
-	printf("    cub->drxion:     %f\n", cub->drxion);
-	printf("    cub->pos_x:      %.2f\n", cub->pos_x);
-	printf("    cub->pos_y:      %.2f\n", cub->pos_y);
-	printf("    cub->increment:  %.2f\n", cub->increment);
-	printf("    cub->cub_size:   %dpx\n", cub->cub_size);
+	printf("    Window width:    %d -> %d\n", cub->parsed_w, cub->win_w);
+	printf("    Window height:   %d -> %d\n", cub->parsed_h, cub->win_h);
+	printf("    Sky color:       %X\n", cub->sky_color);
+	printf("    Ground color:    %X\n", cub->grnd_color);
+	printf("    North texture:   %s\n", cub->txtr_no);
+	printf("    South texture:   %s\n", cub->txtr_so);
+	printf("    East texture:    %s\n", cub->txtr_ea);
+	printf("    West texture:    %s\n", cub->txtr_we);
+	printf("    Sprite texture:  %s\n", cub->txtr_s);
+	printf("    Map size (x):    %zu\n", cub->map_size_x);
+	printf("    Map size (y):    %zu\n", cub->map_size_y);
+	printf("    Player drxion:   %.2f\n", cub->drxion);
+	printf("    Player pos (x):  %.1f\n", cub->pos_x);
+	printf("    Player pos (y):  %.1f\n", cub->pos_y);
+	printf("    Movement speed:  %.2f cubes/frame\n", cub->increment);
 	printf("}\n\n");
 	print_map(cub);
 	printf("\n----\n\n");
-}
-
-void	sprites_dump(t_cub *cub)
-{
-	int i;
-
-	if (cub->sprites_ocs <= 0)
-		return ;
-	printf("-- Sprites Dump (%d) --\n", cub->sprites_ocs);
-	printf("Position: x["B_RED"%.30f"CLR_COLOR"] y["B_RED"%.30f"CLR_COLOR"]\n",
-		cub->pos_x, cub->pos_y);
-	printf("{\n");
-	i = -1;
-	while (++i < cub->sprites_ocs)
-	{
-		printf("    cub->sprites[%2d] => ", i);
-		printf("x["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].x);
-		printf("y["B_GREEN"%2d"CLR_COLOR"] ", cub->sprites[i].y);
-		if (cub->sprites[i].hit == 1)
-			printf("hit["B_RED"%d"CLR_COLOR"] ", cub->sprites[i].hit);
-		else
-			printf("hit["B_GREEN"%d"CLR_COLOR"] ", cub->sprites[i].hit);
-		printf("dist["B_GREEN"%.3f"CLR_COLOR"]\n", cub->sprites[i].distance);
-	}
-	printf("}\n\n");
 }

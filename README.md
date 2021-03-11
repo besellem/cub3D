@@ -9,9 +9,10 @@ clang, GNU make
 - [x] Check map
 - [x] Raycasting
 - [x] Textures
-- [ ] Sprites
+- [x] Sprites
 - [x] --save option
 - [x] Fix memory leaks
+- [x] Check norm
 
 ## Compilation
 Just run `make` to compile on macOS or Linux (it checks the system automatically).

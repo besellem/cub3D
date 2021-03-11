@@ -6,45 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 17:21:21 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 18:44:38 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-** Init a ray struct
-** Use of memset to (re)set all variables to 0
-*/
-
-static void	init_ray(t_cub *cub, t_ray *ray, double angle, int is_vertical)
-{
-	ft_memset(ray, 0, sizeof(t_ray));
-	ray->angle = angle;
-	ray->tan_ngl = tan(angle);
-	ray->is_down = angle >= 0 && angle <= T_PI;
-	ray->is_right = !(angle >= T_PI_2 && angle <= T_3PI_2);
-	ray->distance = -1.0;
-	ray->distortion = cos(angle - cub->drxion);
-	if (is_vertical && (ray->hit_vertical = 1))
-	{
-		ray->xintcpt = (int)cub->pos_x + ray->is_right;
-		ray->yintcpt = cub->pos_y + (ray->xintcpt - cub->pos_x) * ray->tan_ngl;
-		ray->xstep = ray->is_right ? 1 : -1;
-		ray->ystep = ray->tan_ngl;
-		ray->ystep *= (!ray->is_down && ray->ystep > 0 ? -1 : 1);
-		ray->ystep *= (ray->is_down && ray->ystep < 0 ? -1 : 1);
-	}
-	else
-	{
-		ray->yintcpt = (int)cub->pos_y + ray->is_down;
-		ray->xintcpt = cub->pos_x + (ray->yintcpt - cub->pos_y) / ray->tan_ngl;
-		ray->ystep = ray->is_down ? 1 : -1;
-		ray->xstep = 1 / ray->tan_ngl;
-		ray->xstep *= (!ray->is_right && ray->xstep > 0 ? -1 : 1);
-		ray->xstep *= (ray->is_right && ray->xstep < 0 ? -1 : 1);
-	}
-}
 
 /*
 ** Horizontal wall raycasting
@@ -96,98 +62,6 @@ static void	wall_raycasting_vertical(t_cub *cub, t_raycasting *cast)
 	}
 }
 
-// UNUSED
-void		fill_sprites_in_good_order(t_cub *cub, t_raycasting *cast,
-										t_spcasting_vars *tmp, int order)
-{
-	if (order)
-	{
-		if (tmp->horz_printable)
-			sprite_intersect(cub, cast->horz,
-							cast->horz_x, cast->horz_y - !cast->horz->is_down);
-		if (tmp->vert_printable)
-			sprite_intersect(cub, cast->vert,
-							cast->vert_x - !cast->vert->is_right, cast->vert_y);
-	}
-	else
-	{
-		if (tmp->vert_printable)
-			sprite_intersect(cub, cast->vert,
-							cast->vert_x - !cast->vert->is_right, cast->vert_y);
-		if (tmp->horz_printable)
-			sprite_intersect(cub, cast->horz,
-							cast->horz_x, cast->horz_y - !cast->horz->is_down);
-	}
-}
-
-static void	sprite_raycasting_z(t_cub *cub, t_raycasting *cast,
-							t_ray *valid_ray, t_spcasting_vars *tmp)
-{
-	int idx_vert;
-	int idx_horz;
-
-	tmp->dist_horz = ft_pyt_like(cub->pos_x, cub->pos_y, (int)cast->horz_x,
-								(int)cast->horz_y);
-	tmp->dist_vert = ft_pyt_like(cub->pos_x, cub->pos_y, (int)cast->vert_x,
-								(int)cast->vert_y);
-	if (in_map_limits(cub, cast->horz_x, cast->horz_y - !cast->horz->is_down)
-		&& tmp->dist_horz < valid_ray->cmp_distance &&
-		is_sprite(cub->map[(int)cast->horz_y - !cast->horz->is_down][(int)cast->horz_x]))
-		tmp->horz_sp = 1;
-	if (in_map_limits(cub, cast->vert_x - !cast->vert->is_right, cast->vert_y)
-		&& tmp->dist_vert < valid_ray->cmp_distance &&
-		is_sprite(cub->map[(int)cast->vert_y][(int)cast->vert_x - !cast->vert->is_right]))
-		tmp->vert_sp = 1;
-	if (tmp->horz_sp)
-		tmp->horz_printable = 1;
-	if (tmp->vert_sp)
-		tmp->vert_printable = 1;
-	if (tmp->horz_sp && tmp->vert_sp)
-	{
-		idx_vert = get_sprite_idx(cub, cast->vert_x - !cast->vert->is_right,
-								cast->vert_y);
-		idx_horz = get_sprite_idx(cub, cast->horz_x, cast->horz_y - \
-								!cast->horz->is_down);
-		if (cub->sprites[idx_horz].distance < cub->sprites[idx_vert].distance)
-			tmp->order = 1;
-	}
-}
-
-static void	sprites_raycasting(t_cub *cub, t_raycasting *cast, t_ray *valid_ray)
-{
-	t_spcasting_vars tmp;
-
-	while (in_map_limits(cub, cast->horz_x, cast->horz_y) ||
-			in_map_limits(cub, cast->vert_x, cast->vert_y))
-	{
-		ft_bzero(&tmp, sizeof(t_spcasting_vars));
-		sprite_raycasting_z(cub, cast, valid_ray, &tmp);
-
-		if (tmp.order)
-		{
-			if (tmp.horz_printable)
-				sprite_intersect(cub, cast->horz, cast->horz_x,
-								cast->horz_y - !cast->horz->is_down);
-			if (tmp.vert_printable)
-				sprite_intersect(cub, cast->vert, cast->vert_x - \
-								!cast->vert->is_right, cast->vert_y);
-		}
-		else
-		{
-			if (tmp.vert_printable)
-				sprite_intersect(cub, cast->vert, cast->vert_x - \
-								!cast->vert->is_right, cast->vert_y);
-			if (tmp.horz_printable)
-				sprite_intersect(cub, cast->horz, cast->horz_x,
-								cast->horz_y - !cast->horz->is_down);
-		}
-		cast->horz_x += cast->horz->xstep;
-		cast->horz_y += cast->horz->ystep;
-		cast->vert_x += cast->vert->xstep;
-		cast->vert_y += cast->vert->ystep;
-	}
-}
-
 /*
 ** Cast a ray, get the least distant hit (horizontal / vertical)
 ** and get the hit direction
@@ -204,6 +78,13 @@ static void	set_hit_drxion(t_ray *ray)
 	else if (ray->hit_vertical && !ray->is_right)
 		ray->hit_drxion = HIT_EAST;
 }
+
+/*
+** Cast a ray.
+** We keep and then set the new ray pointer (horizontal or vertical)
+** with the sprites's ray (cub->rays[i].sp_ray) because otherwise it's lost
+** as we memset all rays each time.
+*/
 
 static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 {
@@ -232,29 +113,7 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 }
 
 /*
-** Re-init sprites rays to 0
-*/
-
-static void	init_sprites_rays(t_cub *cub)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < cub->win_w)
-	{
-		j = -1;
-		while (++j < cub->win_h)
-			(&cub->rays[i])->sp_ray[j] = 0U; // check if still works by replacing pointer
-		++i;
-	}
-}
-
-/*
 ** Cast all rays and update the sprites rays too.
-** We keep and then set the new ray pointer (horizontal or vertical)
-** with cub->rays[i].sp_ray because otherwise it's lost as we memset all rays
-** each time.
 */
 
 void		cast_all_rays(t_cub *cub)

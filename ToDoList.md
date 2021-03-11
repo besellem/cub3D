@@ -1,10 +1,9 @@
-# TO DO BEFORE PUSHING
+# TO DO - BEFORE 'SET AS FINISH'
 - [x] remove check in engine_loop - do an infinite loop
-- [ ] add bonus ?
 - [x] update Makefile (add `bonus` rule)
+- [ ] add bonus ?
 - [ ] update doc in .h file
-- [ ] (Add handling of tabs in config file)
-- [ ] check norm
+- [ ] (Add handling of tabs in config file ?)
 - [ ] remove unused maps
-- [ ] remove unused textures
-- [ ] update README
+- [x] remove unused textures
+- [x] update README

@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 17:14:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 19:37:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ static void	print_ray(t_cub *cub, t_ray *ray)
 {
 	double distance;
 
-	distance = ray->distance * cub->cub_size;
-	while ((distance -= 1) > 0)
+	distance = ray->distance * cub->cub_size - 1;
+	while (distance > 0)
 	{
 		ft_pixel_put(cub,
 					cub->pos_x * cub->cub_size + cos(ray->angle) * distance,
 					cub->pos_y * cub->cub_size + sin(ray->angle) * distance,
 					0xFFFFFF);
+		--distance;
 	}
 }
 
@@ -54,13 +55,17 @@ static void	put_cub(t_cub *cub, int x, int y, uint32_t color)
 	int i;
 	int j;
 
-	i = -1;
-	while (++i < cub->cub_size)
+	i = 0;
+	while (i < cub->cub_size)
 	{
-		j = -1;
-		while (++j < cub->cub_size)
+		j = 0;
+		while (j < cub->cub_size)
+		{
 			ft_pixel_put(cub, x * cub->cub_size + i, y * cub->cub_size + j,
 						color);
+			++j;
+		}
+		++i;
 	}
 }
 
