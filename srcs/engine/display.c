@@ -6,14 +6,14 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:02 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 10:24:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 15:29:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** PRINT A PIXEL AT THE COORDINATES INTO mlx->img
+** Print a pixel at the coordinates into mlx->img
 */
 
 void		ft_pixel_put(t_cub *cub, int x, int y, uint32_t color)
@@ -25,7 +25,7 @@ void		ft_pixel_put(t_cub *cub, int x, int y, uint32_t color)
 }
 
 /*
-** PRINT A SPRITE RAY
+** Print a sprite ray
 */
 
 static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
@@ -43,7 +43,7 @@ static void	print_sprite_ray(t_cub *cub, t_ray ray, int x)
 }
 
 /*
-** PRINT A TEXTURE COLUMN DEFINED BY A RAY
+** Print a column of texture defined by a ray
 */
 
 static int	hit_x_calc(t_img tx, t_ray ray)
@@ -72,15 +72,15 @@ static void	print_txtre_ray(t_cub *cub, t_ray ray, int x, double scale)
 	}
 	while (start < end && idx < cub->win_h)
 	{
-		ft_pixel_put(cub, x, idx++,
-			*(uint32_t *)(tx.addr + (int)start * tx.size_line + \
-			hit_x_calc(tx, ray) * (tx.bpp / 8)));
+		if (ray.sp_ray[idx++] == 0U)
+			ft_pixel_put(cub, x, idx - 1, *(uint32_t *)(tx.addr + (int)start * \
+						tx.size_line + hit_x_calc(tx, ray) * (tx.bpp / 8)));
 		start += tx.y / scale;
 	}
 }
 
 /*
-** MAIN FUNCTION FOR DISPLAYING
+** Display main function
 */
 
 void		update_cubs(t_cub *cub)
@@ -101,11 +101,13 @@ void		update_cubs(t_cub *cub)
 		h_start = (cub->win_h - scale) / 2;
 		y = 0;
 		while (y < h_start)
-			ft_pixel_put(cub, x, y++, cub->sky_color);
+			if (cub->rays[x].sp_ray[y++] == 0U)
+				ft_pixel_put(cub, x, y - 1, cub->sky_color);
 		print_txtre_ray(cub, cub->rays[x], x, scale);
 		y = scale + h_start;
 		while (y < cub->win_h)
-			ft_pixel_put(cub, x, y++, cub->grnd_color);
+			if (cub->rays[x].sp_ray[y++] == 0U)
+				ft_pixel_put(cub, x, y - 1, cub->grnd_color);
 		print_sprite_ray(cub, cub->rays[x], x);
 	}
 }

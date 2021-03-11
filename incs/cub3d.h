@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 14:26:03 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 15:43:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@
 
 /*
 ** Bonus Macros
-** Defined at compile time if wanted
+** Defined at compile time if wanted / needed
 */
 # define GUN_GIF_NB 5
 # ifndef BONUS
@@ -163,8 +163,13 @@ typedef	struct	s_sprite
 	double	centre_angle;
 }				t_sprite;
 
+
+/*
+** order:	vertical stripe before or after horizontal one (0 or 1)
+*/
 typedef	struct	s_spcasting_vars
 {
+	int		order;
 	int		horz_sp;
 	int		vert_sp;
 	int		horz_printable;

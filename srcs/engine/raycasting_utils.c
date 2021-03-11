@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:29:17 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/09 14:05:20 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 15:25:56 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ void		wall_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	ray->hit_wall_y = y;
 	ray->cmp_distance = ft_pyt_like(cub->pos_x, cub->pos_y, x, y);
 	ray->distance = sqrt(ray->cmp_distance);
+	// printf("sqrt_dist: [%f]\n", ray->distance);
+	// ray->distance = (ray->xintcpt - cub->pos_x) * cos(cub->drxion) - (ray->yintcpt - cub->pos_y) * sin(cub->drxion);
+	// printf("new_dist:  [%f]\n\n", ray->distance);
 }
 
 int			get_sprite_idx(t_cub *cub, int x, int y)
@@ -87,12 +90,10 @@ void		sprite_intersect(t_cub *cub, t_ray *ray, double x, double y)
 	sprite = &cub->sprites[idx];
 	if (sprite->hit == 0)
 		set_sprite_struct(cub, sprite, ray->angle);
-	x_col = sprite->distance * tan(ray->angle - sprite->centre_angle) * \
-			cub->txtrs[4].x + cub->txtrs[4].x / 2;
-	if (x_col >= cub->txtrs[4].x)
-		x_col = cub->txtrs[4].x - 1;
-	else if (x_col < 0)
-		x_col = 0;
+	x_col = (sprite->distance * tan(ray->angle - sprite->centre_angle) * \
+			cub->txtrs[4].x) + (cub->txtrs[4].x / 2);
+	if (x_col < 0 || x_col >= cub->txtrs[4].x)
+		return ;
 	if (x_col >= 0 && x_col <= cub->txtrs[4].x)
 		fill_sprite_ptr(cub, ray, cub->win_h / sprite->distance, x_col);
 }
