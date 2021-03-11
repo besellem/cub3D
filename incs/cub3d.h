@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 15:43:59 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 17:25:10 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ typedef	struct	s_sprite
 	double	distance;
 	double	centre_angle;
 }				t_sprite;
-
 
 /*
 ** order:	vertical stripe before or after horizontal one (0 or 1)
@@ -380,6 +379,5 @@ void			init_bonus(t_cub *cub);
 void			play_global_music(t_cub *cub);
 void			update_minimap(t_cub *cub);
 void			display_gun(t_cub *cub);
-// void			display_life(t_cub *cub);
 
 #endif

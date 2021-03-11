@@ -6,7 +6,7 @@
 #    By: besellem <besellem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/09 20:27:25 by besellem          #+#    #+#              #
-#    Updated: 2021/03/11 08:27:51 by besellem         ###   ########.fr        #
+#    Updated: 2021/03/11 17:06:34 by besellem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ OBJS		=	$(SRCS:.c=.o)
 
 ## Commands
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g3 -Ofast -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror# -g3 -fsanitize=address
 RM			=	rm -f
 RMRF		=	rm -rf
 
@@ -72,7 +72,7 @@ UNAME		:=	$(shell uname)
 
 ifeq ($(UNAME), Darwin)
 .c.o:
-			$(MUTE) $(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I incs -Ilibft/incs -Imlx
+			$(MUTE) $(CC) $(CFLAGS) -Ofast -c $< -o $(<:.c=.o) -I incs -Ilibft/incs -Imlx
 endif
 
 
@@ -91,7 +91,7 @@ $(NAME):	$(OBJS)
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
 			@echo "\033[34;1m# 3/3 - Compiling project...\033[0m"
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -Ofast -o $(NAME) -Imlx $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
 endif
 
 
@@ -119,7 +119,7 @@ bonus:		$(OBJS)
 			$(MUTE) $(MAKE) -C mlx all
 			$(MUTE) cp ./mlx/$(MLIBX) .
 			@echo "\033[34;1m# 3/3 - Compiling project...\033[0m"
-			$(MUTE) $(CC) $(CFLAGS) -o $(NAME) -Imlx -DBONUS $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
+			$(MUTE) $(CC) $(CFLAGS) -Ofast -o $(NAME) -Imlx -DBONUS $(PATH_SRCS)/main.c $(SRCS) -Lmlx -lmlx -lm -framework OpenGL -framework AppKit $(INCS)
 endif
 
 
@@ -139,9 +139,6 @@ ifeq ($(UNAME), Darwin)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx clean
-			# To remove along with the -g flag at compilation
-			$(MUTE) $(RMRF) Cub3D.dSYM
-			# End to remove
 			$(MUTE) $(RM) $(BMP_FILE)
 			$(MUTE) $(RM) $(OBJS)
 endif
@@ -151,9 +148,6 @@ ifeq ($(UNAME), Linux)
 clean:
 			$(MUTE) $(MAKE) -C libft clean
 			$(MUTE) $(MAKE) -C mlx_linux clean
-			# To remove along with the -g flag at compilation
-			$(MUTE) $(RMRF) Cub3D.dSYM
-			# End to remove
 			$(MUTE) $(RM) $(BMP_FILE)
 			$(MUTE) $(RM) $(OBJS)
 endif

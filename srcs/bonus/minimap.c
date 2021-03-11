@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/09 11:02:02 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/11 17:14:59 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,33 +90,11 @@ void		update_minimap(t_cub *cub)
 	int i;
 
 	put_map(cub);
-	i = -1;
-	while (++i < cub->win_w)
-		print_ray(cub, &(cub->rays[i]));
-
-
-	// TO DEBUG SPRITE'S RAYCASTING
-	int j;
-
 	i = 0;
-	while ((size_t)i < cub->map_size_y)
+	while (i < cub->win_w)
 	{
-		j = 0;
-		while ((size_t)j++ < cub->map_size_x)
-		{
-			const int idx = get_sprite_idx(cub, j, i);
-			if (idx == -1)
-				continue ;
-			if (is_sprite(cub->map[i][j]) &&
-				cub->sprites[idx].hit == 1)
-			{
-				put_cub(cub, j, i, UCOLOR_RED);
-			}
-		}
+		print_ray(cub, &(cub->rays[i]));
 		++i;
 	}
-	// END
-
-
 	print_player(cub);
 }
