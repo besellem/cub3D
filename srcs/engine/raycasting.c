@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:53:42 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 18:44:38 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/14 00:45:47 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	set_hit_drxion(t_ray *ray)
 ** as we memset all rays each time.
 */
 
-static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
+static void	cast_ray(t_cub *cub, t_ray *ray, double angle, int ray_nb)
 {
 	t_raycasting	cast;
 	t_ray			hor;
@@ -109,6 +109,8 @@ static void	cast_ray(t_cub *cub, t_ray *ray, double angle)
 		*ray = ver;
 	else if (hor.distance < ver.distance)
 		*ray = hor;
+	if (BONUS && cub->kill_sprite && ray_nb == cub->win_w / 2)
+		ray->can_kill_sp = 1;
 	sprites_raycasting(cub, &cast, ray);
 }
 
@@ -129,7 +131,7 @@ void		cast_all_rays(t_cub *cub)
 	while (i < cub->win_w)
 	{
 		tmp_angle = ft_norm_angle(ray_angle);
-		cast_ray(cub, &cub->rays[i], tmp_angle);
+		cast_ray(cub, &cub->rays[i], tmp_angle, i);
 		set_hit_drxion(&cub->rays[i]);
 		ray_angle += (FOV * cub->rays[i].distortion) / cub->win_w;
 		++i;

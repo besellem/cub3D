@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 00:02:16 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 17:07:46 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/14 01:05:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ void		update_frame(t_cub *cub)
 	update_cubs(cub);
 	if (BONUS)
 	{
-		update_minimap(cub);
+		display_minimap(cub);
+		display_life(cub);
 		display_gun(cub);
+		if (cub->life <= 0)
+		{
+			printf(F_RED""B_YELLOW"YOU DIED!\nGAME OVER"CLR_COLOR"\n");
+			ft_quit(cub);
+		}
 	}
 	if (!cub->save_opt)
 		mlx_put_image_to_window(cub->mlx, cub->win, cub->img.ptr, 0, 0);

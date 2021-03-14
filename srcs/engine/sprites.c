@@ -6,55 +6,11 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 10:28:26 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 20:18:09 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/14 00:58:48 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-** REINITIALIZE EACH SPRITE'S STRUCT (EXCEPT ITS COORDINATES)
-** The use of memset is useful here in case of modifications on t_sprite struct
-*/
-
-void		init_sprites_hit(t_cub *cub)
-{
-	int tmp_x;
-	int tmp_y;
-	int i;
-
-	i = -1;
-	while (++i < cub->sprites_ocs)
-	{
-		tmp_x = cub->sprites[i].x;
-		tmp_y = cub->sprites[i].y;
-		ft_memset(&cub->sprites[i], 0, sizeof(t_sprite));
-		(&cub->sprites[i])->x = tmp_x;
-		(&cub->sprites[i])->y = tmp_y;
-	}
-}
-
-/*
-** Re-init sprites rays to 0
-*/
-
-void		init_sprites_rays(t_cub *cub)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < cub->win_w)
-	{
-		j = 0;
-		while (j < cub->win_h)
-		{
-			cub->rays[i].sp_ray[j] = 0U;
-			++j;
-		}
-		++i;
-	}
-}
 
 static void	order_and_fill_sprites(t_cub *cub, t_raycasting *cast,
 								t_spcasting_vars *tmp)
@@ -105,6 +61,27 @@ static void	sprite_raycasting_z_axis(t_cub *cub, t_raycasting *cast,
 			tmp->order = 1;
 }
 
+static void	handle_kill(t_cub *cub, t_raycasting *cast, t_ray *valid_ray,
+						t_spcasting_vars *tmp)
+{
+	if (BONUS && cub->kill_sprite && valid_ray->can_kill_sp &&
+		tmp->horz_printable)
+	{
+		cub->map[(int)cast->horz_y - \
+				!cast->horz->is_down][(int)cast->horz_x] = '0';
+		tmp->horz_printable = 0;
+		cub->kill_sprite = 0;
+	}
+	if (BONUS && cub->kill_sprite && valid_ray->can_kill_sp &&
+		tmp->vert_printable)
+	{
+		cub->map[(int)cast->vert_y][(int)cast->vert_x - \
+				!cast->vert->is_right] = '0';
+		tmp->vert_printable = 0;
+		cub->kill_sprite = 0;
+	}
+}
+
 void		sprites_raycasting(t_cub *cub, t_raycasting *cast, t_ray *valid_ray)
 {
 	t_spcasting_vars tmp;
@@ -114,6 +91,7 @@ void		sprites_raycasting(t_cub *cub, t_raycasting *cast, t_ray *valid_ray)
 	{
 		ft_bzero(&tmp, sizeof(t_spcasting_vars));
 		sprite_raycasting_z_axis(cub, cast, valid_ray, &tmp);
+		handle_kill(cub, cast, valid_ray, &tmp);
 		order_and_fill_sprites(cub, cast, &tmp);
 		cast->horz_x += cast->horz->xstep;
 		cast->horz_y += cast->horz->ystep;

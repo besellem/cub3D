@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 00:56:58 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 19:37:48 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/13 20:22:22 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	put_map(t_cub *cub)
 	}
 }
 
-void		update_minimap(t_cub *cub)
+void		display_minimap(t_cub *cub)
 {
 	int i;
 

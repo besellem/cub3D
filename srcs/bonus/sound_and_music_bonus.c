@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sound_and_music.c                                  :+:      :+:    :+:   */
+/*   sound_and_music_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 01:17:56 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/17 15:46:28 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/13 21:51:21 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	play_global_music(t_cub *cub)
 {
 	const time_t now = time(NULL);
 
-	if (cub->sound_time == 0 || now - cub->sound_time >= GAME_SOUND_DURATION)
+	if (cub->sounds.sound_time == 0 ||
+		now - cub->sounds.sound_time >= GAME_SOUND_DURATION)
 	{
 		system(SOUND_CMD" "GAME_SOUND_PATH" 2>/dev/null&");
-		cub->sound_time = now;
+		cub->sounds.sound_time = now;
 	}
 }

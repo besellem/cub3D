@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 21:10:09 by besellem          #+#    #+#             */
-/*   Updated: 2021/02/24 10:24:31 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/13 23:18:12 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,36 @@ static void	set_gun_txtres(t_cub *cub, int count)
 		set_gun_txtres(cub, count - 1);
 }
 
+static void	is_gun_printable(t_cub *cub)
+{
+	int xmax;
+	int ymax;
+	int i;
+
+	xmax = 0;
+	ymax = 0;
+	i = 0;
+	while (i < GUN_GIF_NB)
+	{
+		if (xmax < cub->txtr_gun[i].x)
+			xmax = cub->txtr_gun[i].x;
+		if (ymax < cub->txtr_gun[i].y)
+			ymax = cub->txtr_gun[i].y;
+		++i;
+	}
+	cub->gun.gun_is_printable = (cub->win_w >= xmax && cub->win_h / 2 >= ymax);
+}
+
 void		init_bonus(t_cub *cub)
 {
 	if (BONUS)
 	{
-		set_gun_txtres(cub, GUN_GIF_NB - 1);
-		fill_texture(cub, &cub->txtr_target, "./assets/gun/target.xpm");
 		set_minimap_cub_size(cub);
+		set_gun_txtres(cub, GUN_GIF_NB - 1);
+		is_gun_printable(cub);
+		if (cub->gun.gun_is_printable)
+			fill_texture(cub, &cub->txtr_target, "./assets/gun/target.xpm");
+		fill_texture(cub, &cub->txtr_life, "./assets/life_bar.xpm");
 		cub->life = 100;
 	}
 }

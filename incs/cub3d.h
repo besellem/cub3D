@@ -6,7 +6,7 @@
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/09 19:56:20 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/11 20:26:13 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/14 00:52:28 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct	s_ray
 	int			is_right : 2;
 	int			hit_vertical : 2;
 	int			hit_drxion : 4;
+	int			can_kill_sp : 2;
 	double		angle;
 	double		tan_ngl;
 	double		distortion;
@@ -222,13 +223,21 @@ typedef struct	s_img
 
 typedef	struct	s_gun
 {
+	int		gun_is_printable : 2;
 	int		gun_status;
+	int		gun_frames;
 	time_t	last_time;
 }				t_gun;
 
+typedef	struct	s_sounds
+{
+	clock_t sound_time;
+	clock_t sprite_last_hit_time;
+}				t_sounds;
+
 /*
 ** save_opt:		check if the option '--save' is defined
-** life:			between 0 and 100 (thus needs only 7 bits)
+** life:			between 0 and 100
 ** win_w:			resolution width (if > screen, is truncated)
 ** win_h:			resolution height (if > screen, is truncated)
 ** parsed_w:		resolution width from the .cub file
@@ -236,6 +245,7 @@ typedef	struct	s_gun
 ** sky_color:		sky color
 ** grnd_color:		ground color
 ** sprites_ocs:		sprites occurrences in the map
+** kill_sprite:		is the gun shooting or not ?
 ** dw:				(key press): none (0), left (-1), right (1)
 ** dh:				(key press): none (0), down (-1), up (1)
 ** turn:			(key press): none (0), left angle (-1), right angle (1)
@@ -254,7 +264,6 @@ typedef	struct	s_gun
 ** pos_x:			player position horizontally
 ** pos_y:			player position vertically
 ** increment:		player's speed
-** sound_time:		global music timing. to repeat the track when finished
 ** keys:			keys struct
 ** img:				image to print out
 ** txtrs:			all the textures and their specs
@@ -267,7 +276,7 @@ typedef	struct	s_gun
 typedef	struct	s_cub
 {
 	int			save_opt : 2;
-	uint8_t		life : 7;
+	int8_t		life;
 	int			win_w;
 	int			win_h;
 	int			parsed_w;
@@ -275,6 +284,7 @@ typedef	struct	s_cub
 	int32_t		sky_color;
 	int32_t		grnd_color;
 	int			sprites_ocs;
+	int			kill_sprite;
 	int			dw;
 	int			dh;
 	int			turn;
@@ -293,7 +303,7 @@ typedef	struct	s_cub
 	double		pos_x;
 	double		pos_y;
 	double		increment;
-	clock_t		sound_time;
+	t_sounds	sounds;
 	t_keys		keys;
 	t_img		img;
 	t_img		txtrs[TEXTURES_COUNT];
@@ -384,7 +394,8 @@ int				engine_loop(t_cub *cub);
 */
 void			init_bonus(t_cub *cub);
 void			play_global_music(t_cub *cub);
-void			update_minimap(t_cub *cub);
+void			display_minimap(t_cub *cub);
+void			display_life(t_cub *cub);
 void			display_gun(t_cub *cub);
 
 #endif

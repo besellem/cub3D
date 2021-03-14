@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gun.c                                              :+:      :+:    :+:   */
+/*   gun_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: besellem <besellem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:23:51 by besellem          #+#    #+#             */
-/*   Updated: 2021/03/08 11:22:48 by besellem         ###   ########.fr       */
+/*   Updated: 2021/03/14 00:54:20 by besellem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,10 @@ static void	print_target(t_cub *cub, t_img tx)
 
 void		display_gun(t_cub *cub)
 {
-	int xmax;
-	int ymax;
-	int i;
-
-	xmax = 0;
-	ymax = 0;
-	i = -1;
-	while (++i < GUN_GIF_NB)
+	if (cub->gun.gun_is_printable)
 	{
-		if (xmax < cub->txtr_gun[i].x)
-			xmax = cub->txtr_gun[i].x;
-		if (ymax < cub->txtr_gun[i].y)
-			ymax = cub->txtr_gun[i].y;
-	}
-	if (cub->win_w >= xmax && cub->win_h / 2 >= ymax)
-	{
+		if (cub->gun.gun_status == -1)
+			cub->kill_sprite = 1;
 		set_gun_txtr_idx(cub);
 		print_gun(cub, cub->txtr_gun[cub->gun.gun_status]);
 		print_target(cub, cub->txtr_target);
